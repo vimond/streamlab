@@ -3,13 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/core": "^0.2.6",
+    "@emotion/core": "^10.0.17",
+    "@emotion/styled": "^10.0.17",
     "@types/jest": "24.0.18",
     "@types/node": "12.7.4",
     "@types/react": "16.9.2",
     "@types/react-dom": "16.9.0",
+    "@types/react-panelgroup": "^1.0.1",
+    "emotion-theming": "^10.0.17",
+    "prettier": "^1.18.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-panelgroup": "^1.0.7",
     "react-scripts": "3.1.1",
+    "react-split": "^2.0.7",
     "typescript": "3.6.2"
   },
   "scripts": {
@@ -32,5 +40,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "prettier": {
+    "printWidth": 120,
+    "singleQuote": true
   }
 }
