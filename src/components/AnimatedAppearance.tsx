@@ -1,5 +1,5 @@
 import React from 'react';
-import { Collapse } from '@chakra-ui/core/dist';
+import { Collapse } from '@chakra-ui/core';
 
 type Props = {
   children: React.ReactNode;

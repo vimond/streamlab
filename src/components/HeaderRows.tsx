@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Collapse, Flex, IconButton, Input } from '@chakra-ui/core/dist';
+import { Box, Collapse, Flex, IconButton, Input } from '@chakra-ui/core';
 import { BoxProps } from '@chakra-ui/core/dist/Box';
 
 type Header = { name: string; value: string };
