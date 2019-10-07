@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu, MenuButton, MenuList, MenuItem, Button, FormControl, Input, Flex } from '@chakra-ui/core';
 
-const techOptions = ['Auto', 'HLS', 'MPEG-DASH', 'Smooth stream', 'Progressive video'];
+const techOptions = ['Auto-detect technology', 'HLS', 'MPEG-DASH', 'Smooth stream', 'Progressive video'];
 
 const Basic: React.FC = () => (
   <form>
@@ -12,8 +12,8 @@ const Basic: React.FC = () => (
       <Menu>
         {/*
             // @ts-ignore */}
-        <MenuButton as={Button} rightIcon="chevron-down" flex="0 0 none">
-          Auto
+        <MenuButton as={Button} rightIcon="chevron-down" flex="0 0 none" ml={2}>
+          {techOptions[0]}
         </MenuButton>
         <MenuList>
           {techOptions.map((option, i) => (

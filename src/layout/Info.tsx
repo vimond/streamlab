@@ -12,7 +12,7 @@ const Info: React.FC = () => (
     <ListItem>
       <Alert status="info" alignItems="flex-start">
         <AlertIcon />
-        Fill in an URL to the stream you want to test, and press Play.
+        Fill in an URL to the stream you want to test, and press Play. Flip the Advanced switch for more options.
       </Alert>
     </ListItem>
   </List>
