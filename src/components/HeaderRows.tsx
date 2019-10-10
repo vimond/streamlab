@@ -49,11 +49,7 @@ class HeaderRows extends React.Component<Props, State> {
 
   renderRow = ({ name, value }: Header, index: number) => {
     return (
-      <Collapse
-        key={index}
-        isOpen={this.state.isOpen[index]}
-        onAnimationEnd={() => this.onAnimationEnd(index)}
-      >
+      <Collapse key={index} isOpen={this.state.isOpen[index]} onAnimationEnd={() => this.onAnimationEnd(index)}>
         <Flex direction="row" mt={2} mb={4}>
           <Input
             flex="1 2 auto"
@@ -83,11 +79,7 @@ class HeaderRows extends React.Component<Props, State> {
 
   render() {
     const { headers = [], ...boxProps } = this.props;
-    return (
-      <Box {...boxProps}>
-        {headers.map(this.renderRow)}
-      </Box>
-    );
+    return <Box {...boxProps}>{headers.map(this.renderRow)}</Box>;
   }
 }
 

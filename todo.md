@@ -4,6 +4,14 @@ Layout with React spaces
 https://www.allaneagle.com/projects/react-spaces
 
 
+API plugin:
+* API host
+* API url
+* API headers
+* API payload
+* Define form fields and map to url, headers, and payload.
+* Result extraction: [JMES path](http://jmespath.org/)?
+
 ### Remember
 
 * Accordion folds with "active" settings should be marked.

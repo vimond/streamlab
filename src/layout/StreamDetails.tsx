@@ -5,7 +5,6 @@ import {
   Collapse,
   Flex,
   FormControl,
-  Heading,
   IconButton,
   Input,
   Menu,
@@ -14,6 +13,7 @@ import {
   MenuList,
   Switch
 } from '@chakra-ui/core';
+import Header, { Level } from '../components/Header';
 
 const StreamDetailRow: React.FC<{
   label: string;
@@ -68,18 +68,12 @@ const StreamDetailRow: React.FC<{
 const StreamDetails: React.FC = () => (
   <form>
     <Box display="grid" gridTemplateColumns="1fr auto auto auto" gridAutoRows="auto" gridGap={2} alignItems="center">
-      <Heading as="h6" size="sm" fontWeight="normal">
+      <Header level={Level.H6} justifySelf="left">
         URLs
-      </Heading>
-      <Heading as="h6" size="sm" fontWeight="normal" justifySelf="center">
-        Technology
-      </Heading>
-      <Heading as="h6" size="sm" fontWeight="normal" justifySelf="center">
-        Proxy
-      </Heading>
-      <Heading as="h6" size="sm" fontWeight="normal" justifySelf="center">
-        Headers
-      </Heading>
+      </Header>
+      <Header level={Level.H6}>Technology</Header>
+      <Header level={Level.H6}>Proxy</Header>
+      <Header level={Level.H6}>Headers</Header>
       <StreamDetailRow
         label="Stream URL"
         techOptions={['Auto', 'HLS', 'MPEG-DASH', 'Smooth stream', 'Progressive video']}

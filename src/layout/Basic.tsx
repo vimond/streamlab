@@ -1,14 +1,14 @@
 import React from 'react';
-import { Menu, MenuButton, MenuList, MenuItem, Button, FormControl, Input, Flex } from '@chakra-ui/core';
+import { Box, Menu, MenuButton, MenuList, MenuItem, Button, FormControl, Input, Flex } from '@chakra-ui/core';
 
 const techOptions = ['Auto-detect technology', 'HLS', 'MPEG-DASH', 'Smooth stream', 'Progressive video'];
 
 const Basic: React.FC = () => (
-  <form>
-    <Flex direction="row" m={4}>
-      <FormControl isRequired flex="1 1 auto">
-        <Input placeholder="Stream URL" type="url" />
-      </FormControl>
+  <Box as="form" my={8}>
+    <FormControl isRequired m={4}>
+      <Input placeholder="Stream URL" type="url" />
+    </FormControl>
+    <Flex justify="center" mx={4}>
       <Menu>
         {/*
             // @ts-ignore */}
@@ -21,14 +21,11 @@ const Basic: React.FC = () => (
           ))}
         </MenuList>
       </Menu>
-    </Flex>
-    <Flex justify="center" py={4}>
-      <Button variantColor="green" mx={1}>
+      <Button variantColor="green" mx={4}>
         Play
       </Button>
-      <Button mx={1}>Clear</Button>
     </Flex>
-  </form>
+  </Box>
 );
 
 export default Basic;

@@ -1,15 +1,5 @@
 import React, { Component } from 'react';
-import {
-  FormControl,
-  Switch,
-  FormLabel,
-  ThemeProvider,
-  ColorModeProvider,
-  Heading,
-  CSSReset,
-  Flex,
-  Box
-} from '@chakra-ui/core';
+import { FormControl, Switch, FormLabel, ThemeProvider, ColorModeProvider, CSSReset, Flex, Box } from '@chakra-ui/core';
 import { Replay } from 'vimond-replay';
 import 'vimond-replay/index.css';
 import './App.css';
@@ -17,6 +7,7 @@ import Advanced from './layout/Advanced';
 import Sidebar from './layout/Sidebar';
 import Basic from './layout/Basic';
 import * as Space from 'react-spaces';
+import Header, { Level } from './components/Header';
 
 type State = {
   isAdvancedEnabled: boolean;
@@ -43,9 +34,9 @@ class App extends Component<{}, State> {
           <Space.ViewPort>
             <Space.Fill scrollable={true}>
               <Flex direction="row" align="center" backgroundColor="gray.200">
-                <Heading as="h1" size="md" flex="1 1 auto" px={4}>
+                <Header level={Level.H1} flex="1 1 auto">
                   Streamlab
-                </Heading>
+                </Header>
                 <FormControl
                   flex="0"
                   p={2}
@@ -55,8 +46,7 @@ class App extends Component<{}, State> {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Switch id="advanced-switch" isChecked={isAdvancedEnabled} onChange={this.onAdvancedToggle}>
-                  </Switch>
+                  <Switch id="advanced-switch" isChecked={isAdvancedEnabled} onChange={this.onAdvancedToggle}>&nbsp;</Switch>
                   <FormLabel ml={2} htmlFor="advanced-switch">
                     Advanced
                   </FormLabel>
@@ -65,15 +55,15 @@ class App extends Component<{}, State> {
               {isAdvancedEnabled ? <Advanced /> : <Basic />}
               <Box my={1}>
                 <Replay
-                  options={ {
+                  options={{
                     interactionDetector: {
                       inactivityDelay: -1
                     }
-                  } }
+                  }}
                 />
               </Box>
             </Space.Fill>
-            <Space.RightResizable size="30%" scrollable={true}>
+            <Space.RightResizable size="33%" scrollable={true}>
               <Sidebar onAdvancedToggle={this.onAdvancedToggle} />
             </Space.RightResizable>
           </Space.ViewPort>
