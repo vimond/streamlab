@@ -12,6 +12,9 @@ API plugin:
 * Define form fields and map to url, headers, and payload.
 * Result extraction: [JMES path](http://jmespath.org/)?
 
+
+[TS to JSON](https://github.com/YousefED/typescript-json-schema)
+
 ### Remember
 
 * Accordion folds with "active" settings should be marked.

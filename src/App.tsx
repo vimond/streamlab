@@ -17,7 +17,7 @@ class App extends Component<{}, State> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      isAdvancedEnabled: true
+      isAdvancedEnabled: false
     };
   }
 
