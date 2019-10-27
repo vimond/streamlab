@@ -13,7 +13,7 @@ type Props = {
 };
 
 const HeaderBar: React.FC<Props> = ({ advancedMode, toggleAdvancedMode }) => (
-  <Flex direction="row" align="center" backgroundColor="gray.200" flex="0">
+  <Flex direction="row" align="center" backgroundColor="gray.200" flex="0 0 auto">
     <Header level={Level.H1} flex="1 1 auto">
       Streamlab
     </Header>

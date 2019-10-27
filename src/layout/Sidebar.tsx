@@ -15,13 +15,13 @@ const Sidebar: React.FC = () => (
     backgroundColor="gray.100"
     height="100vh"
   >
-    <TabList flex="0" backgroundColor="white">
+    <TabList flex="0 0 auto" backgroundColor="white">
       <Tab>Info</Tab>
       <Tab>History</Tab>
       <Tab>Settings</Tab>
       <Tab>Share</Tab>
     </TabList>
-    <TabPanels flex="1 1 auto" overflowY="auto">
+    <TabPanels flex="1 1 auto" overflowY="auto" outline="none">
       <TabPanel>
         <Info />
       </TabPanel>

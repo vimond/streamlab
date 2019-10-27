@@ -18,7 +18,7 @@ type Props = {
 };
 
 const Player: React.FC<Props> = ({ source, options, onError, onExit }) => (
-  <Box my={1}>
+  <Box my={1} p={4}>
     <Replay source={source} options={options} onError={onError} onExit={source ? onExit : undefined}>
       <CompoundVideoStreamer />
     </Replay>
