@@ -9,7 +9,7 @@ const Settings: React.FC = () => (
     <SidebarSwitch label="Save all form fields on every playback start" isChecked />
     <Box display="grid" gridTemplateColumns="1fr 2fr" gridAutoRows="auto" gridGap={2} my={4} alignItems="center">
       <InputGroup size="sm">
-        <Input type="number" value={100} id="max-history-count" onChange={() => {}}/>
+        <Input type="number" value={100} id="max-history-count" onChange={() => {}} />
         <InputRightAddon children="days" />
       </InputGroup>
       <FormLabel htmlFor="max-history-count" mt="1">

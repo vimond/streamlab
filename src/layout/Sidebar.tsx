@@ -5,11 +5,7 @@ import Share from './Share';
 import FormHistory from './FormHistory';
 import Settings from './Settings';
 
-type Props = {
-  onAdvancedToggle: (evt: React.ChangeEvent<HTMLInputElement>) => void;
-};
-
-const Sidebar: React.FC<Props> = () => (
+const Sidebar: React.FC = () => (
   <Tabs
     flex="1 1 auto"
     display="flex"
@@ -17,7 +13,7 @@ const Sidebar: React.FC<Props> = () => (
     alignContent="stretch"
     isFitted
     backgroundColor="gray.100"
-    minHeight="100%"
+    height="100vh"
   >
     <TabList flex="0" backgroundColor="white">
       <Tab>Info</Tab>
@@ -25,7 +21,7 @@ const Sidebar: React.FC<Props> = () => (
       <Tab>Settings</Tab>
       <Tab>Share</Tab>
     </TabList>
-    <TabPanels flex="1 1 auto">
+    <TabPanels flex="1 1 auto" overflowY="auto">
       <TabPanel>
         <Info />
       </TabPanel>

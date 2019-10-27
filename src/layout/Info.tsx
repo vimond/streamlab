@@ -1,21 +1,24 @@
 import React from 'react';
 import { Alert, AlertIcon, List, ListItem } from '@chakra-ui/core';
+import { AppState } from '../store/reducers';
+import { connect } from 'react-redux';
+import { Message } from '../store/model/messages';
 
-const Info: React.FC = () => (
-  <List styleType="none">
-    <ListItem>
-      <Alert status="info" alignItems="flex-start">
-        <AlertIcon />
-        Welcome to Streamlab.
-      </Alert>
-    </ListItem>
-    <ListItem>
-      <Alert status="info" alignItems="flex-start">
-        <AlertIcon />
-        Fill in an URL to the stream you want to test, and press Play. Flip the Advanced switch for more options.
-      </Alert>
-    </ListItem>
-  </List>
+const renderMessage = ({ text, level }: Message, i: number) => (
+  <ListItem key={i}>
+    <Alert status={level} alignItems="flex-start">
+      <AlertIcon />
+      {text}
+    </Alert>
+  </ListItem>
 );
 
-export default Info;
+const Info: React.FC<{ messages: Message[] }> = ({ messages }) => (
+  <List styleType="none">{messages.map(renderMessage)}</List>
+);
+
+const mapStateToProps = (state: AppState) => ({
+  messages: state.information.messages
+});
+
+export default connect(mapStateToProps)(Info);
