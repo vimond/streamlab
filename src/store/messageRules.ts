@@ -41,7 +41,7 @@ export const messageRules: MessageRule[] = [
         return {
           level: MessageLevel.INFO,
           text: `Auto detected stream type is ${streamType.label}. ${
-            opened ? '' : 'Press Play to open it in the player.'
+            opened ? '' : 'Press Play to load it into the player.'
           }`
         };
       } else {
@@ -59,7 +59,7 @@ export const messageRules: MessageRule[] = [
       nextState.streamDetails.streamResource.url !== '',
     message: {
       level: MessageLevel.INFO,
-      text: 'Press play to load the specified stream URL in the player.'
+      text: 'Press Play to load the specified stream URL in the player.'
     }
   },
   {

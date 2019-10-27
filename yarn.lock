@@ -8685,10 +8685,10 @@ react-scripts@3.1.1:
   optionalDependencies:
     fsevents "2.0.7"
 
-react-spaces@^0.1.15:
-  version "0.1.15"
-  resolved "https://vimond.jfrog.io/vimond/api/npm/npm-virtual/react-spaces/-/react-spaces-0.1.15.tgz#a6dec09e41add76399afcd781ba78cb14d03a29e"
-  integrity sha1-pt7AnkGt12OZr814G6eMsU0Dop4=
+react-spaces@^0.1.17:
+  version "0.1.19"
+  resolved "https://registry.yarnpkg.com/react-spaces/-/react-spaces-0.1.19.tgz#94ee498a57dfd3b98cae7f40644b45d7a42aaae9"
+  integrity sha512-vBFdj4WGOqhTFshGJIiiZCdPHaLonDWn4cEXfP5qIMzKGVwaiibTkJpCHzU1lXzp8PvGkXK04EcodEx7WgfGTg==
   dependencies:
     css-element-queries "^1.2.1"
 

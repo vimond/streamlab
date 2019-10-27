@@ -52,7 +52,7 @@ const Basic: React.FC<Props> = ({
       Test progressive, HLS, or MPEG-DASH streams
     </Header>
     <FormControl isRequired m={4}>
-      <Input placeholder="Stream URL" type="url" value={streamResource.url} onChange={handleStreamUrlChange} />
+      <Input placeholder="Stream URL" type="url" textAlign="center" value={streamResource.url} onChange={handleStreamUrlChange} />
     </FormControl>
     <Flex justify="center" mx={4}>
       <Menu>
