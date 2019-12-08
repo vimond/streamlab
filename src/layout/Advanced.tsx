@@ -15,6 +15,10 @@ import ApiLookup from './ApiLookup';
 import StreamProcessor from './StreamProcessor';
 import PlayerOptions from './PlayerOptions';
 import Header, { Level } from '../components/Header';
+import { Dispatch } from "redux";
+import { Action } from "../store/actions";
+import { playAdvanced } from "../store/actions/player";
+import { connect } from "react-redux";
 
 const SectionHeader: React.FC<{ header: string; isRequired?: boolean }> = ({ header, isRequired }) => (
   <AccordionHeader backgroundColor="gray.100">
@@ -31,7 +35,7 @@ const SectionHeader: React.FC<{ header: string; isRequired?: boolean }> = ({ hea
   </AccordionHeader>
 );
 
-const Advanced: React.FC = () => (
+const Advanced: React.FC<{ handlePlay: () => void}> = ({ handlePlay }) => (
   <Stack>
     <Accordion defaultIndex={[1]} allowMultiple>
       <AccordionItem>
@@ -60,9 +64,17 @@ const Advanced: React.FC = () => (
       </AccordionItem>
     </Accordion>
     <Flex justify="center" py={4}>
-      <Button variantColor="green">Play</Button>
+      <Button variantColor="green" onClick={handlePlay}>Play</Button>
     </Flex>
   </Stack>
 );
 
-export default Advanced;
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  // @ts-ignore Typing not supported for thunk actions.
+  handlePlay: () => dispatch(playAdvanced),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Advanced);

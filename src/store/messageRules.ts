@@ -1,6 +1,7 @@
 import { MessageLevel, MessageRule } from './model/messages';
-import { BaseTech, detectStreamType } from './model/streamDetails';
+import { BaseTech, detectStreamType, DrmTechnology } from './model/streamDetails';
 import { PLAYER_ERROR } from './actions/player';
+import { drmTechOptions, getLabel } from "../layout/StreamDetails";
 
 export const messageRules: MessageRule[] = [
   {
@@ -70,5 +71,29 @@ export const messageRules: MessageRule[] = [
       text: `Player error: ${action.type === PLAYER_ERROR &&
         action.error.message}. The full error object is logged to the browser console.`
     })
-  }
+  },
+  {
+    id: 'drm-auto-detect',
+    displayCondition: ({ nextState }) => nextState.ui.advancedMode,
+    message: (nextState, action) => ({
+      level: MessageLevel.INFO,
+      text: `This browser implements ${getLabel(nextState.streamDetails.drmLicenseResource.technology, drmTechOptions)} for DRM playback.`
+    })
+  },
+  {
+    id: 'drm-fairplay-certificate',
+    displayCondition: ({ nextState }) => nextState.ui.advancedMode && !!nextState.streamDetails.drmLicenseResource.url && !nextState.streamDetails.drmCertificateResource.url && nextState.streamDetails.drmLicenseResource.technology === DrmTechnology.FAIRPLAY,
+    message: {
+      level: MessageLevel.WARNING,
+      text: 'When playing a stream with FairPlay DRM encryption, a certificate URL for the content provider needs to be specified.'
+    }
+  },
+  {
+    id: 'drm-widevine-certificate',
+    displayCondition: ({ nextState }) => nextState.ui.advancedMode && !!nextState.streamDetails.drmLicenseResource.url && !nextState.streamDetails.drmCertificateResource.url && nextState.streamDetails.drmLicenseResource.technology === DrmTechnology.WIDEVINE,
+    message: {
+      level: MessageLevel.INFO,
+      text: 'When no DRM certificate URL is specified, the Widevine service\'s certificate will be fetched from the same URL as the DRM license.'
+    }
+  },
 ];

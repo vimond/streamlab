@@ -1,11 +1,19 @@
-import { DrmTechnology, Resource, StreamTechnology, SubtitlesFormat } from '../model/streamDetails';
+import { detectDrmType, DrmTechnology, Resource, StreamTechnology, SubtitlesFormat } from '../model/streamDetails';
 
 export const STREAM_RESOURCE_FIELD_CHANGE = 'STREAM_RESOURCE_FIELD_CHANGE';
 export const DRM_LICENSE_RESOURCE_FIELD_CHANGE = 'DRM_LICENSE_RESOURCE_FIELD_CHANGE';
 export const DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE = 'DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE';
 export const SUBTITLES_RESOURCE_FIELD_CHANGE = 'SUBTITLES_RESOURCE_FIELD_CHANGE';
+export const SET_BROWSER_FEATURES = 'SET_BROWSER_FEATURES';
 
-type ResourceUpdate =
+export type SetBrowserFeaturesAction = {
+  type: typeof SET_BROWSER_FEATURES,
+  value: {
+    drmTechnology: DrmTechnology
+  }
+};
+
+export type ResourceUpdate =
   | {
       streamResource: Partial<Resource<StreamTechnology>>;
     }
@@ -57,3 +65,10 @@ export const updateStreamDetailsField = (resourceUpdate: ResourceUpdate): Stream
         type: SUBTITLES_RESOURCE_FIELD_CHANGE,
         value: resourceUpdate.subtitlesResource
       };
+
+export const setBrowserFeatures = (userAgent: string): SetBrowserFeaturesAction => ({
+  type: SET_BROWSER_FEATURES,
+  value: {
+    drmTechnology: detectDrmType(userAgent)
+  }
+});

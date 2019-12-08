@@ -19,14 +19,24 @@ export type PlayerAction =
   | {
       type: typeof STOP;
     };
+
 export type PlayerErrorAction = {
   type: typeof PLAYER_ERROR;
   error: Error;
 };
 
-export const play = (dispatch: Dispatch<Action>, getState: () => AppState) => {
+export const playBasic = (dispatch: Dispatch<Action>, getState: () => AppState) => {
   const { streamDetails } = getState();
-  const source = createPlayerSource(streamDetails.streamResource.url, streamDetails.streamResource.technology);
+  const { streamResource } = streamDetails; // Only including what's visible in the form.
+  const source = createPlayerSource({ streamResource }, navigator.userAgent);
+  if (source) {
+    dispatch({ type: PLAY, value: { source } });
+  }
+};
+
+export const playAdvanced = (dispatch: Dispatch<Action>, getState: () => AppState)=> {
+  const { streamDetails } = getState();
+  const source = createPlayerSource(streamDetails, navigator.userAgent);
   if (source) {
     dispatch({ type: PLAY, value: { source } });
   }

@@ -1,8 +1,6 @@
 
 
-Layout with React spaces
-https://www.allaneagle.com/projects/react-spaces
-
+Layout with [React spaces](https://www.allaneagle.com/projects/react-spaces)
 
 API plugin:
 * API host
@@ -21,14 +19,24 @@ API plugin:
 * Drawer for save/load? Reconsider what to save/load. Easy export/import. Autosave history after each stream start? And then later give names?
 * Undo clear button after clear.
 * Play, Clear, Save, History, Share buttons at bottom of right pane.
+* Widevine support for Edge! Should enable dropdown.
+* Tests!
 
 ## Tasks
+
+#### Overall
+
+* [ ] Responsive/mobile mode.
 
 #### Stream details
 
 * [ ] All form fields. `3.0.0`
 * [ ] Headers - disable for stream & subtitles `3.0.0`
+* [ ] Disable cert url for PlayReady
+* [ ] Message about Chromium Edge
+* [ ] Message about unsupported subtitle formats
 * [ ] Parsers for TTML, VTT, SRT? `3.2.0`
+* [ ] Override HLS.js/Shaka selection. With DRM support.
 
 #### History
 

@@ -7,7 +7,7 @@ import { Action } from '../store/actions';
 import { updateStreamDetailsField } from '../store/actions/streamDetails';
 import { connect } from 'react-redux';
 import { AutoTechnology, BaseTech, Resource, StreamTechnology } from '../store/model/streamDetails';
-import { play } from '../store/actions/player';
+import { playBasic } from '../store/actions/player';
 
 type StreamTech = AutoTechnology<StreamTechnology>;
 
@@ -94,11 +94,11 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
       })
     ),
   // @ts-ignore Typing not supported for thunk actions.
-  handlePlay: () => dispatch(play),
+  handlePlay: () => dispatch(playBasic),
   handleFormSubmit: (evt: React.FormEvent) => {
     evt.preventDefault();
     // @ts-ignore
-    dispatch(play);
+    dispatch(playBasic);
   }
 });
 

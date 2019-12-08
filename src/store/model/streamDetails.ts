@@ -1,5 +1,5 @@
 // @ts-ignore
-import { streamTypes } from 'vimond-replay/components/player/VideoStreamer/CompoundVideoStreamer/helpers.js';
+import { streamTypes, isMicrosoft, isSafari } from 'vimond-replay/components/player/VideoStreamer/CompoundVideoStreamer/helpers.js';
 import { PlaybackSource } from 'vimond-replay/default-player/Replay';
 
 export enum BaseTech {
@@ -29,10 +29,17 @@ export type AutoTechnology<T> = BaseTech | T;
 
 export interface Resource<T> {
   url: string;
-  headers: { [key: string]: string };
+  headers: { key: string, value: string }[];
   useProxy: boolean;
   technology: AutoTechnology<T>;
 }
+
+type StreamDetails = {
+  streamResource: Resource<StreamTechnology>;
+  drmLicenseResource?: Resource<DrmTechnology>;
+  drmCertificateResource?: Resource<DrmTechnology>;
+  subtitlesResource?: Resource<SubtitlesFormat>;
+};
 
 const contentTypes = {
   [StreamTechnology.DASH]: 'application/dash+xml',
@@ -52,22 +59,72 @@ export const detectStreamType = (streamUrl: string) =>
     }
   });
 
-export const createPlayerSource = (
-  streamUrl: string,
-  technology: StreamTechnology | BaseTech
-): PlaybackSource | undefined => {
-  if (technology === BaseTech.AUTO) {
-    const streamType = detectStreamType(streamUrl);
-    if (streamType) {
-      return {
-        streamUrl,
-        contentType: streamType.contentTypes[0]
-      };
-    }
+const getContentType = (streamType?: { contentTypes: string[]}) => {
+  if (streamType) {
+    return streamType.contentTypes[0];
+  }
+};
+
+export const detectDrmType = (userAgent: string) => {
+  if (isMicrosoft(userAgent)) {
+    return DrmTechnology.PLAYREADY;
+  } else if (isSafari(userAgent)) {
+    return DrmTechnology.FAIRPLAY;
   } else {
-    return {
-      streamUrl,
-      contentType: contentTypes[technology]
-    };
+    return DrmTechnology.WIDEVINE;
+  }
+};
+
+export const detectSubtitlesType = (subtitlesUrl: string) => {
+  if (/\.vtt/.test(subtitlesUrl)) {
+    return SubtitlesFormat.WEBVTT;
+  } else if (/(\.ttml|\.dxfp|\.xml)/.test(subtitlesUrl)) {
+    return SubtitlesFormat.TTML;
+  } else if (/\.srt/.test(subtitlesUrl)) {
+    return SubtitlesFormat.SRT;
+  }
+};
+
+export const createPlayerSource = ({ streamResource, drmLicenseResource, drmCertificateResource, subtitlesResource }: StreamDetails, userAgent: string): PlaybackSource | undefined => {
+  const streamUrl = streamResource.url;
+  if (streamUrl) {
+    const contentType = streamResource.technology === BaseTech.AUTO ? getContentType(detectStreamType(streamUrl)) : contentTypes[streamResource.technology];
+    if (contentType) {
+      const source: PlaybackSource = {
+        streamUrl,
+        contentType,
+      };
+
+      const licenseUrl = drmLicenseResource && drmLicenseResource.url;
+      if (licenseUrl) {
+        source.licenseUrl = licenseUrl;
+        source.licenseAcquisitionDetails = {};
+
+        if (drmLicenseResource && drmLicenseResource.headers.length) {
+          const headers: {[k: string]: string}  = {};
+          drmLicenseResource.headers.forEach(h => headers[h.key] = h.value);
+          source.licenseAcquisitionDetails.licenseRequestHeaders = headers;
+        }
+
+        const certificateUrl = drmCertificateResource && drmCertificateResource.url;
+        if (certificateUrl) {
+          const drmType = detectDrmType(userAgent);
+          if (drmType === DrmTechnology.WIDEVINE) {
+            source.licenseAcquisitionDetails.widevineServiceCertificateUrl = certificateUrl;
+          } else if (drmType === DrmTechnology.FAIRPLAY) {
+            source.licenseAcquisitionDetails.fairPlayCertificateUrl = certificateUrl;
+          }
+        }
+      }
+
+      const subtitlesUrl = subtitlesResource && subtitlesResource.url;
+      if (subtitlesUrl) {
+        const subtitlesFormat = detectSubtitlesType(subtitlesUrl);
+        if (subtitlesFormat) {
+          source.textTracks = [{ contentType, src: subtitlesUrl }];
+        }
+      }
+      return source;
+    }
   }
 };
