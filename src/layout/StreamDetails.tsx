@@ -74,7 +74,11 @@ export const drmTechOptions = [
   }
 ];
 
-const subtitlesFormatOptions = [
+export const subtitlesFormatOptions = [
+  {
+    key: BaseTech.AUTO,
+    label: 'Auto'
+  },
   {
     key: SubtitlesFormat.WEBVTT,
     label: 'WebVTT'

@@ -1,7 +1,7 @@
 import { MessageLevel, MessageRule } from './model/messages';
-import { BaseTech, detectStreamType, DrmTechnology } from './model/streamDetails';
+import { BaseTech, detectStreamType, detectSubtitlesType, DrmTechnology } from './model/streamDetails';
 import { PLAYER_ERROR } from './actions/player';
-import { drmTechOptions, getLabel } from "../layout/StreamDetails";
+import { drmTechOptions, subtitlesFormatOptions, getLabel } from "../layout/StreamDetails";
 
 export const messageRules: MessageRule[] = [
   {
@@ -31,7 +31,7 @@ export const messageRules: MessageRule[] = [
     }
   },
   {
-    id: 'basic-autodetect',
+    id: 'stream-autodetect',
     displayCondition: ({ nextState }) =>
       nextState.streamDetails.streamResource.technology === BaseTech.AUTO &&
       nextState.streamDetails.streamResource.url !== '',
@@ -49,6 +49,26 @@ export const messageRules: MessageRule[] = [
         return {
           level: MessageLevel.WARNING,
           text: `Unable to detect stream type based on URL content. Please select the technology from the dropdown.`
+        };
+      }
+    }
+  },
+  {
+    id: 'subtitles-autodetect',
+    displayCondition: ({ nextState }) =>
+      nextState.streamDetails.subtitlesResource.technology === BaseTech.AUTO &&
+      nextState.streamDetails.subtitlesResource.url !== '',
+    message: (nextState, action) => {
+      const subtitlesType = detectSubtitlesType(nextState.streamDetails.subtitlesResource.url);
+      if (subtitlesType) {
+        return {
+          level: MessageLevel.INFO,
+          text: `Auto detected subtitles type is ${getLabel(subtitlesType, subtitlesFormatOptions)}.`
+        };
+      } else {
+        return {
+          level: MessageLevel.WARNING,
+          text: `Unable to detect subtitles type based on URL content. Please select the technology from the dropdown.`
         };
       }
     }

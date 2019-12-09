@@ -53,6 +53,12 @@ const contentTypes = {
   [StreamTechnology.MSS]: 'application/vnd.ms-sstr+xml'
 };
 
+const subtitlesContentTypes = {
+  [SubtitlesFormat.WEBVTT]: 'text/vtt',
+  [SubtitlesFormat.TTML]: 'application/ttml+xml',
+  [SubtitlesFormat.SRT]: 'text/srt'
+};
+
 export const detectStreamType = (streamUrl: string) =>
   // @ts-ignore
   streamTypes.find(type => {
@@ -128,11 +134,14 @@ export const createPlayerSource = (
         }
       }
 
-      const subtitlesUrl = subtitlesResource && subtitlesResource.url;
-      if (subtitlesUrl) {
-        const subtitlesFormat = detectSubtitlesType(subtitlesUrl);
-        if (subtitlesFormat) {
-          source.textTracks = [{ contentType, src: subtitlesUrl }];
+      if (subtitlesResource) {
+        const src = subtitlesResource.url;
+        if (src) {
+          const subtitlesFormat = subtitlesResource.technology === BaseTech.AUTO ? detectSubtitlesType(src) : subtitlesResource.technology;
+          if (subtitlesFormat) {
+            const contentType = subtitlesContentTypes[subtitlesFormat];
+            source.textTracks = [{ contentType, src }];
+          }
         }
       }
       return source;
