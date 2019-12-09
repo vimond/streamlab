@@ -1,18 +1,5 @@
 import React from 'react';
-import {
-  Box,
-  Button,
-  Collapse,
-  Flex,
-  FormControl,
-  IconButton,
-  Input,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Switch
-} from '@chakra-ui/core';
+import { Box, Button, FormControl, Input, Menu, MenuButton, MenuItem, MenuList, Switch } from '@chakra-ui/core';
 import Header, { Level } from '../components/Header';
 import {
   AutoTechnology,
@@ -28,6 +15,7 @@ import { Action } from '../store/actions';
 import { ResourceUpdate, updateStreamDetailsField } from '../store/actions/streamDetails';
 import { StreamDetailsState } from '../store/reducers/streamDetails';
 import { connect } from 'react-redux';
+import HeaderRows from '../components/HeaderRows';
 
 type Props = StreamDetailsState & {
   handleResourceFieldChange: (resource: ResourceUpdate) => void;
@@ -41,13 +29,12 @@ type TechOption = {
 type RowProps<T = any> = {
   label: string;
   url: string;
-  headers: { key: string; value: string }[];
+  headers: { name: string; value: string; id: number }[];
   technology: AutoTechnology<T>;
   useProxy: boolean;
   onChange: (resource: Partial<Resource<T>>) => void;
   techOptions: TechOption[];
   isTechOptionsEnabled?: boolean;
-  disabledTechTooltip?: string;
   isHeadersEnabled?: boolean;
 };
 
@@ -102,25 +89,20 @@ const subtitlesFormatOptions = [
   }
 ];
 
-const disabledDrmSelectorTooltip =
-  'DRM technology is tied to the browser, and auto-selected. For testing a different DRM technology, choose a browser that supports it.';
-
 export const getLabel = <T extends unknown>(tech: AutoTechnology<T>, options: TechOption[]) =>
   (options.find(({ key }) => key === tech) || options[0]).label;
 
 const StreamDetailRow: React.FC<RowProps> = ({
   url,
   label,
-  onChange,
   useProxy,
+  headers,
   technology,
   techOptions,
   isTechOptionsEnabled,
-  isHeadersEnabled,
-  disabledTechTooltip
+  onChange,
+  isHeadersEnabled
 }) => {
-  const [showHeaders, setShow] = React.useState(false);
-  const handleToggle = () => setShow(!showHeaders);
   return (
     <>
       <FormControl isRequired>
@@ -156,19 +138,17 @@ const StreamDetailRow: React.FC<RowProps> = ({
           Activate proxy for {label}
         </Switch>
       </FormControl>
-      <Button onClick={handleToggle} isDisabled={!isHeadersEnabled}>
+      <Button
+        onClick={() => onChange({ headers: headers.concat({ name: '', value: '', id: Date.now() }) })}
+        isDisabled={!isHeadersEnabled}
+      >
         Add
       </Button>
       <Box gridColumn="1/span 4">
-        <Collapse isOpen={showHeaders}>
-          <Flex direction="row" mt={2} mb={4}>
-            <Input flex="1 2 auto" placeholder="Header name" mr={2} />
-            <Input flex="2 1 auto" placeholder="Header value" mr={2} />
-            {/*
-              // @ts-ignore */}
-            <IconButton flex="0" aria-label="Remove" icon="delete" />
-          </Flex>
-        </Collapse>
+        <HeaderRows
+          onHeadersChange={(headers: { name: string; value: string; id: number }[]) => onChange({ headers })}
+          headers={headers}
+        />
       </Box>
     </>
   );
@@ -212,7 +192,6 @@ const StreamDetails: React.FC<Props> = ({
         techOptions={drmTechOptions}
         isTechOptionsEnabled={false}
         isHeadersEnabled
-        disabledTechTooltip={disabledDrmSelectorTooltip}
         onChange={(drmLicenseResource: Partial<Resource<DrmTechnology>>) =>
           handleResourceFieldChange({ drmLicenseResource })
         }
@@ -223,7 +202,6 @@ const StreamDetails: React.FC<Props> = ({
         techOptions={drmTechOptions}
         isTechOptionsEnabled={false}
         isHeadersEnabled={false}
-        disabledTechTooltip={disabledDrmSelectorTooltip}
         onChange={(drmCertificateResource: Partial<Resource<DrmTechnology>>) =>
           handleResourceFieldChange({ drmCertificateResource })
         }
@@ -247,9 +225,14 @@ const mapStateToProps = (state: AppState) => ({
   ...state.streamDetails
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  handleResourceFieldChange: (resource: ResourceUpdate) => dispatch(updateStreamDetailsField(resource))
-});
+// TODO: Remove
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
+  // @ts-ignore
+  window.updateResourceField = (resource: ResourceUpdate) => dispatch(updateStreamDetailsField(resource));
+  return {
+    handleResourceFieldChange: (resource: ResourceUpdate) => dispatch(updateStreamDetailsField(resource))
+  };
+};
 
 export default connect(
   mapStateToProps,

@@ -2,27 +2,38 @@ import React from 'react';
 import { Box, Collapse, Flex, IconButton, Input } from '@chakra-ui/core';
 import { BoxProps } from '@chakra-ui/core/dist/Box';
 
-type Header = { name: string; value: string };
+type Header = { name: string; value: string; id: number };
 
 type Props = BoxProps & {
   headers: Header[];
-  onChange: (headers: Header[]) => void;
+  onHeadersChange: (headers: Header[]) => void;
 };
 
 type State = {
   isOpen: boolean[];
 };
 
-// Only the last item should expand, i.e. transition isOpen false => true after being added (with falsy value).
-// Any item could collapse, i.e. transition isOpen true => false happens. Then it is removed, and the remaining should all have isOpen true.
-
 class HeaderRows extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      isOpen: []
+    };
+  }
+
+  componentDidMount(): void {
+    this.setState({ isOpen: new Array(this.props.headers.length).fill(true) });
+  }
+
   componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any): void {
-    if (!prevProps.headers || prevProps.headers.length < this.props.headers.length) {
-      this.setState({ isOpen: [...this.state.isOpen, true] });
+    if (prevProps.headers.length < this.props.headers.length) {
+      this.setState({
+        isOpen: [...this.state.isOpen, true]
+      });
     } else if (prevProps.headers.length > this.props.headers.length) {
-      // TODO: Does this happen too early?
-      this.setState({ isOpen: new Array(this.props.headers.length).fill(true) });
+      this.setState({
+        isOpen: new Array(this.props.headers.length).fill(true)
+      });
     }
   }
 
@@ -37,27 +48,28 @@ class HeaderRows extends React.Component<Props, State> {
   onChange = (header: Header, index: number) => {
     const headers = this.props.headers.slice(0);
     headers[index] = header;
-    this.props.onChange(headers);
+    this.props.onHeadersChange(headers);
   };
 
   onAnimationEnd = (index: number) => {
     if (!this.state.isOpen[index]) {
-      const headers = this.props.headers.slice(0).splice(index, 1);
-      this.props.onChange(headers);
+      const headers = this.props.headers.slice(0);
+      headers.splice(index, 1);
+      this.props.onHeadersChange(headers);
     }
   };
 
-  renderRow = ({ name, value }: Header, index: number) => {
+  renderRow = ({ name, value, id }: Header, index: number, arr: Header[]) => {
     return (
-      <Collapse key={index} isOpen={this.state.isOpen[index]} onAnimationEnd={() => this.onAnimationEnd(index)}>
-        <Flex direction="row" mt={2} mb={4}>
+      <Collapse key={id} isOpen={this.state.isOpen[index]} onAnimationEnd={() => this.onAnimationEnd(index)}>
+        <Flex direction="row" py={2}>
           <Input
             flex="1 2 auto"
             placeholder="Header name"
             mr={2}
             value={name}
             onChange={(evt: React.ChangeEvent<HTMLInputElement>) =>
-              this.onChange({ name: evt.target.value, value }, index)
+              this.onChange({ name: evt.target.value, value, id }, index)
             }
           />
           <Input
@@ -66,7 +78,7 @@ class HeaderRows extends React.Component<Props, State> {
             mr={2}
             value={value}
             onChange={(evt: React.ChangeEvent<HTMLInputElement>) =>
-              this.onChange({ name, value: evt.target.value }, index)
+              this.onChange({ name, value: evt.target.value, id }, index)
             }
           />
           {/*
@@ -78,8 +90,8 @@ class HeaderRows extends React.Component<Props, State> {
   };
 
   render() {
-    const { headers = [], ...boxProps } = this.props;
-    return <Box {...boxProps}>{headers.map(this.renderRow)}</Box>;
+    const { headers = [], onHeadersChange, ...boxProps } = this.props;
+    return <Box mb={headers.length ? 4 : 0} {...boxProps}>{headers.map && headers.map(this.renderRow)}</Box>;
   }
 }
 

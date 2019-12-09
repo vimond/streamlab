@@ -1,5 +1,10 @@
+
+import {
+  streamTypes,
+  isMicrosoft,
+  isSafari
 // @ts-ignore
-import { streamTypes, isMicrosoft, isSafari } from 'vimond-replay/components/player/VideoStreamer/CompoundVideoStreamer/helpers.js';
+} from 'vimond-replay/components/player/VideoStreamer/CompoundVideoStreamer/helpers.js';
 import { PlaybackSource } from 'vimond-replay/default-player/Replay';
 
 export enum BaseTech {
@@ -29,7 +34,7 @@ export type AutoTechnology<T> = BaseTech | T;
 
 export interface Resource<T> {
   url: string;
-  headers: { key: string, value: string }[];
+  headers: { name: string; value: string; id: number }[];
   useProxy: boolean;
   technology: AutoTechnology<T>;
 }
@@ -59,7 +64,7 @@ export const detectStreamType = (streamUrl: string) =>
     }
   });
 
-const getContentType = (streamType?: { contentTypes: string[]}) => {
+const getContentType = (streamType?: { contentTypes: string[] }) => {
   if (streamType) {
     return streamType.contentTypes[0];
   }
@@ -85,14 +90,20 @@ export const detectSubtitlesType = (subtitlesUrl: string) => {
   }
 };
 
-export const createPlayerSource = ({ streamResource, drmLicenseResource, drmCertificateResource, subtitlesResource }: StreamDetails, userAgent: string): PlaybackSource | undefined => {
+export const createPlayerSource = (
+  { streamResource, drmLicenseResource, drmCertificateResource, subtitlesResource }: StreamDetails,
+  userAgent: string
+): PlaybackSource | undefined => {
   const streamUrl = streamResource.url;
   if (streamUrl) {
-    const contentType = streamResource.technology === BaseTech.AUTO ? getContentType(detectStreamType(streamUrl)) : contentTypes[streamResource.technology];
+    const contentType =
+      streamResource.technology === BaseTech.AUTO
+        ? getContentType(detectStreamType(streamUrl))
+        : contentTypes[streamResource.technology];
     if (contentType) {
       const source: PlaybackSource = {
         streamUrl,
-        contentType,
+        contentType
       };
 
       const licenseUrl = drmLicenseResource && drmLicenseResource.url;
@@ -101,8 +112,8 @@ export const createPlayerSource = ({ streamResource, drmLicenseResource, drmCert
         source.licenseAcquisitionDetails = {};
 
         if (drmLicenseResource && drmLicenseResource.headers.length) {
-          const headers: {[k: string]: string}  = {};
-          drmLicenseResource.headers.forEach(h => headers[h.key] = h.value);
+          const headers: { [k: string]: string } = {};
+          drmLicenseResource.headers.forEach(h => (headers[h.name] = h.value));
           source.licenseAcquisitionDetails.licenseRequestHeaders = headers;
         }
 
