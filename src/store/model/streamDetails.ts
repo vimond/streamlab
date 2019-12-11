@@ -1,9 +1,8 @@
-
 import {
   streamTypes,
   isMicrosoft,
   isSafari
-// @ts-ignore
+  // @ts-ignore
 } from 'vimond-replay/components/player/VideoStreamer/CompoundVideoStreamer/helpers.js';
 import { PlaybackSource } from 'vimond-replay/default-player/Replay';
 
@@ -137,7 +136,8 @@ export const createPlayerSource = (
       if (subtitlesResource) {
         const src = subtitlesResource.url;
         if (src) {
-          const subtitlesFormat = subtitlesResource.technology === BaseTech.AUTO ? detectSubtitlesType(src) : subtitlesResource.technology;
+          const subtitlesFormat =
+            subtitlesResource.technology === BaseTech.AUTO ? detectSubtitlesType(src) : subtitlesResource.technology;
           if (subtitlesFormat) {
             const contentType = subtitlesContentTypes[subtitlesFormat];
             source.textTracks = [{ contentType, src }];

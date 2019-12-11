@@ -3,7 +3,9 @@ import {
   DRM_LICENSE_RESOURCE_FIELD_CHANGE,
   STREAM_RESOURCE_FIELD_CHANGE,
   SUBTITLES_RESOURCE_FIELD_CHANGE,
-  StreamDetailsFieldChangeAction, SET_BROWSER_FEATURES, setBrowserFeatures,
+  StreamDetailsFieldChangeAction,
+  SET_BROWSER_FEATURES,
+  setBrowserFeatures
 } from '../actions/streamDetails';
 import { BaseTech, DrmTechnology, Resource, StreamTechnology, SubtitlesFormat } from '../model/streamDetails';
 

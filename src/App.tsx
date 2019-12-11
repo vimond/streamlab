@@ -10,16 +10,16 @@ import { AppState } from './store/reducers';
 import { connect } from 'react-redux';
 import Player from './layout/Player';
 import HeaderBar from './layout/HeaderBar';
-import { Action } from "./store/actions";
-import { Dispatch } from "redux";
-import { handlePaneResize } from "./store/actions/ui";
-import { setBrowserFeatures } from "./store/actions/streamDetails";
+import { Action } from './store/actions';
+import { Dispatch } from 'redux';
+import { handlePaneResize } from './store/actions/ui';
+import { setBrowserFeatures } from './store/actions/streamDetails';
 
 type Props = {
   advancedMode: boolean;
   rightPaneWidth?: number | string;
-  handlePaneResize: (size: number) => void
-  initializeFeatureState: (userAgent: string) => void
+  handlePaneResize: (size: number) => void;
+  initializeFeatureState: (userAgent: string) => void;
 };
 
 class App extends Component<Props> {
@@ -32,19 +32,19 @@ class App extends Component<Props> {
     return (
       <ThemeProvider>
         <ColorModeProvider value="light">
-          <CSSReset/>
+          <CSSReset />
           <Space.ViewPort>
             <Space.Fill>
               <Flex height="100vh" direction="column">
-                <HeaderBar/>
+                <HeaderBar />
                 <Box flex="1 1 auto" overflowY="auto">
-                  { advancedMode ? <Advanced/> : <Basic/> }
-                  <Player/>
+                  {advancedMode ? <Advanced /> : <Basic />}
+                  <Player />
                 </Box>
               </Flex>
             </Space.Fill>
-            <Space.RightResizable size={ rightPaneWidth } trackSize={ true } onResizeEnd={ handlePaneResize }>
-              <Sidebar/>
+            <Space.RightResizable size={rightPaneWidth} trackSize={true} onResizeEnd={handlePaneResize}>
+              <Sidebar />
             </Space.RightResizable>
           </Space.ViewPort>
         </ColorModeProvider>
@@ -64,11 +64,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     return null;
   },
   initializeFeatureState: (userAgent: string) => {
-    dispatch(setBrowserFeatures(userAgent))
+    dispatch(setBrowserFeatures(userAgent));
   }
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

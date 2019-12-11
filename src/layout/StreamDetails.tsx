@@ -238,7 +238,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StreamDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(StreamDetails);

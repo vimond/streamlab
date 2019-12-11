@@ -7,10 +7,10 @@ export const SUBTITLES_RESOURCE_FIELD_CHANGE = 'SUBTITLES_RESOURCE_FIELD_CHANGE'
 export const SET_BROWSER_FEATURES = 'SET_BROWSER_FEATURES';
 
 export type SetBrowserFeaturesAction = {
-  type: typeof SET_BROWSER_FEATURES,
+  type: typeof SET_BROWSER_FEATURES;
   value: {
-    drmTechnology: DrmTechnology
-  }
+    drmTechnology: DrmTechnology;
+  };
 };
 
 export type ResourceUpdate =

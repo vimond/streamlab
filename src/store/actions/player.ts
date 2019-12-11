@@ -34,7 +34,7 @@ export const playBasic = (dispatch: Dispatch<Action>, getState: () => AppState) 
   }
 };
 
-export const playAdvanced = (dispatch: Dispatch<Action>, getState: () => AppState)=> {
+export const playAdvanced = (dispatch: Dispatch<Action>, getState: () => AppState) => {
   const { streamDetails } = getState();
   const source = createPlayerSource(streamDetails, navigator.userAgent);
   if (source) {
@@ -47,7 +47,8 @@ export const stop = (dispatch: Dispatch<Action>): PlayerAction => dispatch({ typ
 export const handlePlayerError = (error: any) => (dispatch: Dispatch<Action>) => {
   // TODO: Improve typing for Replay errors.
   if (error instanceof Error) {
-    // @ts-ignore Redux dev tools has issues with JSON.stringify and HLS.js source errors.
+    // Redux dev tools has issues with JSON.stringify and HLS.js source errors.
+    // @ts-ignore
     if (error.sourceError && error.sourceError.loader) {
       // @ts-ignore
       const { loader, context, ...rest } = error.sourceError;

@@ -1,7 +1,7 @@
 import { AppState, BaseAppState } from './index';
 import { AnyAction } from 'redux';
-import { Message, resolveMessages } from '../model/messages';
-import { messageRules } from '../messageRules';
+import { Message, resolveMessages } from '../model/messageResolver';
+import { messages } from '../model/messages';
 import { REHYDRATE } from 'redux-persist/es/constants';
 
 export interface InformationState {
@@ -14,14 +14,14 @@ const getRootState = (prevState: AppState | undefined, action: AnyAction, nextSt
       ...nextState,
       ...action.payload,
       information: {
-        messages: resolveMessages(messageRules, prevState, action, { ...nextState, ...action.payload })
+        messages: resolveMessages(messages, prevState, action, { ...nextState, ...action.payload })
       }
     };
   } else {
     return {
       ...nextState,
       information: {
-        messages: resolveMessages(messageRules, prevState, action, nextState)
+        messages: resolveMessages(messages, prevState, action, nextState)
       }
     };
   }

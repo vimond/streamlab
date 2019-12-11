@@ -91,7 +91,11 @@ class HeaderRows extends React.Component<Props, State> {
 
   render() {
     const { headers = [], onHeadersChange, ...boxProps } = this.props;
-    return <Box mb={headers.length ? 4 : 0} {...boxProps}>{headers.map && headers.map(this.renderRow)}</Box>;
+    return (
+      <Box mb={headers.length ? 4 : 0} {...boxProps}>
+        {headers.map && headers.map(this.renderRow)}
+      </Box>
+    );
   }
 }
 

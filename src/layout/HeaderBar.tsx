@@ -36,7 +36,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   toggleAdvancedMode: (evt: React.ChangeEvent<HTMLInputElement>) => dispatch(toggleAdvancedMode(evt.target.checked))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HeaderBar);
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderBar);

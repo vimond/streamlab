@@ -2,11 +2,11 @@ import React from 'react';
 import { Alert, AlertIcon, List, ListItem } from '@chakra-ui/core';
 import { AppState } from '../store/reducers';
 import { connect } from 'react-redux';
-import { Message } from '../store/model/messages';
+import { Message } from '../store/model/messageResolver';
 
 const renderMessage = ({ text, level }: Message, i: number) => (
   <ListItem key={i}>
-    <Alert status={level} alignItems="flex-start">
+    <Alert status={level} alignItems="flex-start" style={{ overflowX: 'auto' }}>
       <AlertIcon />
       {text}
     </Alert>

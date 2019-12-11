@@ -36,7 +36,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   onExit: () => dispatch(stop)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Player);
+export default connect(mapStateToProps, mapDispatchToProps)(Player);
