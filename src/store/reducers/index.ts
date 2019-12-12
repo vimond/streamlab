@@ -2,7 +2,9 @@ import { AnyAction, combineReducers } from 'redux';
 import ui from './ui';
 import streamDetails from './streamDetails';
 import player from './player';
-import getRootState, { InformationState } from './information';
+import createRootReducerWithInformation, { InformationState } from './information';
+import { messages } from '../model/messages';
+import { resolveMessages } from '../model/messageResolver';
 
 const rootReducer = combineReducers({
   ui,
@@ -10,6 +12,8 @@ const rootReducer = combineReducers({
   player,
   information: () => ({})
 });
+
+const getRootState = createRootReducerWithInformation(messages, resolveMessages);
 
 export type BaseAppState = ReturnType<typeof rootReducer>;
 export type AppState = BaseAppState & { information: InformationState };

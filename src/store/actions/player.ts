@@ -28,7 +28,7 @@ export type PlayerErrorAction = {
 export const playBasic = (dispatch: Dispatch<Action>, getState: () => AppState) => {
   const { streamDetails } = getState();
   const { streamResource } = streamDetails; // Only including what's visible in the form.
-  const source = createPlayerSource({ streamResource }, navigator.userAgent);
+  const source = createPlayerSource({ streamResource });
   if (source) {
     dispatch({ type: PLAY, value: { source } });
   }
@@ -36,7 +36,7 @@ export const playBasic = (dispatch: Dispatch<Action>, getState: () => AppState) 
 
 export const playAdvanced = (dispatch: Dispatch<Action>, getState: () => AppState) => {
   const { streamDetails } = getState();
-  const source = createPlayerSource(streamDetails, navigator.userAgent);
+  const source = createPlayerSource(streamDetails);
   if (source) {
     dispatch({ type: PLAY, value: { source } });
   }

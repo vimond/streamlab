@@ -27,12 +27,14 @@ export type MessageRule = {
   message: Message | ((state: BaseAppState, action: Action) => Message);
 };
 
-export const resolveMessages = (
+export type MessageResolver = (
   messageRules: MessageRule[],
   prevState: AppState | undefined,
   action: Action,
   nextState: BaseAppState
-) =>
+) => Message[];
+
+export const resolveMessages: MessageResolver = (messageRules, prevState, action, nextState) =>
   messageRules
     .filter(rule => rule.displayCondition({ action, prevState, nextState }))
     .map(rule => (typeof rule.message === 'function' ? rule.message(nextState, action) : rule.message));

@@ -52,10 +52,22 @@ const contentTypes = {
   [StreamTechnology.MSS]: 'application/vnd.ms-sstr+xml'
 };
 
+const drmTypes = {
+  [DrmTechnology.WIDEVINE]: 'com.widevine.alpha',
+  [DrmTechnology.PLAYREADY]: 'com.microsoft.playready',
+  [DrmTechnology.FAIRPLAY]: 'com.apple.fps.1_0'
+};
+
 const subtitlesContentTypes = {
   [SubtitlesFormat.WEBVTT]: 'text/vtt',
   [SubtitlesFormat.TTML]: 'application/ttml+xml',
   [SubtitlesFormat.SRT]: 'text/srt'
+};
+
+const getContentType = (streamType?: { contentTypes: string[] }) => {
+  if (streamType) {
+    return streamType.contentTypes[0];
+  }
 };
 
 export const detectStreamType = (streamUrl: string) =>
@@ -68,12 +80,6 @@ export const detectStreamType = (streamUrl: string) =>
       return urlMatch.test(streamUrl);
     }
   });
-
-const getContentType = (streamType?: { contentTypes: string[] }) => {
-  if (streamType) {
-    return streamType.contentTypes[0];
-  }
-};
 
 export const detectDrmType = (userAgent: string) => {
   if (isMicrosoft(userAgent)) {
@@ -95,10 +101,12 @@ export const detectSubtitlesType = (subtitlesUrl: string) => {
   }
 };
 
-export const createPlayerSource = (
-  { streamResource, drmLicenseResource, drmCertificateResource, subtitlesResource }: StreamDetails,
-  userAgent: string
-): PlaybackSource | undefined => {
+export const createPlayerSource = ({
+  streamResource,
+  drmLicenseResource,
+  drmCertificateResource,
+  subtitlesResource
+}: StreamDetails): PlaybackSource | undefined => {
   const streamUrl = streamResource.url;
   if (streamUrl) {
     const contentType =
@@ -111,24 +119,27 @@ export const createPlayerSource = (
         contentType
       };
 
-      const licenseUrl = drmLicenseResource && drmLicenseResource.url;
-      if (licenseUrl) {
-        source.licenseUrl = licenseUrl;
-        source.licenseAcquisitionDetails = {};
+      if (drmLicenseResource) {
+        const licenseUrl = drmLicenseResource.url;
+        if (licenseUrl) {
+          source.licenseUrl = licenseUrl;
+          source.drmType =
+            drmLicenseResource.technology !== BaseTech.AUTO ? drmTypes[drmLicenseResource.technology] : undefined;
+          source.licenseAcquisitionDetails = {};
 
-        if (drmLicenseResource && drmLicenseResource.headers.length) {
-          const headers: { [k: string]: string } = {};
-          drmLicenseResource.headers.forEach(h => (headers[h.name] = h.value));
-          source.licenseAcquisitionDetails.licenseRequestHeaders = headers;
-        }
+          if (drmLicenseResource && drmLicenseResource.headers.length) {
+            const headers: { [k: string]: string } = {};
+            drmLicenseResource.headers.forEach(h => (headers[h.name] = h.value));
+            source.licenseAcquisitionDetails.licenseRequestHeaders = headers;
+          }
 
-        const certificateUrl = drmCertificateResource && drmCertificateResource.url;
-        if (certificateUrl) {
-          const drmType = detectDrmType(userAgent);
-          if (drmType === DrmTechnology.WIDEVINE) {
-            source.licenseAcquisitionDetails.widevineServiceCertificateUrl = certificateUrl;
-          } else if (drmType === DrmTechnology.FAIRPLAY) {
-            source.licenseAcquisitionDetails.fairPlayCertificateUrl = certificateUrl;
+          const certificateUrl = drmCertificateResource && drmCertificateResource.url;
+          if (certificateUrl) {
+            if (drmLicenseResource.technology === DrmTechnology.WIDEVINE) {
+              source.licenseAcquisitionDetails.widevineServiceCertificateUrl = certificateUrl;
+            } else if (drmLicenseResource.technology === DrmTechnology.FAIRPLAY) {
+              source.licenseAcquisitionDetails.fairPlayCertificateUrl = certificateUrl;
+            }
           }
         }
       }
