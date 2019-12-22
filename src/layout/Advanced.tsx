@@ -11,8 +11,6 @@ import {
   Text
 } from '@chakra-ui/core';
 import StreamDetails from './StreamDetails';
-import ApiLookup from './ApiLookup';
-import StreamProcessor from './StreamProcessor';
 import PlayerOptions from './PlayerOptions';
 import Header, { Level } from '../components/Header';
 import { Dispatch } from 'redux';
@@ -37,23 +35,11 @@ const SectionHeader: React.FC<{ header: string; isRequired?: boolean }> = ({ hea
 
 const Advanced: React.FC<{ handlePlay: () => void }> = ({ handlePlay }) => (
   <Stack>
-    <Accordion defaultIndex={[1]} allowMultiple>
-      <AccordionItem>
-        <SectionHeader header="CMS/API stream lookup" />
-        <AccordionPanel ml={2} backgroundColor="White">
-          <ApiLookup />
-        </AccordionPanel>
-      </AccordionItem>
+    <Accordion defaultIndex={[0]} allowMultiple>
       <AccordionItem>
         <SectionHeader header="Stream details" isRequired />
         <AccordionPanel ml={2} backgroundColor="White">
           <StreamDetails />
-        </AccordionPanel>
-      </AccordionItem>
-      <AccordionItem>
-        <SectionHeader header="Stream processor" />
-        <AccordionPanel ml={2} backgroundColor="White">
-          <StreamProcessor />
         </AccordionPanel>
       </AccordionItem>
       <AccordionItem>

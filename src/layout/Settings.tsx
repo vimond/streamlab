@@ -5,7 +5,7 @@ import SidebarSwitch from '../components/SidebarSwitch';
 
 const Settings: React.FC = () => (
   <Box mx={4}>
-    <Header level={Level.H3}>History & presets</Header>
+    <Header level={Level.H3}>History</Header>
     <SidebarSwitch label="Save all form fields on every playback start" isChecked />
     <Box display="grid" gridTemplateColumns="1fr 2fr" gridAutoRows="auto" gridGap={2} my={4} alignItems="center">
       <InputGroup size="sm">
@@ -25,16 +25,10 @@ const Settings: React.FC = () => (
         Clear history
       </Button>
       <FormLabel htmlFor="clear-history-button" mt="1">
-        Clear history except presets
-      </FormLabel>
-      <Button variantColor="red" id="clear-presets-button">
-        Clear presets
-      </Button>
-      <FormLabel htmlFor="clear-history-button" mt="1">
-        Clear stored presets
+        Clear history of form details
       </FormLabel>
     </Box>
-    <Text>Presets and history are saved to local storage.</Text>
+    <Text>The history is saved to local storage.</Text>
   </Box>
 );
 

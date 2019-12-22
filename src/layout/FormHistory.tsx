@@ -11,20 +11,8 @@ const Item: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 const FormHistory: React.FC = () => (
   <Box mx={4}>
     <Box>
-      <Header level={Level.H3}>Presets</Header>
-      <List overflowY="scroll" backgroundColor="white" maxHeight={48}>
-        <Item>Live sports channel</Item>
-        <Item>Big Buck Bunny 1080P</Item>
-        <Item>Low latency HLS.js mode</Item>
-        <Item>Base64 FairPlay payloads</Item>
-        <Item>Stream with WebVTT subtitles</Item>
-        <Item>Troubleshooting for client</Item>
-        <Item>Full debug output from Shaka Player</Item>
-        <Item>Shift live stream edge</Item>
-        <Item>My first stream</Item>
-      </List>
       <Header level={Level.H3}>History entries</Header>
-      <Text mb={1}>Select for inspection and creating presets:</Text>
+      <Text mb={1}>Select for inspection and restoration:</Text>
       <List overflowY="scroll" backgroundColor="white" maxHeight={64}>
         <Item>Current form content</Item>
         <Item>2019-10-09 22:43 Stream details • Proxy • API</Item>

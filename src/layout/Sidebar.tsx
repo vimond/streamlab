@@ -1,7 +1,6 @@
 import React from 'react';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/core';
 import Info from './Info';
-import Share from './Share';
 import FormHistory from './FormHistory';
 import Settings from './Settings';
 
@@ -19,7 +18,6 @@ const Sidebar: React.FC = () => (
       <Tab>Info</Tab>
       <Tab>History</Tab>
       <Tab>Settings</Tab>
-      <Tab>Share</Tab>
     </TabList>
     <TabPanels flex="1 1 auto" overflowY="auto" outline="none">
       <TabPanel>
@@ -30,9 +28,6 @@ const Sidebar: React.FC = () => (
       </TabPanel>
       <TabPanel>
         <Settings />
-      </TabPanel>
-      <TabPanel>
-        <Share />
       </TabPanel>
     </TabPanels>
   </Tabs>
