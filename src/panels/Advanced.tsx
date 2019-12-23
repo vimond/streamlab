@@ -17,6 +17,8 @@ import { Dispatch } from 'redux';
 import { Action } from '../store/actions';
 import { playAdvanced } from '../store/actions/player';
 import { connect } from 'react-redux';
+import { updateAdvancedAccordionExpansions } from '../store/actions/ui';
+import { AppState } from '../store/reducers';
 
 const SectionHeader: React.FC<{ header: string; isRequired?: boolean }> = ({ header, isRequired }) => (
   <AccordionHeader backgroundColor="gray.100">
@@ -33,9 +35,15 @@ const SectionHeader: React.FC<{ header: string; isRequired?: boolean }> = ({ hea
   </AccordionHeader>
 );
 
-const Advanced: React.FC<{ handlePlay: () => void }> = ({ handlePlay }) => (
+const Advanced: React.FC<{
+  expandedIndices: number[];
+  handlePlay: () => void;
+  handleAccordionChange: (indices: number[]) => void;
+}> = ({ expandedIndices, handlePlay, handleAccordionChange }) => (
   <Stack>
-    <Accordion defaultIndex={[0]} allowMultiple>
+    {/*
+            // @ts-ignore Inconsistently defined change handler type. */}
+    <Accordion defaultIndex={expandedIndices} allowMultiple onChange={handleAccordionChange}>
       <AccordionItem>
         <SectionHeader header="Stream details" isRequired />
         <AccordionPanel ml={2} backgroundColor="White">
@@ -57,9 +65,14 @@ const Advanced: React.FC<{ handlePlay: () => void }> = ({ handlePlay }) => (
   </Stack>
 );
 
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  // @ts-ignore Typing not supported for thunk actions.
-  handlePlay: () => dispatch(playAdvanced)
+const mapStateToProps = (state: AppState) => ({
+  expandedIndices: state.ui.expandedAdvancedAccordionIndices
 });
 
-export default connect(null, mapDispatchToProps)(Advanced);
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  // @ts-ignore Typing not supported for thunk actions.
+  handlePlay: () => dispatch(playAdvanced),
+  handleAccordionChange: (indices: number[]) => dispatch(updateAdvancedAccordionExpansions(indices))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Advanced);

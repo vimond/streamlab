@@ -12,7 +12,7 @@ import Player from './panels/Player';
 import HeaderBar from './panels/HeaderBar';
 import { Action } from './store/actions';
 import { Dispatch } from 'redux';
-import { handlePaneResize } from './store/actions/ui';
+import { updatePaneSize } from './store/actions/ui';
 import { setBrowserFeatures } from './store/actions/streamDetails';
 
 type Props = {
@@ -60,7 +60,7 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   handlePaneResize: (size: number) => {
-    dispatch(handlePaneResize(size));
+    dispatch(updatePaneSize(size));
     return null;
   },
   initializeFeatureState: (userAgent: string) => {

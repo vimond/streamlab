@@ -47,8 +47,8 @@ API plugin:
 
 #### Overall
 
-* [ ] Rename layout to panels
-* [ ] Remember accordion expand states
+* [x] Rename layout to panels
+* [x] Remember accordion expand states
 * [ ] Accordion folds with "active" settings should be marked. `3.0.0`
 * [ ] Move "use proxy" and all mentions to branch. `3.0.0`
 * [ ] Create "static"/"client side only" build and deployment. `3.0.0`
@@ -109,3 +109,10 @@ Only available on localhost?
 * [ ] Regex. `3.4.0`
 * [ ] HLS tools. `3.6.0`
 * [ ] MPD tools. `3.6.0`
+
+#### Replay
+
+* [ ] Logo when not playing.
+* [ ] Make dependencies great again.
+
+
