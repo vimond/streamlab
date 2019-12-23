@@ -1,7 +1,7 @@
 import { MessageLevel, MessageRule } from './messageResolver';
 import { BaseTech, detectStreamType, detectSubtitlesType, DrmTechnology } from './streamDetails';
 import { PLAYER_ERROR } from '../actions/player';
-import { drmTechOptions, subtitlesFormatOptions, getLabel } from '../../layout/StreamDetails';
+import { drmTechOptions, subtitlesFormatOptions, getLabel } from '../../panels/StreamDetails';
 
 export const messages: MessageRule[] = [
   {
