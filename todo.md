@@ -50,7 +50,7 @@ API plugin:
 * [x] Rename layout to panels
 * [x] Remember accordion expand states
 * [ ] Accordion folds with "active" settings should be marked. `3.0.0`
-* [ ] Move "use proxy" and all mentions to branch. `3.0.0`
+* [x] Move "use proxy" and all mentions to branch. `3.0.0`
 * [ ] Create "static"/"client side only" build and deployment. `3.0.0`
 * [ ] Feature toggle system where proxy or processor things are not visible in "static build/deploy". `3.2.0`
 * [ ] Responsive/mobile mode. `3.3.0`
@@ -94,7 +94,7 @@ Only available on localhost?
 
 #### Player options
 
-* [ ] JSON editor for modern React. `3.0.0`
+* [x] JSON editor for modern React. `3.0.0`
 * [ ] Log level. `3.0.0`
 
 #### Proxy

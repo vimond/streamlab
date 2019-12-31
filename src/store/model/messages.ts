@@ -1,7 +1,7 @@
 import { MessageLevel, MessageRule } from './messageResolver';
 import { BaseTech, detectStreamType, detectSubtitlesType, DrmTechnology } from './streamDetails';
 import { PLAYER_ERROR } from '../actions/player';
-import { drmTechOptions, subtitlesFormatOptions, getLabel } from '../../panels/StreamDetails';
+import { drmTechOptions, getLabel, subtitlesFormatOptions } from '../../panels/StreamDetails';
 
 export const messages: MessageRule[] = [
   {
@@ -127,6 +127,21 @@ export const messages: MessageRule[] = [
       level: MessageLevel.INFO,
       text:
         "When no DRM certificate URL is specified, the Widevine service's certificate will be fetched from the same URL as the DRM license."
+    }
+  },
+  {
+    id: 'player-options-invalid-json',
+    displayCondition: ({ nextState }) => {
+      try {
+        JSON.parse(nextState.playerOptions.customConfiguration);
+        return false;
+      } catch (e) {
+        return true;
+      }
+    },
+    message: {
+      level: MessageLevel.WARNING,
+      text: 'The player configuration overrides are not specified as valid JSON, and will be ignored.'
     }
   }
 ];

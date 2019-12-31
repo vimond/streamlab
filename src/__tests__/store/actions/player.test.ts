@@ -7,9 +7,9 @@ import {
   handlePlayerError,
   PLAYER_ERROR
 } from '../../../store/actions/player';
-import { BaseTech, DrmTechnology } from '../../../store/model/streamDetails';
+import { BaseTech, DrmTechnology, PlayerLogLevel } from '../../../store/model/streamDetails';
 
-const basicStreamDetails = {
+const basicFormState = {
   streamDetails: {
     streamResource: {
       url: 'https://example.com/stream.mpd',
@@ -18,7 +18,7 @@ const basicStreamDetails = {
   }
 };
 
-const advancedStreamDetails = {
+const advancedFormState = {
   streamDetails: {
     streamResource: {
       url: 'https://example.com/stream.m3u8',
@@ -46,6 +46,11 @@ const advancedStreamDetails = {
       url: 'https://example.com/subs.vtt',
       technology: BaseTech.AUTO
     }
+  },
+  playerOptions: {
+    logLevel: PlayerLogLevel.WARNING,
+    showPlaybackMonitor: true,
+    customConfiguration: '{"some":"value"}'
   }
 };
 
@@ -54,8 +59,8 @@ describe('Player Redux actions', () => {
     test('Basic playback start only applying visible stream details', () => {
       const getState = jest
         .fn()
-        .mockReturnValueOnce(basicStreamDetails)
-        .mockReturnValue(advancedStreamDetails);
+        .mockReturnValueOnce(basicFormState)
+        .mockReturnValue(advancedFormState);
       const dispatch = jest.fn();
 
       playBasic(dispatch, getState);
@@ -80,8 +85,8 @@ describe('Player Redux actions', () => {
         }
       });
     });
-    test('Advanced playback start applying all stream details', () => {
-      const getState = jest.fn().mockReturnValue(advancedStreamDetails);
+    test('Advanced playback start applying all advanced form details', () => {
+      const getState = jest.fn().mockReturnValue(advancedFormState);
       const dispatch = jest.fn();
 
       playAdvanced(dispatch, getState);
@@ -107,6 +112,15 @@ describe('Player Redux actions', () => {
                 contentType: 'text/vtt'
               }
             ]
+          },
+          options: {
+            some: 'value',
+            videoStreamer: {
+              logLevel: 'WARNING'
+            },
+            playbackMonitor: {
+              visibleAtStart: true
+            }
           }
         }
       });

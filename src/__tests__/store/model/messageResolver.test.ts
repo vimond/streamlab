@@ -138,12 +138,12 @@ describe('Information message resolver', () => {
         })
       }
     ];
-    // @ts-ignore
     const result = resolveMessages(
       rules,
       undefined,
       { type: PANE_RESIZE, value: 313 },
-      { ui: { advancedMode: true, rightPaneWidth: 535 } }
+      // @ts-ignore
+      { ui: { advancedMode: true, rightPaneWidth: 535, expandedAdvancedAccordionIndices: [1] } }
     );
     expect(result).toEqual([
       {

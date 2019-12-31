@@ -27,6 +27,7 @@ type TechOption = {
 };
 
 type RowProps<T = any> = {
+  id: string;
   label: string;
   url: string;
   headers: { name: string; value: string; id: number }[];
@@ -97,6 +98,7 @@ export const getLabel = <T extends unknown>(tech: AutoTechnology<T>, options: Te
   (options.find(({ key }) => key === tech) || options[0]).label;
 
 const StreamDetailRow: React.FC<RowProps> = ({
+  id,
   url,
   label,
   useProxy,
@@ -136,7 +138,7 @@ const StreamDetailRow: React.FC<RowProps> = ({
       <FormControl justifySelf="center" style={{ visibility: isProxyVisible ? 'visible' : 'hidden' }}>
         <Switch
           onChange={(evt: React.ChangeEvent<HTMLInputElement>) => onChange({ useProxy: evt.target.checked })}
-          id="stream-proxy-activate"
+          id={`${id}-proxy-activate`}
           isChecked={useProxy}
         >
           Activate proxy for {label}
@@ -182,6 +184,7 @@ const StreamDetails: React.FC<Props> = ({
       </Header>
       <Header level={Level.H6}>Headers</Header>
       <StreamDetailRow
+        id="stream"
         label="Stream URL"
         techOptions={streamTechOptions}
         isTechOptionsEnabled
@@ -193,6 +196,7 @@ const StreamDetails: React.FC<Props> = ({
       />
       <StreamDetailRow
         label="DRM license URL"
+        id="license"
         techOptions={drmTechOptions}
         isTechOptionsEnabled={false}
         isHeadersEnabled
@@ -202,6 +206,7 @@ const StreamDetails: React.FC<Props> = ({
         {...drmLicenseResource}
       />
       <StreamDetailRow
+        id="certificate"
         label="DRM certificate URL"
         techOptions={drmTechOptions}
         isTechOptionsEnabled={false}
@@ -212,6 +217,7 @@ const StreamDetails: React.FC<Props> = ({
         {...drmCertificateResource}
       />
       <StreamDetailRow
+        id="subtitles"
         label="Subtitles URL"
         techOptions={subtitlesFormatOptions}
         isTechOptionsEnabled

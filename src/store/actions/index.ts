@@ -1,6 +1,7 @@
 import { AdvancedAccordionExpansionAction, PaneResizeAction, ToggleAdvancedModeAction } from './ui';
 import { SetBrowserFeaturesAction, StreamDetailsFieldChangeAction } from './streamDetails';
 import { PlayerAction, PlayerErrorAction } from './player';
+import { SetLogLevelAction, SetPlayerConfigurationAction, TogglePlaybackMonitorAction } from './playerOptions';
 
 export type Action =
   | SetBrowserFeaturesAction
@@ -9,4 +10,7 @@ export type Action =
   | AdvancedAccordionExpansionAction
   | StreamDetailsFieldChangeAction
   | PlayerAction
-  | PlayerErrorAction;
+  | PlayerErrorAction
+  | SetLogLevelAction
+  | TogglePlaybackMonitorAction
+  | SetPlayerConfigurationAction;

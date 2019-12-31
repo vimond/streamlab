@@ -4,7 +4,7 @@ import {
   isSafari
   // @ts-ignore
 } from 'vimond-replay/components/player/VideoStreamer/CompoundVideoStreamer/helpers.js';
-import { PlaybackSource } from 'vimond-replay/default-player/Replay';
+import { PlaybackSource, PlayerConfiguration } from 'vimond-replay/default-player/Replay';
 
 export enum BaseTech {
   AUTO
@@ -43,6 +43,20 @@ type StreamDetails = {
   drmLicenseResource?: Resource<DrmTechnology>;
   drmCertificateResource?: Resource<DrmTechnology>;
   subtitlesResource?: Resource<SubtitlesFormat>;
+};
+
+export enum PlayerLogLevel {
+  NONE,
+  ERROR,
+  WARNING,
+  INFO,
+  DEBUG
+}
+
+type PlayerOptions = {
+  logLevel: PlayerLogLevel;
+  showPlaybackMonitor: boolean;
+  customConfiguration: string;
 };
 
 const contentTypes = {
@@ -158,4 +172,29 @@ export const createPlayerSource = ({
       return source;
     }
   }
+};
+
+export const getLogLevelLabel = (logLevel: PlayerLogLevel) => {
+  const found = Object.entries(PlayerLogLevel).find(([key, value]) => logLevel === value);
+  return found && found[0];
+};
+
+export const createPlayerOptions = ({ logLevel, showPlaybackMonitor, customConfiguration }: PlayerOptions) => {
+  const trimmed = customConfiguration.trim();
+  let options: PlayerConfiguration = {};
+  if (trimmed) {
+    try {
+      options = JSON.parse(trimmed);
+    } catch (e) {}
+  }
+
+  options.videoStreamer = options.videoStreamer || {};
+  // @ts-ignore
+  options.videoStreamer.logLevel = getLogLevelLabel(logLevel);
+  // @ts-ignore
+  options.playbackMonitor = options.playbackMonitor || {};
+  // @ts-ignore
+  options.playbackMonitor.visibleAtStart = showPlaybackMonitor;
+
+  return options;
 };

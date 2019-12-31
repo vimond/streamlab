@@ -1,7 +1,7 @@
 import { PlaybackSource, PlayerConfiguration } from 'vimond-replay/default-player/Replay';
 import { AppState } from '../reducers';
 import { Dispatch } from 'redux';
-import { createPlayerSource } from '../model/streamDetails';
+import { createPlayerOptions, createPlayerSource } from '../model/streamDetails';
 import { Action } from './index';
 
 export const PLAY = 'PLAY';
@@ -35,10 +35,11 @@ export const playBasic = (dispatch: Dispatch<Action>, getState: () => AppState) 
 };
 
 export const playAdvanced = (dispatch: Dispatch<Action>, getState: () => AppState) => {
-  const { streamDetails } = getState();
+  const { streamDetails, playerOptions } = getState();
   const source = createPlayerSource(streamDetails);
+  const options = createPlayerOptions(playerOptions);
   if (source) {
-    dispatch({ type: PLAY, value: { source } });
+    dispatch({ type: PLAY, value: { source, options } });
   }
 };
 
