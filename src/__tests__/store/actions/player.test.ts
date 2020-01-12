@@ -15,6 +15,15 @@ const basicFormState = {
       url: 'https://example.com/stream.mpd',
       technology: BaseTech.AUTO
     }
+  },
+  ui: {
+    advancedMode: false,
+    expandedAdvancedAccordionIndices: []
+  },
+  playerOptions: {
+    logLevel: PlayerLogLevel.DEBUG,
+    showPlaybackMonitor: false,
+    customConfiguration: ''
   }
 };
 
@@ -22,7 +31,9 @@ const advancedFormState = {
   streamDetails: {
     streamResource: {
       url: 'https://example.com/stream.m3u8',
-      technology: BaseTech.AUTO
+      technology: BaseTech.AUTO,
+      headers: [{ name: 'X-Header', value: '123' }],
+      useProxy: true
     },
     drmLicenseResource: {
       url: 'https://example.com/license',
@@ -54,7 +65,19 @@ const advancedFormState = {
   }
 };
 
+const isoTimestamp = '2020-01-12T16:46:58.596Z';
+
 describe('Player Redux actions', () => {
+  let originalDate: DateConstructor;
+  beforeAll(() => {
+    originalDate = global.Date;
+    const MockDate = jest.fn(() => ({ toISOString: () => isoTimestamp }));
+    // @ts-ignore
+    global.Date = MockDate;
+  });
+  afterAll(() => {
+    global.Date = originalDate;
+  });
   describe('Playback start mapping form details to Replay source', function() {
     test('Basic playback start only applying visible stream details', () => {
       const getState = jest
@@ -72,6 +95,18 @@ describe('Player Redux actions', () => {
           source: {
             streamUrl: 'https://example.com/stream.m3u8',
             contentType: 'application/x-mpegurl'
+          },
+          historyEntry: {
+            timestamp: isoTimestamp,
+            name: '',
+            formData: {
+              streamDetails: {
+                streamResource: {
+                  url: 'https://example.com/stream.m3u8',
+                  technology: BaseTech.AUTO
+                }
+              }
+            }
           }
         }
       });
@@ -81,6 +116,13 @@ describe('Player Redux actions', () => {
           source: {
             streamUrl: 'https://example.com/stream.mpd',
             contentType: 'application/dash+xml'
+          },
+          historyEntry: {
+            timestamp: isoTimestamp,
+            name: '',
+            formData: {
+              streamDetails: basicFormState.streamDetails
+            }
           }
         }
       });
@@ -120,6 +162,14 @@ describe('Player Redux actions', () => {
             },
             playbackMonitor: {
               visibleAtStart: true
+            }
+          },
+          historyEntry: {
+            timestamp: isoTimestamp,
+            name: '',
+            formData: {
+              streamDetails: advancedFormState.streamDetails,
+              playerOptions: advancedFormState.playerOptions
             }
           }
         }

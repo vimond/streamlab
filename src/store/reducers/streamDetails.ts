@@ -1,13 +1,14 @@
 import {
   DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE,
   DRM_LICENSE_RESOURCE_FIELD_CHANGE,
-  STREAM_RESOURCE_FIELD_CHANGE,
-  SUBTITLES_RESOURCE_FIELD_CHANGE,
-  StreamDetailsFieldChangeAction,
   SET_BROWSER_FEATURES,
-  setBrowserFeatures
+  setBrowserFeatures,
+  STREAM_RESOURCE_FIELD_CHANGE,
+  StreamDetailsFieldChangeAction,
+  SUBTITLES_RESOURCE_FIELD_CHANGE
 } from '../actions/streamDetails';
 import { BaseTech, DrmTechnology, Resource, StreamTechnology, SubtitlesFormat } from '../model/streamDetails';
+import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../actions/history';
 
 export interface StreamDetailsState {
   streamResource: Resource<StreamTechnology>;
@@ -27,7 +28,7 @@ const initState = () => ({
 
 const streamDetails = (
   state: StreamDetailsState = initState(),
-  action: StreamDetailsFieldChangeAction | ReturnType<typeof setBrowserFeatures>
+  action: StreamDetailsFieldChangeAction | ReturnType<typeof setBrowserFeatures> | HistoryEntryAction
 ): StreamDetailsState => {
   switch (action.type) {
     case SET_BROWSER_FEATURES:
@@ -72,6 +73,16 @@ const streamDetails = (
         subtitlesResource: {
           ...state.subtitlesResource,
           ...action.value
+        }
+      };
+    case RESTORE_HISTORY_ENTRY:
+      const initialState = initState();
+      return {
+        ...initialState,
+        ...action.value.formData.streamDetails,
+        streamResource: {
+          ...initialState.streamResource,
+          ...action.value.formData.streamDetails.streamResource
         }
       };
     default:

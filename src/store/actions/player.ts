@@ -3,6 +3,9 @@ import { AppState } from '../reducers';
 import { Dispatch } from 'redux';
 import { createPlayerOptions, createPlayerSource } from '../model/streamDetails';
 import { Action } from './index';
+import { AdvancedHistoryEntry, BasicHistoryEntry, HistoryEntry } from '../model/history';
+import { StreamDetailsState } from '../reducers/streamDetails';
+import { PlayerOptionsState } from '../reducers/playerOptions';
 
 export const PLAY = 'PLAY';
 export const STOP = 'STOP';
@@ -14,6 +17,7 @@ export type PlayerAction =
       value: {
         source: PlaybackSource;
         options?: PlayerConfiguration;
+        historyEntry: HistoryEntry;
       };
     }
   | {
@@ -25,12 +29,43 @@ export type PlayerErrorAction = {
   error: Error;
 };
 
+const createBasicHistoryEntry = (streamDetails: StreamDetailsState): BasicHistoryEntry => ({
+  timestamp: new Date().toISOString(),
+  name: '',
+  formData: {
+    streamDetails: {
+      streamResource: {
+        url: streamDetails.streamResource.url,
+        technology: streamDetails.streamResource.technology
+      }
+    }
+  }
+});
+
+const createAdvancedHistoryEntry = (
+  streamDetails: StreamDetailsState,
+  playerOptions: PlayerOptionsState
+): AdvancedHistoryEntry => ({
+  timestamp: new Date().toISOString(),
+  name: '',
+  formData: {
+    streamDetails,
+    playerOptions
+  }
+});
+
 export const playBasic = (dispatch: Dispatch<Action>, getState: () => AppState) => {
   const { streamDetails } = getState();
   const { streamResource } = streamDetails; // Only including what's visible in the form.
   const source = createPlayerSource({ streamResource });
   if (source) {
-    dispatch({ type: PLAY, value: { source } });
+    dispatch({
+      type: PLAY,
+      value: {
+        source,
+        historyEntry: createBasicHistoryEntry(streamDetails)
+      }
+    });
   }
 };
 
@@ -39,7 +74,14 @@ export const playAdvanced = (dispatch: Dispatch<Action>, getState: () => AppStat
   const source = createPlayerSource(streamDetails);
   const options = createPlayerOptions(playerOptions);
   if (source) {
-    dispatch({ type: PLAY, value: { source, options } });
+    dispatch({
+      type: PLAY,
+      value: {
+        source,
+        options,
+        historyEntry: createAdvancedHistoryEntry(streamDetails, playerOptions)
+      }
+    });
   }
 };
 

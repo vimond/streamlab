@@ -1,10 +1,11 @@
 import {
   PlayerOptionsAction,
   SET_LOG_LEVEL,
-  TOGGLE_PLAYBACK_MONITOR,
-  SET_PLAYER_CONFIGURATION
+  SET_PLAYER_CONFIGURATION,
+  TOGGLE_PLAYBACK_MONITOR
 } from '../actions/playerOptions';
 import { PlayerLogLevel } from '../model/streamDetails';
+import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../actions/history';
 
 export interface PlayerOptionsState {
   logLevel: PlayerLogLevel;
@@ -14,7 +15,7 @@ export interface PlayerOptionsState {
 
 const playerOptions = (
   state: PlayerOptionsState = { logLevel: PlayerLogLevel.ERROR, showPlaybackMonitor: false, customConfiguration: '' },
-  action: PlayerOptionsAction
+  action: PlayerOptionsAction | HistoryEntryAction
 ): PlayerOptionsState => {
   switch (action.type) {
     case SET_LOG_LEVEL:
@@ -32,6 +33,14 @@ const playerOptions = (
         ...state,
         customConfiguration: action.value
       };
+    case RESTORE_HISTORY_ENTRY:
+      if ('playerOptions' in action.value.formData) {
+        const { playerOptions } = action.value.formData;
+        if (playerOptions) {
+          return playerOptions;
+        }
+      }
+    // eslint-disable no-fallthrough
     default:
       return state;
   }

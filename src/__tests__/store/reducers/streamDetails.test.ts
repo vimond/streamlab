@@ -7,6 +7,7 @@ import {
   STREAM_RESOURCE_FIELD_CHANGE,
   SUBTITLES_RESOURCE_FIELD_CHANGE
 } from '../../../store/actions/streamDetails';
+import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../../../store/actions/history';
 
 const streamResource = {
   url: 'https://example.com/stream.mpd',
@@ -32,6 +33,13 @@ const drmCertificateResource = {
 const subtitlesResource = {
   url: 'https://example.com/subs.vtt',
   technology: SubtitlesFormat.WEBVTT,
+  headers: [],
+  useProxy: false
+};
+
+const emptyResource = {
+  url: '',
+  technology: BaseTech.AUTO,
   headers: [],
   useProxy: false
 };
@@ -121,4 +129,85 @@ describe('Stream details reducer', () => {
     expect(drmCertificateResource.technology).toBe(DrmTechnology.WIDEVINE);
     expect(oldState).toMatchObject(rest);
   });
+  test(
+    'Restoring a history entry should overwrite all stream details with the history ' +
+      'entry, and pad with the initial state for entries containing basic playback data only.',
+    () => {
+      const action1: HistoryEntryAction = {
+        type: RESTORE_HISTORY_ENTRY,
+        value: {
+          timestamp: '2020-01-12T19:11:02.837Z',
+          name: 'My good old stream',
+          formData: {
+            streamDetails: {
+              streamResource: {
+                url: 'http://example.com/my-good-old-stream.mpd',
+                technology: StreamTechnology.MSS
+              }
+            }
+          }
+        }
+      };
+      const newState1 = streamDetailsReducer(oldState, action1);
+      expect(newState1).toEqual({
+        streamResource: {
+          url: 'http://example.com/my-good-old-stream.mpd',
+          technology: StreamTechnology.MSS,
+          headers: [],
+          useProxy: false
+        },
+        drmLicenseResource: emptyResource,
+        drmCertificateResource: emptyResource,
+        subtitlesResource: emptyResource
+      });
+      const action2: HistoryEntryAction = {
+        type: RESTORE_HISTORY_ENTRY,
+        value: {
+          timestamp: '2020-01-12T19:11:02.837Z',
+          name: 'My good old stream',
+          formData: {
+            streamDetails: {
+              streamResource: {
+                url: 'http://example.com/my-good-old-stream.mpd',
+                technology: StreamTechnology.MSS,
+                useProxy: true,
+                headers: [{ id: 123, name: 'Max-Age', value: '300' }]
+              },
+              drmLicenseResource: {
+                url: 'https://example.com/license',
+                technology: DrmTechnology.WIDEVINE,
+                headers: [
+                  {
+                    id: 123,
+                    name: 'Authorization',
+                    value: 'Token'
+                  },
+                  {
+                    id: 456,
+                    name: 'Something',
+                    value: 'Somewhat'
+                  }
+                ],
+                useProxy: true
+              },
+              drmCertificateResource: {
+                url: 'https://example.com/certificate',
+                technology: DrmTechnology.WIDEVINE,
+                useProxy: true,
+                headers: []
+              },
+              subtitlesResource: {
+                url: 'https://example.com/subs.vtt',
+                technology: BaseTech.AUTO,
+                useProxy: false,
+                headers: []
+              }
+            }
+          }
+        }
+      };
+      const newState2 = streamDetailsReducer(oldState, action2);
+      expect(newState2).toEqual(action2.value.formData.streamDetails);
+    }
+  );
 });
