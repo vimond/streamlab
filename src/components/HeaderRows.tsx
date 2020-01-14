@@ -81,8 +81,6 @@ class HeaderRows extends React.Component<Props, State> {
               this.onChange({ name, value: evt.target.value, id }, index)
             }
           />
-          {/*
-                // @ts-ignore */}
           <IconButton flex="0" aria-label="Remove" icon="delete" onClick={() => this.onDelete(index)} />
         </Flex>
       </Collapse>

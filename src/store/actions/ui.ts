@@ -1,6 +1,7 @@
 export const TOGGLE_ADVANCED_MODE = 'TOGGLE_ADVANCED_MODE';
 export const PANE_RESIZE = 'PANE_RESIZE';
 export const ADVANCED_ACCORDION_CHANGE = 'ADVANCED_ACCORDION_CHANGE';
+export const RIGHT_PANE_TAB_CHANGE = 'RIGHT_PANE_TAB_CHANGE';
 
 export interface ToggleAdvancedModeAction {
   type: typeof TOGGLE_ADVANCED_MODE;
@@ -17,6 +18,11 @@ export interface AdvancedAccordionExpansionAction {
   value: number[];
 }
 
+export interface RightPaneTabChangeAction {
+  type: typeof RIGHT_PANE_TAB_CHANGE;
+  value: number;
+}
+
 export const toggleAdvancedMode = (value: boolean): ToggleAdvancedModeAction => ({
   type: TOGGLE_ADVANCED_MODE,
   value
@@ -29,5 +35,10 @@ export const updatePaneSize = (value: number): PaneResizeAction => ({
 
 export const updateAdvancedAccordionExpansions = (value: number[]): AdvancedAccordionExpansionAction => ({
   type: ADVANCED_ACCORDION_CHANGE,
+  value
+});
+
+export const updateActiveRightPaneTab = (value: number): RightPaneTabChangeAction => ({
+  type: RIGHT_PANE_TAB_CHANGE,
   value
 });

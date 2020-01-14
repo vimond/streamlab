@@ -2,7 +2,7 @@ import playerOptionsReducer from '../../../store/reducers/playerOptions';
 import { SET_LOG_LEVEL, SET_PLAYER_CONFIGURATION, TOGGLE_PLAYBACK_MONITOR } from '../../../store/actions/playerOptions';
 import { BaseTech, PlayerLogLevel, StreamTechnology } from '../../../store/model/streamDetails';
 import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../../../store/actions/history';
-import { AdvancedHistoryEntry } from "../../../store/model/history";
+import { AdvancedHistoryEntry } from '../../../store/model/history';
 
 const initialState = { customConfiguration: '', showPlaybackMonitor: false, logLevel: PlayerLogLevel.ERROR };
 

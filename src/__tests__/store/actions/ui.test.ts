@@ -1,10 +1,12 @@
 import {
   toggleAdvancedMode,
   updatePaneSize,
+  updateAdvancedAccordionExpansions,
+  updateActiveRightPaneTab,
   TOGGLE_ADVANCED_MODE,
   PANE_RESIZE,
-  updateAdvancedAccordionExpansions,
-  ADVANCED_ACCORDION_CHANGE
+  ADVANCED_ACCORDION_CHANGE,
+  RIGHT_PANE_TAB_CHANGE
 } from '../../../store/actions/ui';
 
 describe('UI Redux actions', () => {
@@ -16,5 +18,8 @@ describe('UI Redux actions', () => {
   });
   test('Advanced accordion expansion changes', () => {
     expect(updateAdvancedAccordionExpansions([1, 3])).toEqual({ type: ADVANCED_ACCORDION_CHANGE, value: [1, 3] });
+  });
+  test('Changing the active tab in the right pane', () => {
+    expect(updateActiveRightPaneTab(2)).toEqual({ type: RIGHT_PANE_TAB_CHANGE, value: 2 });
   });
 });

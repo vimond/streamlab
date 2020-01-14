@@ -83,8 +83,7 @@ const PlayerOptions: React.FC<Props> = ({
       <FormLabel>Player log level (for messages to the JS console)</FormLabel>
     </Grid>
     <Text mt={4} mb={1}>
-      Player {/*
-            // @ts-ignore */}
+      Player{' '}
       <Link
         href="https://vimond.github.io/replay/#/custom-replay/configuration"
         isExternal

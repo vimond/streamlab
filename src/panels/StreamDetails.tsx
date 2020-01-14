@@ -119,8 +119,6 @@ const StreamDetailRow: React.FC<RowProps> = ({
           value={url}
         />
       </FormControl>
-      {/*
-          // @ts-ignore */}
       <Menu>
         {/*
             // @ts-ignore */}
@@ -235,13 +233,8 @@ const mapStateToProps = (state: AppState) => ({
   ...state.streamDetails
 });
 
-// TODO: Remove
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
-  // @ts-ignore
-  window.updateResourceField = (resource: ResourceUpdate) => dispatch(updateStreamDetailsField(resource));
-  return {
-    handleResourceFieldChange: (resource: ResourceUpdate) => dispatch(updateStreamDetailsField(resource))
-  };
-};
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  handleResourceFieldChange: (resource: ResourceUpdate) => dispatch(updateStreamDetailsField(resource))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(StreamDetails);
