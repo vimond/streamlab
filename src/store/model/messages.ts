@@ -1,7 +1,14 @@
 import { MessageLevel, MessageRule } from './messageResolver';
-import { BaseTech, detectStreamType, detectSubtitlesType, DrmTechnology } from './streamDetails';
+import {
+  BaseTech,
+  detectStreamType,
+  detectSubtitlesType,
+  drmTechLabels,
+  DrmTechnology,
+  subtitlesFormatLabels,
+  getLabel
+} from './streamDetails';
 import { PLAYER_ERROR } from '../actions/player';
-import { drmTechOptions, getLabel, subtitlesFormatOptions } from '../../panels/StreamDetails';
 
 export const messages: MessageRule[] = [
   {
@@ -63,7 +70,7 @@ export const messages: MessageRule[] = [
       if (subtitlesType) {
         return {
           level: MessageLevel.INFO,
-          text: `Auto detected subtitles type is ${getLabel(subtitlesType, subtitlesFormatOptions)}.`
+          text: `Auto detected subtitles type is ${getLabel(subtitlesType, subtitlesFormatLabels)}.`
         };
       } else {
         return {
@@ -99,7 +106,7 @@ export const messages: MessageRule[] = [
       level: MessageLevel.INFO,
       text: `This browser implements ${getLabel(
         nextState.streamDetails.drmLicenseResource.technology,
-        drmTechOptions
+        drmTechLabels
       )} for DRM playback.`
     })
   },
@@ -132,11 +139,19 @@ export const messages: MessageRule[] = [
   {
     id: 'player-options-invalid-json',
     displayCondition: ({ nextState }) => {
-      try {
-        JSON.parse(nextState.playerOptions.customConfiguration);
+      if (
+        nextState.ui.advancedMode &&
+        nextState.playerOptions.customConfiguration &&
+        nextState.playerOptions.customConfiguration.trim()
+      ) {
+        try {
+          JSON.parse(nextState.playerOptions.customConfiguration);
+          return false;
+        } catch (e) {
+          return true;
+        }
+      } else {
         return false;
-      } catch (e) {
-        return true;
       }
     },
     message: {

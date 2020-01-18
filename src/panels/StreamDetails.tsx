@@ -3,11 +3,15 @@ import { Box, Button, FormControl, Input, Menu, MenuButton, MenuItem, MenuList, 
 import Header, { Level } from '../components/Header';
 import {
   AutoTechnology,
-  BaseTech,
   DrmTechnology,
+  LabeledTechOption,
   Resource,
   StreamTechnology,
-  SubtitlesFormat
+  SubtitlesFormat,
+  subtitlesFormatLabels,
+  drmTechLabels,
+  streamTechLabels,
+  getLabel
 } from '../store/model/streamDetails';
 import { AppState } from '../store/reducers';
 import { Dispatch } from 'redux';
@@ -21,11 +25,6 @@ type Props = StreamDetailsState & {
   handleResourceFieldChange: (resource: ResourceUpdate) => void;
 };
 
-type TechOption = {
-  key: BaseTech | StreamTechnology | DrmTechnology | SubtitlesFormat;
-  label: string;
-};
-
 type RowProps<T = any> = {
   id: string;
   label: string;
@@ -34,68 +33,12 @@ type RowProps<T = any> = {
   technology: AutoTechnology<T>;
   useProxy: boolean;
   onChange: (resource: Partial<Resource<T>>) => void;
-  techOptions: TechOption[];
+  techOptions: LabeledTechOption[];
   isTechOptionsEnabled?: boolean;
   isHeadersEnabled?: boolean;
 };
 
 const isProxyVisible = false;
-
-const streamTechOptions = [
-  {
-    key: BaseTech.AUTO,
-    label: 'Auto'
-  },
-  {
-    key: StreamTechnology.DASH,
-    label: 'MPEG-DASH'
-  },
-  {
-    key: StreamTechnology.HLS,
-    label: 'HLS'
-  },
-  {
-    key: StreamTechnology.PROGRESSIVE,
-    label: 'Progressive video'
-  }
-];
-
-export const drmTechOptions = [
-  {
-    key: DrmTechnology.WIDEVINE,
-    label: 'Widevine'
-  },
-  {
-    key: DrmTechnology.PLAYREADY,
-    label: 'PlayReady'
-  },
-  {
-    key: DrmTechnology.FAIRPLAY,
-    label: 'FairPlay'
-  }
-];
-
-export const subtitlesFormatOptions = [
-  {
-    key: BaseTech.AUTO,
-    label: 'Auto'
-  },
-  {
-    key: SubtitlesFormat.WEBVTT,
-    label: 'WebVTT'
-  },
-  {
-    key: SubtitlesFormat.TTML,
-    label: 'TTML (DXFP)'
-  },
-  {
-    key: SubtitlesFormat.SRT,
-    label: 'SRT (SubRip)'
-  }
-];
-
-export const getLabel = <T extends unknown>(tech: AutoTechnology<T>, options: TechOption[]) =>
-  (options.find(({ key }) => key === tech) || options[0]).label;
 
 const StreamDetailRow: React.FC<RowProps> = ({
   id,
@@ -126,7 +69,7 @@ const StreamDetailRow: React.FC<RowProps> = ({
           {getLabel(technology, techOptions)}
         </MenuButton>
         <MenuList>
-          {techOptions.map(({ key, label }: TechOption, i: number) => (
+          {techOptions.map(({ key, label }: LabeledTechOption, i: number) => (
             <MenuItem key={i} onClick={() => onChange({ technology: key })}>
               {label}
             </MenuItem>
@@ -184,7 +127,7 @@ const StreamDetails: React.FC<Props> = ({
       <StreamDetailRow
         id="stream"
         label="Stream URL"
-        techOptions={streamTechOptions}
+        techOptions={streamTechLabels}
         isTechOptionsEnabled
         isHeadersEnabled={false}
         onChange={(streamResource: Partial<Resource<StreamTechnology>>) =>
@@ -195,7 +138,7 @@ const StreamDetails: React.FC<Props> = ({
       <StreamDetailRow
         label="DRM license URL"
         id="license"
-        techOptions={drmTechOptions}
+        techOptions={drmTechLabels}
         isTechOptionsEnabled={false}
         isHeadersEnabled
         onChange={(drmLicenseResource: Partial<Resource<DrmTechnology>>) =>
@@ -206,7 +149,7 @@ const StreamDetails: React.FC<Props> = ({
       <StreamDetailRow
         id="certificate"
         label="DRM certificate URL"
-        techOptions={drmTechOptions}
+        techOptions={drmTechLabels}
         isTechOptionsEnabled={false}
         isHeadersEnabled={false}
         onChange={(drmCertificateResource: Partial<Resource<DrmTechnology>>) =>
@@ -217,7 +160,7 @@ const StreamDetails: React.FC<Props> = ({
       <StreamDetailRow
         id="subtitles"
         label="Subtitles URL"
-        techOptions={subtitlesFormatOptions}
+        techOptions={subtitlesFormatLabels}
         isTechOptionsEnabled
         isHeadersEnabled={false}
         onChange={(subtitlesResource: Partial<Resource<SubtitlesFormat>>) =>

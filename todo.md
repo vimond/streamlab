@@ -73,7 +73,7 @@ API plugin:
 
 Reconsider what to save/load. Easy export/import. Autosave history after each stream start? And then later give names?
 
-* [ ] Linear history `3.0.0`
+* [x] Linear history `3.0.0`
 * [ ] Clear & settings `3.0.0`
 * [ ] Undo clear button after clear `3.0.0`
 * [ ] Presets with categories `3.1.0`
@@ -88,13 +88,16 @@ Reconsider what to save/load. Easy export/import. Autosave history after each st
 
 Only available on localhost?
 
+Create separate page with lookup, and then load Streamlab with details? Practicalities with such a flow can be unclear.
+
 * [ ] Pluggable architecture? `3.4.0`
 * [ ] Content delivery API `3.4.0`
 * [ ] Rest API `3.4.0`
+* [ ] Auth0
 
 #### Player options
 
-* [x] JSON editor for modern React. `3.0.0`
+* [ ] JSON editor for modern React. `3.0.0`
 * [ ] Log level. `3.0.0`
 
 #### Proxy
@@ -114,5 +117,6 @@ Only available on localhost?
 
 * [ ] Logo when not playing.
 * [ ] Make dependencies great again.
+* [ ] Bring in RxVideoStreamer for smooth streams.
 
 

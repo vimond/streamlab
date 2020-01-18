@@ -9,10 +9,24 @@ import {
   UPDATE_HISTORY_ENTRY_NAME
 } from '../../../store/actions/history';
 import { PLAY, PLAYER_ERROR } from '../../../store/actions/player';
-import { BaseTech } from '../../../store/model/streamDetails';
+import { BaseTech, PlayerLogLevel } from '../../../store/model/streamDetails';
 
-const resourceData = {
-  url: '',
+const resourceData1 = {
+  url: 'abc',
+  useProxy: false,
+  headers: [],
+  technology: BaseTech.AUTO
+};
+
+const resourceData2 = {
+  url: 'def',
+  useProxy: true,
+  headers: [],
+  technology: BaseTech.AUTO
+};
+
+const resourceData3 = {
+  url: 'ghi',
   useProxy: false,
   headers: [],
   technology: BaseTech.AUTO
@@ -23,23 +37,28 @@ const historyEntry1: HistoryEntry = {
   name: 'My stream test',
   formData: {
     streamDetails: {
-      streamResource: resourceData,
-      drmLicenseResource: resourceData,
-      drmCertificateResource: resourceData,
-      subtitlesResource: resourceData
+      streamResource: resourceData1,
+      drmLicenseResource: resourceData1,
+      drmCertificateResource: resourceData1,
+      subtitlesResource: resourceData1
+    },
+    playerOptions: {
+      logLevel: PlayerLogLevel.WARNING,
+      customConfiguration: '',
+      showPlaybackMonitor: true
     }
   }
 };
 
 const historyEntry2: HistoryEntry = {
   timestamp: '2018-04-23T12:23:02.734Z',
-  name: '',
+  name: 'Stream 2',
   formData: {
     streamDetails: {
-      streamResource: resourceData,
-      drmLicenseResource: resourceData,
-      drmCertificateResource: resourceData,
-      subtitlesResource: resourceData
+      streamResource: resourceData2,
+      drmLicenseResource: resourceData2,
+      drmCertificateResource: resourceData2,
+      subtitlesResource: resourceData2
     }
   }
 };
@@ -49,10 +68,10 @@ const historyEntry3: HistoryEntry = {
   name: 'Problematic stream',
   formData: {
     streamDetails: {
-      streamResource: resourceData,
-      drmLicenseResource: resourceData,
-      drmCertificateResource: resourceData,
-      subtitlesResource: resourceData
+      streamResource: resourceData3,
+      drmLicenseResource: resourceData3,
+      drmCertificateResource: resourceData3,
+      subtitlesResource: resourceData3
     }
   }
 };
@@ -67,6 +86,21 @@ describe('Form history reducer', () => {
       history: [historyEntry1, historyEntry2],
       historyListFilter: HistoryEntryFilter.BOTH,
       selectedEntry: historyEntry1
+    });
+  });
+  test('The SELECT_HISTORY_ENTRY action unselects an already selected history entry', () => {
+    const newState = historyReducer(
+      {
+        history: [historyEntry1, historyEntry2],
+        historyListFilter: HistoryEntryFilter.BOTH,
+        selectedEntry: historyEntry1
+      },
+      { type: SELECT_HISTORY_ENTRY, value: historyEntry1 }
+    );
+    expect(newState).toEqual({
+      history: [historyEntry1, historyEntry2],
+      historyListFilter: HistoryEntryFilter.BOTH,
+      selectedEntry: undefined
     });
   });
   test('The DELETE_HISTORY_ENTRY removes an entry from the history list and from selection.', () => {
@@ -84,7 +118,7 @@ describe('Form history reducer', () => {
       selectedEntry: undefined
     });
   });
-  test('The UPDATE_HISTORY_ENTRY_NAME action sets the name of the selected history event', () => {
+  test('The UPDATE_HISTORY_ENTRY_NAME action sets the name of the selected history entry, and updates the entry in the history list', () => {
     const newState = historyReducer(
       {
         history: [historyEntry1, historyEntry2],
@@ -94,17 +128,22 @@ describe('Form history reducer', () => {
       { type: UPDATE_HISTORY_ENTRY_NAME, value: 'A new name being typ' }
     );
     expect(newState).toEqual({
-      history: [historyEntry1, historyEntry2],
+      history: [{ ...historyEntry1, name: 'A new name being typ' }, historyEntry2],
       historyListFilter: HistoryEntryFilter.BOTH,
       selectedEntry: {
         timestamp: '2020-01-11T20:37:37.885Z',
         name: 'A new name being typ',
         formData: {
           streamDetails: {
-            streamResource: resourceData,
-            drmLicenseResource: resourceData,
-            drmCertificateResource: resourceData,
-            subtitlesResource: resourceData
+            streamResource: resourceData1,
+            drmLicenseResource: resourceData1,
+            drmCertificateResource: resourceData1,
+            subtitlesResource: resourceData1
+          },
+          playerOptions: {
+            logLevel: PlayerLogLevel.WARNING,
+            customConfiguration: '',
+            showPlaybackMonitor: true
           }
         }
       }
@@ -160,6 +199,65 @@ describe('Form history reducer', () => {
       });
     }
   );
+  test(
+    "The PLAY action doesn't add a new entry if an entry with equal form details " +
+      'already exist in the history. Instead the timestamp is updated and the existing entry is moved to the end.',
+    () => {
+      {
+        const duplicateEntry = {
+          ...historyEntry2,
+          timestamp: '2020-01-16T20:36:29.713Z'
+        };
+        const newState = historyReducer(
+          {
+            history: [historyEntry1, historyEntry2, historyEntry3],
+            historyListFilter: HistoryEntryFilter.BOTH,
+            selectedEntry: historyEntry2
+          },
+          {
+            type: PLAY,
+            value: {
+              source: { streamUrl: '' },
+              historyEntry: duplicateEntry
+            }
+          }
+        );
+        expect(newState).toEqual({
+          history: [historyEntry1, historyEntry3, duplicateEntry],
+          historyListFilter: HistoryEntryFilter.BOTH,
+          selectedEntry: {
+            ...duplicateEntry,
+            name: historyEntry2.name
+          }
+        });
+      }
+      {
+        const duplicateEntry = {
+          ...historyEntry2,
+          timestamp: '2020-01-16T20:36:29.713Z'
+        };
+        const newState = historyReducer(
+          {
+            history: [historyEntry1, historyEntry2, historyEntry3],
+            historyListFilter: HistoryEntryFilter.BOTH,
+            selectedEntry: historyEntry1
+          },
+          {
+            type: PLAY,
+            value: {
+              source: { streamUrl: '' },
+              historyEntry: duplicateEntry
+            }
+          }
+        );
+        expect(newState).toEqual({
+          history: [historyEntry1, historyEntry3, duplicateEntry],
+          historyListFilter: HistoryEntryFilter.BOTH,
+          selectedEntry: historyEntry1
+        });
+      }
+    }
+  );
   test('The PLAYER_ERROR action marks the latest history entry as failed.', () => {
     const error = new Error('Bad playback.');
     const newState = historyReducer(
@@ -183,10 +281,10 @@ describe('Form history reducer', () => {
           name: 'Problematic stream',
           formData: {
             streamDetails: {
-              streamResource: resourceData,
-              drmLicenseResource: resourceData,
-              drmCertificateResource: resourceData,
-              subtitlesResource: resourceData
+              streamResource: resourceData3,
+              drmLicenseResource: resourceData3,
+              drmCertificateResource: resourceData3,
+              subtitlesResource: resourceData3
             }
           }
         }

@@ -27,6 +27,24 @@ const basicFormState = {
   }
 };
 
+const basicFormStateWithoutStreamUrl = {
+  streamDetails: {
+    streamResource: {
+      url: '',
+      technology: BaseTech.AUTO
+    }
+  },
+  ui: {
+    advancedMode: false,
+    expandedAdvancedAccordionIndices: []
+  },
+  playerOptions: {
+    logLevel: PlayerLogLevel.DEBUG,
+    showPlaybackMonitor: false,
+    customConfiguration: ''
+  }
+};
+
 const advancedFormState = {
   streamDetails: {
     streamResource: {
@@ -175,6 +193,13 @@ describe('Player Redux actions', () => {
         }
       });
     });
+  });
+  test('Ignore playback start without a stream URL', () => {
+    const getState = jest.fn().mockReturnValue(basicFormStateWithoutStreamUrl);
+    const dispatch = jest.fn();
+
+    playAdvanced(dispatch, getState);
+    expect(dispatch).not.toHaveBeenCalled();
   });
   test('Playback stop', () => {
     const dispatch = jest.fn();

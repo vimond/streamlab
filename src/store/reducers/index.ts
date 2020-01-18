@@ -3,6 +3,7 @@ import ui from './ui';
 import streamDetails from './streamDetails';
 import player from './player';
 import playerOptions from './playerOptions';
+import history from './history';
 import createRootReducerWithInformation, { InformationState } from './information';
 import { messages } from '../model/messages';
 import { resolveMessages } from '../model/messageResolver';
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   streamDetails,
   player,
   playerOptions,
+  history,
   information: () => ({})
 });
 

@@ -33,7 +33,7 @@ export type AutoTechnology<T> = BaseTech | T;
 
 export interface Resource<T> {
   url: string;
-  headers: { name: string; value: string; id: number }[];
+  headers: { id: number; name: string; value: string }[];
   useProxy: boolean;
   technology: AutoTechnology<T>;
 }
@@ -43,6 +43,11 @@ type StreamDetails = {
   drmLicenseResource?: Resource<DrmTechnology>;
   drmCertificateResource?: Resource<DrmTechnology>;
   subtitlesResource?: Resource<SubtitlesFormat>;
+};
+
+export type LabeledTechOption = {
+  key: BaseTech | StreamTechnology | DrmTechnology | SubtitlesFormat;
+  label: string;
 };
 
 export enum PlayerLogLevel {
@@ -77,6 +82,59 @@ const subtitlesContentTypes = {
   [SubtitlesFormat.TTML]: 'application/ttml+xml',
   [SubtitlesFormat.SRT]: 'text/srt'
 };
+
+export const streamTechLabels = [
+  {
+    key: BaseTech.AUTO,
+    label: 'Auto'
+  },
+  {
+    key: StreamTechnology.DASH,
+    label: 'MPEG-DASH'
+  },
+  {
+    key: StreamTechnology.HLS,
+    label: 'HLS'
+  },
+  {
+    key: StreamTechnology.PROGRESSIVE,
+    label: 'Progressive video'
+  }
+];
+
+export const drmTechLabels = [
+  {
+    key: DrmTechnology.WIDEVINE,
+    label: 'Widevine'
+  },
+  {
+    key: DrmTechnology.PLAYREADY,
+    label: 'PlayReady'
+  },
+  {
+    key: DrmTechnology.FAIRPLAY,
+    label: 'FairPlay'
+  }
+];
+
+export const subtitlesFormatLabels = [
+  {
+    key: BaseTech.AUTO,
+    label: 'Auto'
+  },
+  {
+    key: SubtitlesFormat.WEBVTT,
+    label: 'WebVTT'
+  },
+  {
+    key: SubtitlesFormat.TTML,
+    label: 'TTML (DXFP)'
+  },
+  {
+    key: SubtitlesFormat.SRT,
+    label: 'SRT (SubRip)'
+  }
+];
 
 const getContentType = (streamType?: { contentTypes: string[] }) => {
   if (streamType) {
@@ -114,6 +172,9 @@ export const detectSubtitlesType = (subtitlesUrl: string) => {
     return SubtitlesFormat.SRT;
   }
 };
+
+export const getLabel = <T extends unknown>(tech: AutoTechnology<T>, options: LabeledTechOption[]) =>
+  (options.find(({ key }) => key === tech) || options[0]).label;
 
 export const createPlayerSource = ({
   streamResource,

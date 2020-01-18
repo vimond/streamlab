@@ -92,9 +92,9 @@ export const handlePlayerError = (error: any) => (dispatch: Dispatch<Action>) =>
   if (error instanceof Error) {
     // Redux dev tools has issues with JSON.stringify and HLS.js source errors.
     // @ts-ignore
-    if (error.sourceError && error.sourceError.loader) {
+    if (error.sourceError && (error.sourceError.loader || (error.sourceError.frag && error.sourceError.frag.loader))) {
       // @ts-ignore
-      const { loader, context, ...rest } = error.sourceError;
+      const { loader, context, frag, ...rest } = error.sourceError;
       // @ts-ignore
       error.sourceError = rest;
       dispatch({

@@ -1,4 +1,4 @@
-import { HistoryEntry } from '../model/history';
+import { addOrUpdateEntry, HistoryEntry, isDeepEqual } from '../model/history';
 import {
   DELETE_HISTORY,
   DELETE_HISTORY_ENTRY,
@@ -34,14 +34,32 @@ const history = (
 ): HistoryState => {
   switch (action.type) {
     case SELECT_HISTORY_ENTRY:
-      return {
-        ...state,
-        selectedEntry: action.value
-      };
-    case UPDATE_HISTORY_ENTRY_NAME:
-      if (state.selectedEntry) {
+      if (state.selectedEntry && state.selectedEntry.timestamp === action.value.timestamp) {
         return {
           ...state,
+          selectedEntry: undefined
+        };
+      } else {
+        return {
+          ...state,
+          selectedEntry: action.value
+        };
+      }
+    case UPDATE_HISTORY_ENTRY_NAME:
+      if (state.selectedEntry) {
+        const history = state.history.slice(0);
+        const replaceIndex = history.findIndex(
+          entry => entry.timestamp === (state.selectedEntry && state.selectedEntry.timestamp)
+        );
+        if (replaceIndex !== -1) {
+          history[replaceIndex] = {
+            ...history[replaceIndex],
+            name: action.value
+          };
+        }
+        return {
+          ...state,
+          history,
           selectedEntry: {
             ...state.selectedEntry,
             name: action.value
@@ -71,10 +89,18 @@ const history = (
         historyListFilter: action.value
       };
     case PLAY: {
-      const history = state.history.concat(action.value.historyEntry);
+      const history = addOrUpdateEntry(state.history, action.value.historyEntry);
+      const selectedEntry =
+        state.selectedEntry && isDeepEqual(state.selectedEntry.formData, action.value.historyEntry.formData)
+          ? {
+              ...action.value.historyEntry,
+              name: state.selectedEntry.name
+            }
+          : state.selectedEntry;
       return {
         ...state,
-        history
+        history,
+        selectedEntry
       };
     }
     case PLAYER_ERROR: {
