@@ -3,6 +3,7 @@ import { SET_LOG_LEVEL, SET_PLAYER_CONFIGURATION, TOGGLE_PLAYBACK_MONITOR } from
 import { BaseTech, PlayerLogLevel, StreamTechnology } from '../../../store/model/streamDetails';
 import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../../../store/actions/history';
 import { AdvancedHistoryEntry } from '../../../store/model/history';
+import { CLEAR_FORMS } from "../../../store/actions/ui";
 
 const initialState = { customConfiguration: '', showPlaybackMonitor: false, logLevel: PlayerLogLevel.ERROR };
 
@@ -83,5 +84,14 @@ describe('Player options reducer', () => {
     };
     const newState = playerOptionsReducer(oldState, action);
     expect(newState).toEqual(historyEntry.formData.playerOptions);
+  });
+  test('Clearing forms reverts player options to the initial state', () => {
+    const oldState = {
+      customConfiguration: '{"key":"value"}',
+      showPlaybackMonitor: true,
+      logLevel: PlayerLogLevel.INFO
+    };
+    const newState = playerOptionsReducer(oldState, { type: CLEAR_FORMS });
+    expect(newState).toEqual({ logLevel: PlayerLogLevel.ERROR, showPlaybackMonitor: false, customConfiguration: '' });
   });
 });

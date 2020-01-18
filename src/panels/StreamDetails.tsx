@@ -54,7 +54,7 @@ const StreamDetailRow: React.FC<RowProps> = ({
 }) => {
   return (
     <>
-      <FormControl isRequired>
+      <FormControl>
         <Input
           onChange={(evt: React.ChangeEvent<HTMLInputElement>) => onChange({ url: evt.target.value })}
           placeholder={label}

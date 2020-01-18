@@ -2,6 +2,7 @@ export const TOGGLE_ADVANCED_MODE = 'TOGGLE_ADVANCED_MODE';
 export const PANE_RESIZE = 'PANE_RESIZE';
 export const ADVANCED_ACCORDION_CHANGE = 'ADVANCED_ACCORDION_CHANGE';
 export const RIGHT_PANE_TAB_CHANGE = 'RIGHT_PANE_TAB_CHANGE';
+export const CLEAR_FORMS = 'CLEAR_FORMS';
 
 export interface ToggleAdvancedModeAction {
   type: typeof TOGGLE_ADVANCED_MODE;
@@ -23,6 +24,10 @@ export interface RightPaneTabChangeAction {
   value: number;
 }
 
+export interface ClearFormsAction {
+  type: typeof CLEAR_FORMS;
+}
+
 export const toggleAdvancedMode = (value: boolean): ToggleAdvancedModeAction => ({
   type: TOGGLE_ADVANCED_MODE,
   value
@@ -41,4 +46,8 @@ export const updateAdvancedAccordionExpansions = (value: number[]): AdvancedAcco
 export const updateActiveRightPaneTab = (value: number): RightPaneTabChangeAction => ({
   type: RIGHT_PANE_TAB_CHANGE,
   value
+});
+
+export const clearForms = (): ClearFormsAction => ({
+  type: CLEAR_FORMS,
 });

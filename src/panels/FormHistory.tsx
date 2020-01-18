@@ -41,7 +41,6 @@ type Header = { id: number; name: string; value: string };
 const formatDate = (isoDate: string) => isoDate.replace(/T/, ' ').substr(0, 16);
 
 const formatLabel = (entry: HistoryEntry) => {
-  console.log('Redraw');
   if (entry.name) {
     return entry.name;
   } else {
@@ -69,7 +68,7 @@ const HistoryListItem: React.FC<{ entry: HistoryEntry; isSelected: boolean; hand
     onClick={handleClick}
     title={formatLabel(entry)}
   >
-    {formatDate(entry.timestamp)} {entry.error && <Icon name="warning" mx={1} mb={1} />} {formatLabel(entry)}
+    {formatDate(entry.timestamp)} {entry.error && <Icon name="warning" mx={1} mb={1} title={`This playback attempt failed with an error: ${entry.error.message}`}/>} {formatLabel(entry)}
   </PseudoBox>
 );
 
@@ -159,7 +158,7 @@ const FormHistory: React.FC<Props> = ({
     {selectedEntry && (
       <Box mt={4}>
         <Grid templateColumns={selectedEntry.error ? 'auto auto 1fr' : 'auto 1fr'} gap={4} alignItems="center">
-          {selectedEntry.error && <Icon name="warning" />}
+          {selectedEntry.error && <Icon name="warning" title={`This playback attempt failed with an error: ${selectedEntry.error.message}`} />}
           <Header level={Level.H4}>{formatDate(selectedEntry.timestamp)}</Header>
           <Input
             type="text"

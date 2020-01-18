@@ -9,6 +9,7 @@ import {
 } from '../actions/streamDetails';
 import { BaseTech, DrmTechnology, Resource, StreamTechnology, SubtitlesFormat } from '../model/streamDetails';
 import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../actions/history';
+import { CLEAR_FORMS, ClearFormsAction } from "../actions/ui";
 
 export interface StreamDetailsState {
   streamResource: Resource<StreamTechnology>;
@@ -28,7 +29,7 @@ const initState = () => ({
 
 const streamDetails = (
   state: StreamDetailsState = initState(),
-  action: StreamDetailsFieldChangeAction | ReturnType<typeof setBrowserFeatures> | HistoryEntryAction
+  action: StreamDetailsFieldChangeAction | ReturnType<typeof setBrowserFeatures> | HistoryEntryAction | ClearFormsAction
 ): StreamDetailsState => {
   switch (action.type) {
     case SET_BROWSER_FEATURES:
@@ -84,6 +85,19 @@ const streamDetails = (
           ...initialState.streamResource,
           ...action.value.formData.streamDetails.streamResource
         }
+      };
+    case CLEAR_FORMS:
+      return {
+        streamResource: initResource(),
+        drmLicenseResource: {
+          ...initResource(),
+          technology: state.drmLicenseResource.technology,
+        },
+        drmCertificateResource: {
+          ...initResource(),
+          technology: state.drmCertificateResource.technology,
+        },
+        subtitlesResource: initResource(),
       };
     default:
       return state;

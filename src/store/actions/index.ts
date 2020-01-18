@@ -1,4 +1,4 @@
-import { AdvancedAccordionExpansionAction, PaneResizeAction, ToggleAdvancedModeAction } from './ui';
+import { AdvancedAccordionExpansionAction, ClearFormsAction, PaneResizeAction, ToggleAdvancedModeAction } from './ui';
 import { SetBrowserFeaturesAction, StreamDetailsFieldChangeAction } from './streamDetails';
 import { PlayerAction, PlayerErrorAction } from './player';
 import { SetLogLevelAction, SetPlayerConfigurationAction, TogglePlaybackMonitorAction } from './playerOptions';
@@ -14,6 +14,7 @@ export type Action =
   | ToggleAdvancedModeAction
   | PaneResizeAction
   | AdvancedAccordionExpansionAction
+  | ClearFormsAction
   | StreamDetailsFieldChangeAction
   | PlayerAction
   | PlayerErrorAction

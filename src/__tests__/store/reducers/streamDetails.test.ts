@@ -1,4 +1,4 @@
-import streamDetailsReducer from '../../../store/reducers/streamDetails';
+import streamDetailsReducer, { StreamDetailsState } from '../../../store/reducers/streamDetails';
 import { BaseTech, DrmTechnology, StreamTechnology, SubtitlesFormat } from '../../../store/model/streamDetails';
 import {
   DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE,
@@ -8,6 +8,7 @@ import {
   SUBTITLES_RESOURCE_FIELD_CHANGE
 } from '../../../store/actions/streamDetails';
 import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../../../store/actions/history';
+import { CLEAR_FORMS } from "../../../store/actions/ui";
 
 const streamResource = {
   url: 'https://example.com/stream.mpd',
@@ -210,4 +211,33 @@ describe('Stream details reducer', () => {
       expect(newState2).toEqual(action2.value.formData.streamDetails);
     }
   );
+  test('Clearing forms reverts stream details to the initial state', () => {
+    const oldState: StreamDetailsState = {
+      streamResource,
+      drmLicenseResource,
+      drmCertificateResource,
+      subtitlesResource
+    };
+    const blankResource = {
+      url: '',
+      technology: BaseTech.AUTO,
+      useProxy: false,
+      headers: []
+    };
+
+
+    const newState = streamDetailsReducer(oldState, { type: CLEAR_FORMS });
+    expect(newState).toEqual({
+      streamResource: blankResource,
+      drmLicenseResource: {
+        ...blankResource,
+        technology: drmLicenseResource.technology,
+      },
+      drmCertificateResource: {
+        ...blankResource,
+        technology: drmCertificateResource.technology,
+      },
+      subtitlesResource: blankResource
+    });
+  });
 });

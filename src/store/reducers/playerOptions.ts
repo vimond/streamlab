@@ -1,11 +1,7 @@
-import {
-  PlayerOptionsAction,
-  SET_LOG_LEVEL,
-  SET_PLAYER_CONFIGURATION,
-  TOGGLE_PLAYBACK_MONITOR
-} from '../actions/playerOptions';
+import { PlayerOptionsAction, SET_LOG_LEVEL, SET_PLAYER_CONFIGURATION, TOGGLE_PLAYBACK_MONITOR } from '../actions/playerOptions';
 import { PlayerLogLevel } from '../model/streamDetails';
 import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../actions/history';
+import { CLEAR_FORMS, ClearFormsAction } from "../actions/ui";
 
 export interface PlayerOptionsState {
   logLevel: PlayerLogLevel;
@@ -13,9 +9,11 @@ export interface PlayerOptionsState {
   customConfiguration: string;
 }
 
+const initialState = { logLevel: PlayerLogLevel.ERROR, showPlaybackMonitor: false, customConfiguration: '' };
+
 const playerOptions = (
-  state: PlayerOptionsState = { logLevel: PlayerLogLevel.ERROR, showPlaybackMonitor: false, customConfiguration: '' },
-  action: PlayerOptionsAction | HistoryEntryAction
+  state: PlayerOptionsState = initialState,
+  action: PlayerOptionsAction | HistoryEntryAction | ClearFormsAction
 ): PlayerOptionsState => {
   switch (action.type) {
     case SET_LOG_LEVEL:
@@ -33,6 +31,8 @@ const playerOptions = (
         ...state,
         customConfiguration: action.value
       };
+    case CLEAR_FORMS:
+      return initialState;
     case RESTORE_HISTORY_ENTRY:
       if ('playerOptions' in action.value.formData) {
         const { playerOptions } = action.value.formData;
