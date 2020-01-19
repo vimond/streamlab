@@ -13,7 +13,7 @@ import { PLAYER_ERROR } from '../actions/player';
 export const messages: MessageRule[] = [
   {
     id: 'welcome',
-    displayCondition: ({ nextState }) => nextState.streamDetails.streamResource.url === '',
+    displayCondition: ({ nextState }) => nextState.streamDetails.streamResource.url === '' && nextState.history.history.length === 0,
     message: {
       level: MessageLevel.INFO,
       text: 'Welcome to Streamlab'
@@ -104,7 +104,7 @@ export const messages: MessageRule[] = [
     displayCondition: ({ nextState }) => nextState.ui.advancedMode,
     message: (nextState, action) => ({
       level: MessageLevel.INFO,
-      text: `This browser implements ${getLabel(
+      text: `This browser supports ${getLabel(
         nextState.streamDetails.drmLicenseResource.technology,
         drmTechLabels
       )} for DRM playback.`

@@ -49,7 +49,7 @@ API plugin:
 
 * [x] Rename layout to panels
 * [x] Remember accordion expand states
-* [ ] Accordion folds with "active" settings should be marked. `3.0.0`
+* [ ] Accordion folds with "active" settings should be marked. `3.1.0`
 * [x] Move "use proxy" and all mentions to branch. `3.0.0`
 * [ ] Create "static"/"client side only" build and deployment. `3.0.0`
 * [ ] Feature toggle system where proxy or processor things are not visible in "static build/deploy". `3.2.0`
@@ -74,9 +74,9 @@ API plugin:
 Reconsider what to save/load. Easy export/import. Autosave history after each stream start? And then later give names?
 
 * [x] Linear history `3.0.0`
-* [ ] Clear & settings `3.0.0`
-* [ ] Undo clear button after clear `3.0.0`
-* [ ] Presets with categories `3.1.0`
+* [x] Clear history `3.0.0`
+* [ ] Undo clear button after clear `3.1.0`
+* [ ] Save only specific forms `3.3.0`
 
 #### Share
 
