@@ -49,5 +49,5 @@ export const updateActiveRightPaneTab = (value: number): RightPaneTabChangeActio
 });
 
 export const clearForms = (): ClearFormsAction => ({
-  type: CLEAR_FORMS,
+  type: CLEAR_FORMS
 });

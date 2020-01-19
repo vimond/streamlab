@@ -49,7 +49,7 @@ API plugin:
 
 * [x] Rename layout to panels
 * [x] Remember accordion expand states
-* [ ] Accordion folds with "active" settings should be marked. `3.1.0`
+* [x] Accordion folds with "active" settings should be marked. `3.0.0`
 * [x] Move "use proxy" and all mentions to branch. `3.0.0`
 * [ ] Create "static"/"client side only" build and deployment. `3.0.0`
 * [ ] Feature toggle system where proxy or processor things are not visible in "static build/deploy". `3.2.0`
@@ -115,7 +115,7 @@ Create separate page with lookup, and then load Streamlab with details? Practica
 
 #### Replay
 
-* [ ] Logo when not playing.
+* [ ] Logo with link when not playing.
 * [ ] Make dependencies great again.
 * [ ] Bring in RxVideoStreamer for smooth streams.
 

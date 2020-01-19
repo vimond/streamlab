@@ -13,7 +13,8 @@ import { PLAYER_ERROR } from '../actions/player';
 export const messages: MessageRule[] = [
   {
     id: 'welcome',
-    displayCondition: ({ nextState }) => nextState.streamDetails.streamResource.url === '' && nextState.history.history.length === 0,
+    displayCondition: ({ nextState }) =>
+      nextState.streamDetails.streamResource.url === '' && nextState.history.history.length === 0,
     message: {
       level: MessageLevel.INFO,
       text: 'Welcome to Streamlab'

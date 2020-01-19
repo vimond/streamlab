@@ -3,9 +3,14 @@ import { SET_LOG_LEVEL, SET_PLAYER_CONFIGURATION, TOGGLE_PLAYBACK_MONITOR } from
 import { BaseTech, PlayerLogLevel, StreamTechnology } from '../../../store/model/streamDetails';
 import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../../../store/actions/history';
 import { AdvancedHistoryEntry } from '../../../store/model/history';
-import { CLEAR_FORMS } from "../../../store/actions/ui";
+import { CLEAR_FORMS } from '../../../store/actions/ui';
 
-const initialState = { customConfiguration: '', showPlaybackMonitor: false, logLevel: PlayerLogLevel.ERROR };
+const initialState = {
+  customConfiguration: '',
+  showPlaybackMonitor: false,
+  logLevel: PlayerLogLevel.ERROR,
+  isModified: false
+};
 
 describe('Player options reducer', () => {
   test('Updating the log level state when set', () => {
@@ -13,7 +18,8 @@ describe('Player options reducer', () => {
     expect(newState).toEqual({
       customConfiguration: '',
       showPlaybackMonitor: false,
-      logLevel: PlayerLogLevel.INFO
+      logLevel: PlayerLogLevel.INFO,
+      isModified: true
     });
   });
   test('Toggling the playback monitor state', () => {
@@ -21,13 +27,15 @@ describe('Player options reducer', () => {
     expect(newState1).toEqual({
       customConfiguration: '',
       showPlaybackMonitor: true,
-      logLevel: PlayerLogLevel.ERROR
+      logLevel: PlayerLogLevel.ERROR,
+      isModified: true
     });
     const newState2 = playerOptionsReducer(newState1, { type: TOGGLE_PLAYBACK_MONITOR, value: false });
     expect(newState2).toEqual({
       customConfiguration: '',
       showPlaybackMonitor: false,
-      logLevel: PlayerLogLevel.ERROR
+      logLevel: PlayerLogLevel.ERROR,
+      isModified: false
     });
   });
   test('Updating the JSON string representation state', () => {
@@ -35,13 +43,15 @@ describe('Player options reducer', () => {
     expect(newState1).toEqual({
       customConfiguration: '{"key":"value"}',
       showPlaybackMonitor: false,
-      logLevel: PlayerLogLevel.ERROR
+      logLevel: PlayerLogLevel.ERROR,
+      isModified: true
     });
     const newState2 = playerOptionsReducer(newState1, { type: SET_PLAYER_CONFIGURATION, value: '' });
     expect(newState2).toEqual({
       customConfiguration: '',
       showPlaybackMonitor: false,
-      logLevel: PlayerLogLevel.ERROR
+      logLevel: PlayerLogLevel.ERROR,
+      isModified: false
     });
   });
   test('Restoring a history entry should overwrite all player options.', () => {
@@ -69,7 +79,8 @@ describe('Player options reducer', () => {
         playerOptions: {
           customConfiguration: '{"key":"value"}',
           logLevel: PlayerLogLevel.WARNING,
-          showPlaybackMonitor: false
+          showPlaybackMonitor: false,
+          isModified: true
         }
       }
     };
@@ -80,7 +91,8 @@ describe('Player options reducer', () => {
     const oldState = {
       customConfiguration: '',
       showPlaybackMonitor: true,
-      logLevel: PlayerLogLevel.ERROR
+      logLevel: PlayerLogLevel.ERROR,
+      isModified: true
     };
     const newState = playerOptionsReducer(oldState, action);
     expect(newState).toEqual(historyEntry.formData.playerOptions);
@@ -89,9 +101,15 @@ describe('Player options reducer', () => {
     const oldState = {
       customConfiguration: '{"key":"value"}',
       showPlaybackMonitor: true,
-      logLevel: PlayerLogLevel.INFO
+      logLevel: PlayerLogLevel.INFO,
+      isModified: true
     };
     const newState = playerOptionsReducer(oldState, { type: CLEAR_FORMS });
-    expect(newState).toEqual({ logLevel: PlayerLogLevel.ERROR, showPlaybackMonitor: false, customConfiguration: '' });
+    expect(newState).toEqual({
+      logLevel: PlayerLogLevel.ERROR,
+      showPlaybackMonitor: false,
+      customConfiguration: '',
+      isModified: false
+    });
   });
 });

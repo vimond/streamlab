@@ -43,10 +43,11 @@ const SectionHeader: React.FC<{ header: string; isRequired?: boolean }> = ({ hea
 
 const Advanced: React.FC<{
   expandedIndices: number[];
+  isPlayerOptionsModified: boolean;
   handlePlay: () => void;
   handleClear: () => void;
   handleAccordionChange: (indices: number[]) => void;
-}> = ({ expandedIndices, handlePlay, handleClear, handleAccordionChange }) => {
+}> = ({ expandedIndices, isPlayerOptionsModified, handlePlay, handleClear, handleAccordionChange }) => {
   const [isOpen, setIsOpen] = React.useState();
   const handleCloseClick = () => setIsOpen(false);
   const handleClearClick = () => {
@@ -66,7 +67,7 @@ const Advanced: React.FC<{
           </AccordionPanel>
         </AccordionItem>
         <AccordionItem>
-          <SectionHeader header="Player options" />
+          <SectionHeader header={`Player options${isPlayerOptionsModified ? ' *' : ''}`} />
           <AccordionPanel ml={2} backgroundColor="White">
             <PlayerOptions />
           </AccordionPanel>
@@ -106,7 +107,8 @@ const Advanced: React.FC<{
 };
 
 const mapStateToProps = (state: AppState) => ({
-  expandedIndices: state.ui.expandedAdvancedAccordionIndices
+  expandedIndices: state.ui.expandedAdvancedAccordionIndices,
+  isPlayerOptionsModified: state.playerOptions.isModified
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({

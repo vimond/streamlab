@@ -8,7 +8,7 @@ import {
   SUBTITLES_RESOURCE_FIELD_CHANGE
 } from '../../../store/actions/streamDetails';
 import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../../../store/actions/history';
-import { CLEAR_FORMS } from "../../../store/actions/ui";
+import { CLEAR_FORMS } from '../../../store/actions/ui';
 
 const streamResource = {
   url: 'https://example.com/stream.mpd',
@@ -225,17 +225,16 @@ describe('Stream details reducer', () => {
       headers: []
     };
 
-
     const newState = streamDetailsReducer(oldState, { type: CLEAR_FORMS });
     expect(newState).toEqual({
       streamResource: blankResource,
       drmLicenseResource: {
         ...blankResource,
-        technology: drmLicenseResource.technology,
+        technology: drmLicenseResource.technology
       },
       drmCertificateResource: {
         ...blankResource,
-        technology: drmCertificateResource.technology,
+        technology: drmCertificateResource.technology
       },
       subtitlesResource: blankResource
     });

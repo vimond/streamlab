@@ -9,7 +9,7 @@ import {
 } from '../actions/streamDetails';
 import { BaseTech, DrmTechnology, Resource, StreamTechnology, SubtitlesFormat } from '../model/streamDetails';
 import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../actions/history';
-import { CLEAR_FORMS, ClearFormsAction } from "../actions/ui";
+import { CLEAR_FORMS, ClearFormsAction } from '../actions/ui';
 
 export interface StreamDetailsState {
   streamResource: Resource<StreamTechnology>;
@@ -91,13 +91,13 @@ const streamDetails = (
         streamResource: initResource(),
         drmLicenseResource: {
           ...initResource(),
-          technology: state.drmLicenseResource.technology,
+          technology: state.drmLicenseResource.technology
         },
         drmCertificateResource: {
           ...initResource(),
-          technology: state.drmCertificateResource.technology,
+          technology: state.drmCertificateResource.technology
         },
-        subtitlesResource: initResource(),
+        subtitlesResource: initResource()
       };
     default:
       return state;

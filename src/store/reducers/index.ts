@@ -19,6 +19,10 @@ const rootReducer = combineReducers({
 
 const getRootState = createRootReducerWithInformation(messages, resolveMessages);
 
+export interface IsModifiedBaseState {
+  isModified: boolean;
+}
+
 export type BaseAppState = ReturnType<typeof rootReducer>;
 export type AppState = BaseAppState & { information: InformationState };
 

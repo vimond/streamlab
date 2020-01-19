@@ -1,22 +1,22 @@
 import React from 'react';
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Box,
   Button,
   Checkbox,
   Flex,
+  FormLabel,
   Grid,
   Icon,
   Input,
   List,
   PseudoBox,
-  Text,
-  FormLabel,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay
+  Text
 } from '@chakra-ui/core';
 import Header, { Level } from '../components/Header';
 import { HistoryEntry, SimpleStreamResource } from '../store/model/history';
@@ -33,7 +33,9 @@ import {
   drmTechLabels,
   DrmTechnology,
   getLabel,
+  getLogLevelLabel,
   LabeledTechOption,
+  PlayerLogLevel,
   Resource,
   streamTechLabels,
   StreamTechnology,
@@ -130,7 +132,7 @@ const StreamResourceFields: React.FC<{
     {'useProxy' in resource && resource.useProxy && (
       <>
         <FormLabel justifySelf="right">Use proxy</FormLabel>
-        <Checkbox isChecked />
+        <Checkbox isChecked isReadOnly />
       </>
     )}
     {resource.technology !== BaseTech.AUTO && (
@@ -246,6 +248,41 @@ const FormHistory: React.FC<Props> = ({
                   resource={selectedEntry.formData.streamDetails.subtitlesResource}
                   techLabels={subtitlesFormatLabels}
                 />
+              )}
+            {'playerOptions' in selectedEntry.formData &&
+              selectedEntry.formData.playerOptions &&
+              selectedEntry.formData.playerOptions.showPlaybackMonitor && (
+                <>
+                  <FormLabel justifySelf="right">Show playback monitor</FormLabel>
+                  <Checkbox isChecked isReadOnly />
+                </>
+              )}
+            {'playerOptions' in selectedEntry.formData &&
+              selectedEntry.formData.playerOptions &&
+              selectedEntry.formData.playerOptions.logLevel !== PlayerLogLevel.ERROR && (
+                <>
+                  <FormLabel justifySelf="right">Player log level</FormLabel>
+                  <Input
+                    type="text"
+                    value={getLogLevelLabel(selectedEntry.formData.playerOptions.logLevel)}
+                    isReadOnly
+                    style={inputStyle}
+                  />
+                </>
+              )}
+            {'playerOptions' in selectedEntry.formData &&
+              selectedEntry.formData.playerOptions &&
+              selectedEntry.formData.playerOptions.customConfiguration &&
+              selectedEntry.formData.playerOptions.customConfiguration.trim() && (
+                <>
+                  <FormLabel justifySelf="right">Custom configuration</FormLabel>
+                  <Input
+                    type="text"
+                    value={selectedEntry.formData.playerOptions.customConfiguration.trim()}
+                    isReadOnly
+                    style={inputStyle}
+                  />
+                </>
               )}
           </Grid>
           <Flex justify="center" pt={4}>
