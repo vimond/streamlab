@@ -4,7 +4,8 @@ import {
   isSafari
   // @ts-ignore
 } from 'vimond-replay/components/player/VideoStreamer/CompoundVideoStreamer/helpers.js';
-import { PlaybackSource, PlayerConfiguration } from 'vimond-replay/default-player/Replay';
+import { PlaybackSource } from 'vimond-replay/default-player/Replay';
+import { PlayerConfiguration } from 'vimond-replay';
 
 export enum BaseTech {
   AUTO
@@ -43,6 +44,7 @@ type StreamDetails = {
   drmLicenseResource?: Resource<DrmTechnology>;
   drmCertificateResource?: Resource<DrmTechnology>;
   subtitlesResource?: Resource<SubtitlesFormat>;
+  startOffset?: number | '';
 };
 
 export type LabeledTechOption = {
@@ -180,9 +182,11 @@ export const createPlayerSource = ({
   streamResource,
   drmLicenseResource,
   drmCertificateResource,
-  subtitlesResource
+  subtitlesResource,
+  startOffset
 }: StreamDetails): PlaybackSource | undefined => {
   const streamUrl = streamResource.url;
+  const startPosition = startOffset === '' ? undefined : startOffset;
   if (streamUrl) {
     const contentType =
       streamResource.technology === BaseTech.AUTO
@@ -191,7 +195,8 @@ export const createPlayerSource = ({
     if (contentType) {
       const source: PlaybackSource = {
         streamUrl,
-        contentType
+        contentType,
+        startPosition
       };
 
       if (drmLicenseResource) {

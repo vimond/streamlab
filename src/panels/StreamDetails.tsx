@@ -1,5 +1,17 @@
 import React from 'react';
-import { Box, Button, FormControl, Input, Menu, MenuButton, MenuItem, MenuList, Switch } from '@chakra-ui/core';
+import {
+  Box,
+  Button,
+  FormLabel,
+  FormControl,
+  Input,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Switch,
+  FormHelperText
+} from '@chakra-ui/core';
 import Header, { Level } from '../components/Header';
 import {
   AutoTechnology,
@@ -106,6 +118,7 @@ const StreamDetails: React.FC<Props> = ({
   drmLicenseResource,
   drmCertificateResource,
   subtitlesResource,
+  startOffset,
   handleResourceFieldChange
 }) => (
   <form>
@@ -169,6 +182,24 @@ const StreamDetails: React.FC<Props> = ({
         {...subtitlesResource}
       />
     </Box>
+    <FormControl display="flex" alignItems="center" mt={2}>
+      <FormLabel htmlFor="startOffsetField">Start offset:</FormLabel>
+      <Input
+        id="startOffsetField"
+        type="number"
+        step={0.001}
+        value={startOffset}
+        width={24}
+        textAlign="right"
+        min={0}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          handleResourceFieldChange({ startOffset: e.target.value === '' ? '' : Number(e.target.value) })
+        }
+      />
+      <FormHelperText mx={2} mb={3}>
+        seconds
+      </FormHelperText>
+    </FormControl>
   </form>
 );
 

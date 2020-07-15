@@ -74,7 +74,8 @@ const advancedFormState = {
     subtitlesResource: {
       url: 'https://example.com/subs.vtt',
       technology: BaseTech.AUTO
-    }
+    },
+    startOffset: 123.456
   },
   playerOptions: {
     logLevel: PlayerLogLevel.WARNING,
@@ -151,6 +152,11 @@ describe('Player Redux actions', () => {
 
       playAdvanced(dispatch, getState);
 
+      const historyStreamDetails = {
+        ...advancedFormState.streamDetails,
+        startOffset: ''
+      };
+
       expect(dispatch).toHaveBeenCalledWith({
         type: PLAY,
         value: {
@@ -171,7 +177,8 @@ describe('Player Redux actions', () => {
                 src: 'https://example.com/subs.vtt',
                 contentType: 'text/vtt'
               }
-            ]
+            ],
+            startPosition: 123.456
           },
           options: {
             some: 'value',
@@ -186,13 +193,48 @@ describe('Player Redux actions', () => {
             timestamp: isoTimestamp,
             name: '',
             formData: {
-              streamDetails: advancedFormState.streamDetails,
+              streamDetails: historyStreamDetails,
               playerOptions: advancedFormState.playerOptions
             }
           }
         }
       });
     });
+  });
+  test('Advanced playback start without start offset', () => {
+    const s = {
+      ...advancedFormState,
+      streamDetails: {
+        ...advancedFormState.streamDetails,
+        startOffset: '',
+      }
+    };
+    const getState = jest.fn().mockReturnValue(s);
+    const dispatch = jest.fn();
+
+    playAdvanced(dispatch, getState);
+
+    const result = dispatch.mock.calls[0][0];
+    expect(result.value.source).toMatchObject({
+      streamUrl: 'https://example.com/stream.m3u8',
+      contentType: 'application/x-mpegurl',
+      licenseUrl: 'https://example.com/license',
+      drmType: 'com.widevine.alpha',
+      licenseAcquisitionDetails: {
+        licenseRequestHeaders: {
+          Authorization: 'Token',
+          Something: 'Somewhat'
+        },
+        widevineServiceCertificateUrl: 'https://example.com/certificate'
+      },
+      textTracks: [
+        {
+          src: 'https://example.com/subs.vtt',
+          contentType: 'text/vtt'
+        }
+      ]
+    });
+    expect(result.value.source.startPosition).toBeUndefined();
   });
   test('Ignore playback start without a stream URL', () => {
     const getState = jest.fn().mockReturnValue(basicFormStateWithoutStreamUrl);

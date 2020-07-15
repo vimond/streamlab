@@ -3,6 +3,7 @@ import {
   DRM_LICENSE_RESOURCE_FIELD_CHANGE,
   SET_BROWSER_FEATURES,
   setBrowserFeatures,
+  START_OFFSET_FIELD_CHANGE,
   STREAM_RESOURCE_FIELD_CHANGE,
   SUBTITLES_RESOURCE_FIELD_CHANGE,
   updateStreamDetailsField
@@ -64,6 +65,22 @@ describe('Stream details Redux actions', () => {
         url: 'https://example.com/subs.ttml',
         useProxy: false
       }
+    });
+    expect(
+      updateStreamDetailsField({
+        startOffset: 123.456
+      })
+    ).toEqual({
+      type: START_OFFSET_FIELD_CHANGE,
+      value: 123.456
+    });
+    expect(
+      updateStreamDetailsField({
+        startOffset: ''
+      })
+    ).toEqual({
+      type: START_OFFSET_FIELD_CHANGE,
+      value: ''
     });
   });
   test('Setting browser specific stream details', () => {

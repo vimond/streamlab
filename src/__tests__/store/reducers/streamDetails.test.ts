@@ -4,6 +4,7 @@ import {
   DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE,
   DRM_LICENSE_RESOURCE_FIELD_CHANGE,
   SET_BROWSER_FEATURES,
+  START_OFFSET_FIELD_CHANGE,
   STREAM_RESOURCE_FIELD_CHANGE,
   SUBTITLES_RESOURCE_FIELD_CHANGE
 } from '../../../store/actions/streamDetails';
@@ -64,7 +65,13 @@ const resourcesAndActions = [
   }
 ];
 
-const oldState = { streamResource, drmLicenseResource, drmCertificateResource, subtitlesResource };
+const oldState: StreamDetailsState = {
+  streamResource,
+  drmLicenseResource,
+  drmCertificateResource,
+  subtitlesResource,
+  startOffset: 123
+};
 
 describe('Stream details reducer', () => {
   test('Changes to form fields should be applied to the state for every type of playback resource.', () => {
@@ -116,6 +123,17 @@ describe('Stream details reducer', () => {
       expect(newState.subtitlesResource).toMatchObject(rest);
     }
   });
+  test('Start offset form fields updates should be applied to the state.', () => {
+    const newState = streamDetailsReducer(oldState, {
+      type: START_OFFSET_FIELD_CHANGE,
+      value: 123.456
+    });
+    expect(newState.startOffset).toBe(123.456);
+    expect(newState.streamResource).toBe(oldState.streamResource);
+    expect(newState.drmLicenseResource).toBe(oldState.drmLicenseResource);
+    expect(newState.drmCertificateResource).toBe(oldState.drmCertificateResource);
+    expect(newState.subtitlesResource).toBe(oldState.subtitlesResource);
+  });
   test('DRM technology should be applied to the DRM related resources when browser features are detected.', () => {
     const action = {
       type: SET_BROWSER_FEATURES,
@@ -159,7 +177,8 @@ describe('Stream details reducer', () => {
         },
         drmLicenseResource: emptyResource,
         drmCertificateResource: emptyResource,
-        subtitlesResource: emptyResource
+        subtitlesResource: emptyResource,
+        startOffset: ''
       });
       const action2: HistoryEntryAction = {
         type: RESTORE_HISTORY_ENTRY,
@@ -202,7 +221,8 @@ describe('Stream details reducer', () => {
                 technology: BaseTech.AUTO,
                 useProxy: false,
                 headers: []
-              }
+              },
+              startOffset: ''
             }
           }
         }
@@ -216,7 +236,8 @@ describe('Stream details reducer', () => {
       streamResource,
       drmLicenseResource,
       drmCertificateResource,
-      subtitlesResource
+      subtitlesResource,
+      startOffset: ''
     };
     const blankResource = {
       url: '',
@@ -236,7 +257,8 @@ describe('Stream details reducer', () => {
         ...blankResource,
         technology: drmCertificateResource.technology
       },
-      subtitlesResource: blankResource
+      subtitlesResource: blankResource,
+      startOffset: ''
     });
   });
 });

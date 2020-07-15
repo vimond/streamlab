@@ -56,7 +56,10 @@ const playerOptions = (
       if ('playerOptions' in action.value.formData) {
         const { playerOptions } = action.value.formData;
         if (playerOptions) {
-          return playerOptions;
+          return {
+            ...playerOptions,
+            isModified: !isInitialState({ ...playerOptions, isModified: false })
+          };
         }
       }
     // eslint-disable no-fallthrough

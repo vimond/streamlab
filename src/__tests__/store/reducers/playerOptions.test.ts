@@ -74,13 +74,13 @@ describe('Player options reducer', () => {
           },
           drmLicenseResource: emptyResource,
           drmCertificateResource: emptyResource,
-          subtitlesResource: emptyResource
+          subtitlesResource: emptyResource,
+          startOffset: ''
         },
         playerOptions: {
           customConfiguration: '{"key":"value"}',
           logLevel: PlayerLogLevel.WARNING,
-          showPlaybackMonitor: false,
-          isModified: true
+          showPlaybackMonitor: false
         }
       }
     };
@@ -95,7 +95,7 @@ describe('Player options reducer', () => {
       isModified: true
     };
     const newState = playerOptionsReducer(oldState, action);
-    expect(newState).toEqual(historyEntry.formData.playerOptions);
+    expect(newState).toEqual({ ...historyEntry.formData.playerOptions, isModified: true });
   });
   test('Clearing forms reverts player options to the initial state', () => {
     const oldState = {

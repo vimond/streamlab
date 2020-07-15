@@ -137,14 +137,14 @@ const StreamResourceFields: React.FC<{
     )}
     {resource.technology !== BaseTech.AUTO && (
       <>
-        <FormLabel justifySelf="right">Technology</FormLabel>
+        <FormLabel justifySelf="right">{label} technology</FormLabel>
         <Input type="text" value={getLabel(resource.technology, techLabels)} isReadOnly style={inputStyle} />
       </>
     )}
-    {'headers' in resource && resource.headers.length ? (
+    {'headers' in resource && resource.headers.some(({ name, value }) => name || value) ? (
       <>
         <FormLabel alignSelf="start" justifySelf="right">
-          Headers
+          {label} headers
         </FormLabel>
         <Grid templateColumns="1fr 3fr" gap={2} alignItems="center">
           {resource.headers.map(renderHeaderRow)}
@@ -229,7 +229,7 @@ const FormHistory: React.FC<Props> = ({
               isResourcePopulated(selectedEntry.formData.streamDetails.drmLicenseResource) && (
                 <StreamResourceFields
                   label="DRM license"
-                  resource={selectedEntry.formData.streamDetails.drmLicenseResource}
+                  resource={{ ...selectedEntry.formData.streamDetails.drmLicenseResource, technology: BaseTech.AUTO }}
                   techLabels={drmTechLabels}
                 />
               )}

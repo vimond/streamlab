@@ -24,7 +24,7 @@ export type BasicHistoryEntry = HistoryEntryBase & {
 export type AdvancedHistoryEntry = HistoryEntryBase & {
   formData: {
     streamDetails: StreamDetailsState;
-    playerOptions?: PlayerOptionsState;
+    playerOptions?: Omit<PlayerOptionsState, 'isModified'>;
   };
 };
 

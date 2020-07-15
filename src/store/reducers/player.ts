@@ -1,7 +1,8 @@
-import { PlaybackSource, PlayerConfiguration } from 'vimond-replay/default-player/Replay';
+import { PlaybackSource } from 'vimond-replay/default-player/Replay';
+import { PlayerConfiguration } from 'vimond-replay';
 import { PLAY, PLAYER_ERROR, PlayerAction, PlayerErrorAction, STOP } from '../actions/player';
 
-// TODO: It seems wrong that the reducer are dependent on player (i.e. UI component) types.
+// TODO: It seems wrong that the reducer is dependent on player (i.e. UI component) types.
 // Consider having an intermediate type, even if that seems redundant.
 
 export interface PlayerState {

@@ -4,6 +4,7 @@ export const STREAM_RESOURCE_FIELD_CHANGE = 'STREAM_RESOURCE_FIELD_CHANGE';
 export const DRM_LICENSE_RESOURCE_FIELD_CHANGE = 'DRM_LICENSE_RESOURCE_FIELD_CHANGE';
 export const DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE = 'DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE';
 export const SUBTITLES_RESOURCE_FIELD_CHANGE = 'SUBTITLES_RESOURCE_FIELD_CHANGE';
+export const START_OFFSET_FIELD_CHANGE = 'START_OFFSET_FIELD_CHANGE';
 export const SET_BROWSER_FEATURES = 'SET_BROWSER_FEATURES';
 
 export type SetBrowserFeaturesAction = {
@@ -25,6 +26,9 @@ export type ResourceUpdate =
     }
   | {
       subtitlesResource: Partial<Resource<SubtitlesFormat>>;
+    }
+  | {
+      startOffset: number | '';
     };
 
 export type StreamDetailsFieldChangeAction =
@@ -43,6 +47,10 @@ export type StreamDetailsFieldChangeAction =
   | {
       type: typeof SUBTITLES_RESOURCE_FIELD_CHANGE;
       value: Partial<Resource<SubtitlesFormat>>;
+    }
+  | {
+      type: typeof START_OFFSET_FIELD_CHANGE;
+      value: number | '';
     };
 
 export const updateStreamDetailsField = (resourceUpdate: ResourceUpdate): StreamDetailsFieldChangeAction =>
@@ -61,9 +69,14 @@ export const updateStreamDetailsField = (resourceUpdate: ResourceUpdate): Stream
         type: DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE,
         value: resourceUpdate.drmCertificateResource
       }
-    : {
+    : 'subtitlesResource' in resourceUpdate
+    ? {
         type: SUBTITLES_RESOURCE_FIELD_CHANGE,
         value: resourceUpdate.subtitlesResource
+      }
+    : {
+        type: START_OFFSET_FIELD_CHANGE,
+        value: resourceUpdate.startOffset
       };
 
 export const setBrowserFeatures = (userAgent: string): SetBrowserFeaturesAction => ({

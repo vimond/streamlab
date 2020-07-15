@@ -1,7 +1,9 @@
 import { Replay } from 'vimond-replay';
 import React from 'react';
 import { Box } from '@chakra-ui/core';
-import { PlaybackSource, PlayerConfiguration } from 'vimond-replay/default-player/Replay';
+import { PlaybackSource } from 'vimond-replay/default-player/Replay';
+import { PlayerConfiguration } from 'vimond-replay';
+
 // @ts-ignore
 import CompoundVideoStreamer from 'vimond-replay/video-streamer/compound';
 import { AppState } from '../store/reducers';

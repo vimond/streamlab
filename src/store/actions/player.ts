@@ -1,4 +1,5 @@
-import { PlaybackSource, PlayerConfiguration } from 'vimond-replay/default-player/Replay';
+import { PlaybackSource } from 'vimond-replay/default-player/Replay';
+import { PlayerConfiguration } from 'vimond-replay';
 import { AppState } from '../reducers';
 import { Dispatch } from 'redux';
 import { createPlayerOptions, createPlayerSource } from '../model/streamDetails';
@@ -79,7 +80,7 @@ export const playAdvanced = (dispatch: Dispatch<Action>, getState: () => AppStat
       value: {
         source,
         options,
-        historyEntry: createAdvancedHistoryEntry(streamDetails, playerOptions)
+        historyEntry: createAdvancedHistoryEntry({ ...streamDetails, startOffset: '' }, playerOptions)
       }
     });
   }

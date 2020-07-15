@@ -3,6 +3,7 @@ import {
   DRM_LICENSE_RESOURCE_FIELD_CHANGE,
   SET_BROWSER_FEATURES,
   setBrowserFeatures,
+  START_OFFSET_FIELD_CHANGE,
   STREAM_RESOURCE_FIELD_CHANGE,
   StreamDetailsFieldChangeAction,
   SUBTITLES_RESOURCE_FIELD_CHANGE
@@ -16,15 +17,17 @@ export interface StreamDetailsState {
   drmLicenseResource: Resource<DrmTechnology>;
   drmCertificateResource: Resource<DrmTechnology>;
   subtitlesResource: Resource<SubtitlesFormat>;
+  startOffset: number | '';
 }
 
 const initResource = () => ({ url: '', headers: [], useProxy: false, technology: BaseTech.AUTO });
 
-const initState = () => ({
+const initState = (): StreamDetailsState => ({
   streamResource: initResource(),
   drmLicenseResource: initResource(),
   drmCertificateResource: initResource(),
-  subtitlesResource: initResource()
+  subtitlesResource: initResource(),
+  startOffset: ''
 });
 
 const streamDetails = (
@@ -76,6 +79,11 @@ const streamDetails = (
           ...action.value
         }
       };
+    case START_OFFSET_FIELD_CHANGE:
+      return {
+        ...state,
+        startOffset: action.value
+      };
     case RESTORE_HISTORY_ENTRY:
       const initialState = initState();
       return {
@@ -97,7 +105,8 @@ const streamDetails = (
           ...initResource(),
           technology: state.drmCertificateResource.technology
         },
-        subtitlesResource: initResource()
+        subtitlesResource: initResource(),
+        startOffset: ''
       };
     default:
       return state;

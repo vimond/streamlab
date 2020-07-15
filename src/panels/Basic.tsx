@@ -49,7 +49,7 @@ const Basic: React.FC<Props> = ({
 }) => (
   <Box as="form" my={8} onSubmit={handleFormSubmit}>
     <Header level={Level.H3} fontSize="md" textAlign="center">
-      Test progressive, HLS, or MPEG-DASH streams
+      Test progressive, HLS, or MPEG-DASH streams:
     </Header>
     <FormControl isRequired m={4}>
       <Input

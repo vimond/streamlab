@@ -62,7 +62,7 @@ const PlayerOptions: React.FC<Props> = ({
       >
         &nbsp;
       </Switch>
-      <FormLabel htmlFor="playback-monitor-switch">Display playback monitor overlay</FormLabel>
+      <FormLabel htmlFor="playback-monitor-switch">Display playback monitor overlay at startup</FormLabel>
       <Menu>
         {/*
             // @ts-ignore */}
