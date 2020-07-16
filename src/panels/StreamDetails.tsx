@@ -66,7 +66,7 @@ const StreamDetailRow: React.FC<RowProps> = ({
 }) => {
   return (
     <>
-      <FormControl>
+      <FormControl gridColumn={isHeadersEnabled ? 1 : '1/span 2'}>
         <Input
           onChange={(evt: React.ChangeEvent<HTMLInputElement>) => onChange({ url: evt.target.value })}
           placeholder={label}
@@ -74,20 +74,29 @@ const StreamDetailRow: React.FC<RowProps> = ({
           value={url}
         />
       </FormControl>
-      <Menu>
-        {/*
+      {isHeadersEnabled && (
+        <Button onClick={() => onChange({ headers: headers.concat({ name: '', value: '', id: Date.now() }) })}>
+          Add header
+        </Button>
+      )}
+      {isTechOptionsEnabled ? (
+        <Menu>
+          {/*
             // @ts-ignore */}
-        <MenuButton as={Button} rightIcon="chevron-down" isDisabled={!isTechOptionsEnabled}>
-          {getLabel(technology, techOptions)}
-        </MenuButton>
-        <MenuList>
-          {techOptions.map(({ key, label }: LabeledTechOption, i: number) => (
-            <MenuItem key={i} onClick={() => onChange({ technology: key })}>
-              {label}
-            </MenuItem>
-          ))}
-        </MenuList>
-      </Menu>
+          <MenuButton as={Button} rightIcon="chevron-down" isDisabled={!isTechOptionsEnabled}>
+            {getLabel(technology, techOptions)}
+          </MenuButton>
+          <MenuList>
+            {techOptions.map(({ key, label }: LabeledTechOption, i: number) => (
+              <MenuItem key={i} onClick={() => onChange({ technology: key })}>
+                {label}
+              </MenuItem>
+            ))}
+          </MenuList>
+        </Menu>
+      ) : (
+        <Button isDisabled={true}>{getLabel(technology, techOptions)}</Button>
+      )}
       <FormControl justifySelf="center" style={{ visibility: isProxyVisible ? 'visible' : 'hidden' }}>
         <Switch
           onChange={(evt: React.ChangeEvent<HTMLInputElement>) => onChange({ useProxy: evt.target.checked })}
@@ -97,12 +106,6 @@ const StreamDetailRow: React.FC<RowProps> = ({
           Activate proxy for {label}
         </Switch>
       </FormControl>
-      <Button
-        onClick={() => onChange({ headers: headers.concat({ name: '', value: '', id: Date.now() }) })}
-        isDisabled={!isHeadersEnabled}
-      >
-        Add
-      </Button>
       <Box gridColumn="1/span 4">
         <HeaderRows
           onHeadersChange={(headers: { name: string; value: string; id: number }[]) => onChange({ headers })}
@@ -124,19 +127,18 @@ const StreamDetails: React.FC<Props> = ({
   <form>
     <Box
       display="grid"
-      gridTemplateColumns={`1fr auto ${isProxyVisible ? 'auto' : '0'} auto`}
+      gridTemplateColumns={`1fr auto auto ${isProxyVisible ? 'auto' : '0'}`}
       gridAutoRows="auto"
       gridGap={2}
       alignItems="center"
     >
-      <Header level={Level.H6} justifySelf="left">
+      <Header level={Level.H6} justifySelf="left" gridColumn="1/span 2">
         URLs
       </Header>
       <Header level={Level.H6}>Technology</Header>
       <Header level={Level.H6} style={{ visibility: isProxyVisible ? 'visible' : 'hidden' }}>
         Proxy
       </Header>
-      <Header level={Level.H6}>Headers</Header>
       <StreamDetailRow
         id="stream"
         label="Stream URL"

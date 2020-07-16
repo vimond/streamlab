@@ -206,7 +206,7 @@ describe('Player Redux actions', () => {
       ...advancedFormState,
       streamDetails: {
         ...advancedFormState.streamDetails,
-        startOffset: '',
+        startOffset: ''
       }
     };
     const getState = jest.fn().mockReturnValue(s);
