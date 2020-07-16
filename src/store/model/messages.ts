@@ -5,8 +5,10 @@ import {
   detectSubtitlesType,
   drmTechLabels,
   DrmTechnology,
-  subtitlesFormatLabels,
-  getLabel
+  getLabel,
+  StreamTechnology,
+  SubtitlesFormat,
+  subtitlesFormatLabels
 } from './streamDetails';
 import { PLAYER_ERROR } from '../actions/player';
 
@@ -79,6 +81,23 @@ export const messages: MessageRule[] = [
           text: `Unable to detect subtitles type based on URL content. Please select the technology from the dropdown.`
         };
       }
+    }
+  },
+  {
+    id: 'subtitles-incompatible',
+    displayCondition: ({ nextState }) =>
+      nextState.streamDetails.subtitlesResource.url !== '' &&
+      (nextState.streamDetails.subtitlesResource.technology === SubtitlesFormat.TTML ||
+        (nextState.streamDetails.subtitlesResource.technology === BaseTech.AUTO &&
+          detectSubtitlesType(nextState.streamDetails.subtitlesResource.url) === SubtitlesFormat.TTML)) &&
+      !(
+        (nextState.streamDetails.streamResource.technology === BaseTech.AUTO &&
+          detectStreamType(nextState.streamDetails.streamResource.url).name === 'dash') ||
+        nextState.streamDetails.streamResource.technology === StreamTechnology.DASH
+      ),
+    message: {
+      level: MessageLevel.WARNING,
+      text: 'The subtitles format, TTML, is only supported for DASH streams through Shaka Player.'
     }
   },
   {
