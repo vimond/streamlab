@@ -165,7 +165,7 @@ const FormHistory: React.FC<Props> = ({
   handleEntryLabelChange,
   handleDeleteHistory
 }) => {
-  const [isOpen, setIsOpen] = React.useState();
+  const [isOpen, setIsOpen] = React.useState<boolean>();
   const handleCloseClick = () => setIsOpen(false);
   const handleDeleteHistoryClick = () => {
     handleDeleteHistory();

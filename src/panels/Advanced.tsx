@@ -48,7 +48,7 @@ const Advanced: React.FC<{
   handleClear: () => void;
   handleAccordionChange: (indices: number[]) => void;
 }> = ({ expandedIndices, isPlayerOptionsModified, handlePlay, handleClear, handleAccordionChange }) => {
-  const [isOpen, setIsOpen] = React.useState();
+  const [isOpen, setIsOpen] = React.useState<boolean>();
   const handleCloseClick = () => setIsOpen(false);
   const handleClearClick = () => {
     handleClear();
