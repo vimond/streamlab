@@ -6,7 +6,7 @@ import {
   RIGHT_PANE_TAB_CHANGE,
   RightPaneTabChangeAction,
   TOGGLE_ADVANCED_MODE,
-  ToggleAdvancedModeAction
+  ToggleAdvancedModeAction,
 } from '../actions/ui';
 import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../actions/history';
 
@@ -30,13 +30,13 @@ const ui = (
     case TOGGLE_ADVANCED_MODE:
       return {
         ...state,
-        advancedMode: action.value
+        advancedMode: action.value,
       };
     case RESTORE_HISTORY_ENTRY:
       if ('drmLicenseResource' in action.value.formData.streamDetails) {
         return {
           ...state,
-          advancedMode: true
+          advancedMode: true,
         };
       } else {
         return state;
@@ -44,17 +44,17 @@ const ui = (
     case PANE_RESIZE:
       return {
         ...state,
-        rightPaneWidth: action.value
+        rightPaneWidth: action.value,
       };
     case ADVANCED_ACCORDION_CHANGE:
       return {
         ...state,
-        expandedAdvancedAccordionIndices: action.value
+        expandedAdvancedAccordionIndices: action.value,
       };
     case RIGHT_PANE_TAB_CHANGE:
       return {
         ...state,
-        rightPaneActiveTabIndex: action.value
+        rightPaneActiveTabIndex: action.value,
       };
     default:
       return state;

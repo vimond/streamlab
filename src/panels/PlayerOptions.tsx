@@ -27,7 +27,7 @@ const PlayerOptions: React.FC<Props> = ({
   customConfiguration,
   handleLogLevelClick,
   handlePlaybackMonitorToggle,
-  handlePlayerConfigurationChange
+  handlePlayerConfigurationChange,
 }) => (
   <form>
     <Grid templateColumns="auto 1fr" gap={4} my={2} alignItems="center">
@@ -86,14 +86,14 @@ const PlayerOptions: React.FC<Props> = ({
 );
 
 const mapStateToProps = (state: AppState) => ({
-  ...state.playerOptions
+  ...state.playerOptions,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   handleLogLevelClick: (value: PlayerLogLevel) => dispatch(setLogLevel(value)),
   handlePlayerConfigurationChange: (value: string) => dispatch(setPlayerConfiguration(value)),
   handlePlaybackMonitorToggle: (evt: React.ChangeEvent<HTMLInputElement>) =>
-    dispatch(togglePlaybackMonitor(evt.target.checked))
+    dispatch(togglePlaybackMonitor(evt.target.checked)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayerOptions);

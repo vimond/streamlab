@@ -6,7 +6,7 @@ import {
   START_OFFSET_FIELD_CHANGE,
   STREAM_RESOURCE_FIELD_CHANGE,
   StreamDetailsFieldChangeAction,
-  SUBTITLES_RESOURCE_FIELD_CHANGE
+  SUBTITLES_RESOURCE_FIELD_CHANGE,
 } from '../actions/streamDetails';
 import { BaseTech, DrmTechnology, Resource, StreamTechnology, SubtitlesFormat } from '../model/streamDetails';
 import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../actions/history';
@@ -27,7 +27,7 @@ const initState = (): StreamDetailsState => ({
   drmLicenseResource: initResource(),
   drmCertificateResource: initResource(),
   subtitlesResource: initResource(),
-  startOffset: ''
+  startOffset: '',
 });
 
 const streamDetails = (
@@ -40,49 +40,49 @@ const streamDetails = (
         ...state,
         drmLicenseResource: {
           ...state.drmLicenseResource,
-          technology: action.value.drmTechnology
+          technology: action.value.drmTechnology,
         },
         drmCertificateResource: {
           ...state.drmCertificateResource,
-          technology: action.value.drmTechnology
-        }
+          technology: action.value.drmTechnology,
+        },
       };
     case STREAM_RESOURCE_FIELD_CHANGE:
       return {
         ...state,
         streamResource: {
           ...state.streamResource,
-          ...action.value
-        }
+          ...action.value,
+        },
       };
     case DRM_LICENSE_RESOURCE_FIELD_CHANGE:
       return {
         ...state,
         drmLicenseResource: {
           ...state.drmLicenseResource,
-          ...action.value
-        }
+          ...action.value,
+        },
       };
     case DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE:
       return {
         ...state,
         drmCertificateResource: {
           ...state.drmCertificateResource,
-          ...action.value
-        }
+          ...action.value,
+        },
       };
     case SUBTITLES_RESOURCE_FIELD_CHANGE:
       return {
         ...state,
         subtitlesResource: {
           ...state.subtitlesResource,
-          ...action.value
-        }
+          ...action.value,
+        },
       };
     case START_OFFSET_FIELD_CHANGE:
       return {
         ...state,
-        startOffset: action.value
+        startOffset: action.value,
       };
     case RESTORE_HISTORY_ENTRY:
       const initialState = initState();
@@ -91,22 +91,22 @@ const streamDetails = (
         ...action.value.formData.streamDetails,
         streamResource: {
           ...initialState.streamResource,
-          ...action.value.formData.streamDetails.streamResource
-        }
+          ...action.value.formData.streamDetails.streamResource,
+        },
       };
     case CLEAR_FORMS:
       return {
         streamResource: initResource(),
         drmLicenseResource: {
           ...initResource(),
-          technology: state.drmLicenseResource.technology
+          technology: state.drmLicenseResource.technology,
         },
         drmCertificateResource: {
           ...initResource(),
-          technology: state.drmCertificateResource.technology
+          technology: state.drmCertificateResource.technology,
         },
         subtitlesResource: initResource(),
-        startOffset: ''
+        startOffset: '',
       };
     default:
       return state;

@@ -8,9 +8,9 @@ const rules = [
     displayCondition: () => true,
     message: {
       level: MessageLevel.SUCCESS,
-      text: 'This is fine.'
-    }
-  }
+      text: 'This is fine.',
+    },
+  },
 ];
 const prevState = { slice: { value: 1 } };
 const nextState = { slice: { value: 2 } };
@@ -30,10 +30,10 @@ describe('Information reducer', () => {
         messages: [
           {
             level: MessageLevel.SUCCESS,
-            text: 'This is fine.'
-          }
-        ]
-      }
+            text: 'This is fine.',
+          },
+        ],
+      },
     });
   });
   test(
@@ -48,7 +48,7 @@ describe('Information reducer', () => {
       const result = getRootState(prevState, action, nextState);
       expect(messageResolver).toHaveBeenCalledWith(rules, prevState, action, {
         ...nextState,
-        ...{ slice: { setting: true } }
+        ...{ slice: { setting: true } },
       });
       expect(result).toEqual({
         slice: { setting: true },
@@ -56,10 +56,10 @@ describe('Information reducer', () => {
           messages: [
             {
               level: MessageLevel.SUCCESS,
-              text: 'This is fine.'
-            }
-          ]
-        }
+              text: 'This is fine.',
+            },
+          ],
+        },
       });
     }
   );

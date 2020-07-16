@@ -17,7 +17,7 @@ class HeaderRows extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isOpen: []
+      isOpen: [],
     };
   }
 
@@ -28,11 +28,11 @@ class HeaderRows extends React.Component<Props, State> {
   componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any): void {
     if (prevProps.headers.length < this.props.headers.length) {
       this.setState({
-        isOpen: [...this.state.isOpen, true]
+        isOpen: [...this.state.isOpen, true],
       });
     } else if (prevProps.headers.length > this.props.headers.length) {
       this.setState({
-        isOpen: new Array(this.props.headers.length).fill(true)
+        isOpen: new Array(this.props.headers.length).fill(true),
       });
     }
   }
@@ -41,7 +41,7 @@ class HeaderRows extends React.Component<Props, State> {
     const isOpen = this.state.isOpen;
     isOpen[index] = false;
     this.setState({
-      isOpen
+      isOpen,
     });
   };
 

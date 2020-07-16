@@ -15,7 +15,7 @@
     "codemirror": "^5.55.0",
     "emotion-theming": "^10.0.17",
     "jsonlint-mod": "^1.7.5",
-    "prettier": "^1.18.2",
+    "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-codemirror2": "^7.2.1",
     "react-dom": "^16.13.1",

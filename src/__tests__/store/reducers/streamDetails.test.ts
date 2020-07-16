@@ -6,7 +6,7 @@ import {
   SET_BROWSER_FEATURES,
   START_OFFSET_FIELD_CHANGE,
   STREAM_RESOURCE_FIELD_CHANGE,
-  SUBTITLES_RESOURCE_FIELD_CHANGE
+  SUBTITLES_RESOURCE_FIELD_CHANGE,
 } from '../../../store/actions/streamDetails';
 import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../../../store/actions/history';
 import { CLEAR_FORMS } from '../../../store/actions/ui';
@@ -15,54 +15,54 @@ const streamResource = {
   url: 'https://example.com/stream.mpd',
   technology: StreamTechnology.PROGRESSIVE,
   headers: [],
-  useProxy: false
+  useProxy: false,
 };
 
 const drmLicenseResource = {
   url: 'https://example.com/license',
   technology: DrmTechnology.PLAYREADY,
   headers: [{ id: 2, name: 'Authorization', value: 'Bearer token' }],
-  useProxy: false
+  useProxy: false,
 };
 
 const drmCertificateResource = {
   url: 'https://example.com/certificate',
   technology: DrmTechnology.FAIRPLAY,
   headers: [],
-  useProxy: false
+  useProxy: false,
 };
 
 const subtitlesResource = {
   url: 'https://example.com/subs.vtt',
   technology: SubtitlesFormat.WEBVTT,
   headers: [],
-  useProxy: false
+  useProxy: false,
 };
 
 const emptyResource = {
   url: '',
   technology: BaseTech.AUTO,
   headers: [],
-  useProxy: false
+  useProxy: false,
 };
 
 const resourcesAndActions = [
   {
     type: STREAM_RESOURCE_FIELD_CHANGE,
-    resource: 'streamResource'
+    resource: 'streamResource',
   },
   {
     type: DRM_LICENSE_RESOURCE_FIELD_CHANGE,
-    resource: 'drmLicenseResource'
+    resource: 'drmLicenseResource',
   },
   {
     type: DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE,
-    resource: 'drmCertificateResource'
+    resource: 'drmCertificateResource',
   },
   {
     type: SUBTITLES_RESOURCE_FIELD_CHANGE,
-    resource: 'subtitlesResource'
-  }
+    resource: 'subtitlesResource',
+  },
 ];
 
 const oldState: StreamDetailsState = {
@@ -70,7 +70,7 @@ const oldState: StreamDetailsState = {
   drmLicenseResource,
   drmCertificateResource,
   subtitlesResource,
-  startOffset: 123
+  startOffset: 123,
 };
 
 describe('Stream details reducer', () => {
@@ -79,7 +79,7 @@ describe('Stream details reducer', () => {
       url: 'https://example.com/changed',
       technology: BaseTech.AUTO,
       useProxy: true,
-      headers: [{ id: 1, name: 'X-Token', value: 'TOKEN' }]
+      headers: [{ id: 1, name: 'X-Token', value: 'TOKEN' }],
     };
     resourcesAndActions.forEach(({ type, resource }) => {
       // @ts-ignore
@@ -97,7 +97,7 @@ describe('Stream details reducer', () => {
     {
       const newState = streamDetailsReducer(oldState, {
         type: DRM_LICENSE_RESOURCE_FIELD_CHANGE,
-        value: { technology: DrmTechnology.WIDEVINE }
+        value: { technology: DrmTechnology.WIDEVINE },
       });
       const { technology, ...rest } = drmLicenseResource;
       expect(newState.drmLicenseResource.technology).toBe(DrmTechnology.WIDEVINE);
@@ -106,7 +106,7 @@ describe('Stream details reducer', () => {
     {
       const newState = streamDetailsReducer(oldState, {
         type: DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE,
-        value: { technology: BaseTech.AUTO }
+        value: { technology: BaseTech.AUTO },
       });
       const { technology, ...rest } = drmCertificateResource;
       expect(newState.drmCertificateResource.technology).toBe(BaseTech.AUTO);
@@ -115,7 +115,7 @@ describe('Stream details reducer', () => {
     {
       const newState = streamDetailsReducer(oldState, {
         type: SUBTITLES_RESOURCE_FIELD_CHANGE,
-        value: { useProxy: true, headers: [{ id: 3, name: 'X', value: 'Y' }] }
+        value: { useProxy: true, headers: [{ id: 3, name: 'X', value: 'Y' }] },
       });
       const { useProxy, headers, ...rest } = subtitlesResource;
       expect(newState.subtitlesResource.useProxy).toBe(true);
@@ -126,7 +126,7 @@ describe('Stream details reducer', () => {
   test('Start offset form fields updates should be applied to the state.', () => {
     const newState = streamDetailsReducer(oldState, {
       type: START_OFFSET_FIELD_CHANGE,
-      value: 123.456
+      value: 123.456,
     });
     expect(newState.startOffset).toBe(123.456);
     expect(newState.streamResource).toBe(oldState.streamResource);
@@ -138,8 +138,8 @@ describe('Stream details reducer', () => {
     const action = {
       type: SET_BROWSER_FEATURES,
       value: {
-        drmTechnology: DrmTechnology.WIDEVINE
-      }
+        drmTechnology: DrmTechnology.WIDEVINE,
+      },
     };
     // @ts-ignore
     const newState = streamDetailsReducer(oldState, action);
@@ -161,11 +161,11 @@ describe('Stream details reducer', () => {
             streamDetails: {
               streamResource: {
                 url: 'http://example.com/my-good-old-stream.mpd',
-                technology: StreamTechnology.MSS
-              }
-            }
-          }
-        }
+                technology: StreamTechnology.MSS,
+              },
+            },
+          },
+        },
       };
       const newState1 = streamDetailsReducer(oldState, action1);
       expect(newState1).toEqual({
@@ -173,12 +173,12 @@ describe('Stream details reducer', () => {
           url: 'http://example.com/my-good-old-stream.mpd',
           technology: StreamTechnology.MSS,
           headers: [],
-          useProxy: false
+          useProxy: false,
         },
         drmLicenseResource: emptyResource,
         drmCertificateResource: emptyResource,
         subtitlesResource: emptyResource,
-        startOffset: ''
+        startOffset: '',
       });
       const action2: HistoryEntryAction = {
         type: RESTORE_HISTORY_ENTRY,
@@ -191,7 +191,7 @@ describe('Stream details reducer', () => {
                 url: 'http://example.com/my-good-old-stream.mpd',
                 technology: StreamTechnology.MSS,
                 useProxy: true,
-                headers: [{ id: 123, name: 'Max-Age', value: '300' }]
+                headers: [{ id: 123, name: 'Max-Age', value: '300' }],
               },
               drmLicenseResource: {
                 url: 'https://example.com/license',
@@ -200,32 +200,32 @@ describe('Stream details reducer', () => {
                   {
                     id: 123,
                     name: 'Authorization',
-                    value: 'Token'
+                    value: 'Token',
                   },
                   {
                     id: 456,
                     name: 'Something',
-                    value: 'Somewhat'
-                  }
+                    value: 'Somewhat',
+                  },
                 ],
-                useProxy: true
+                useProxy: true,
               },
               drmCertificateResource: {
                 url: 'https://example.com/certificate',
                 technology: DrmTechnology.WIDEVINE,
                 useProxy: true,
-                headers: []
+                headers: [],
               },
               subtitlesResource: {
                 url: 'https://example.com/subs.vtt',
                 technology: BaseTech.AUTO,
                 useProxy: false,
-                headers: []
+                headers: [],
               },
-              startOffset: ''
-            }
-          }
-        }
+              startOffset: '',
+            },
+          },
+        },
       };
       const newState2 = streamDetailsReducer(oldState, action2);
       expect(newState2).toEqual(action2.value.formData.streamDetails);
@@ -237,13 +237,13 @@ describe('Stream details reducer', () => {
       drmLicenseResource,
       drmCertificateResource,
       subtitlesResource,
-      startOffset: ''
+      startOffset: '',
     };
     const blankResource = {
       url: '',
       technology: BaseTech.AUTO,
       useProxy: false,
-      headers: []
+      headers: [],
     };
 
     const newState = streamDetailsReducer(oldState, { type: CLEAR_FORMS });
@@ -251,14 +251,14 @@ describe('Stream details reducer', () => {
       streamResource: blankResource,
       drmLicenseResource: {
         ...blankResource,
-        technology: drmLicenseResource.technology
+        technology: drmLicenseResource.technology,
       },
       drmCertificateResource: {
         ...blankResource,
-        technology: drmCertificateResource.technology
+        technology: drmCertificateResource.technology,
       },
       subtitlesResource: blankResource,
-      startOffset: ''
+      startOffset: '',
     });
   });
 });

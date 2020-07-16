@@ -30,24 +30,24 @@ export interface ClearFormsAction {
 
 export const toggleAdvancedMode = (value: boolean): ToggleAdvancedModeAction => ({
   type: TOGGLE_ADVANCED_MODE,
-  value
+  value,
 });
 
 export const updatePaneSize = (value: number): PaneResizeAction => ({
   type: PANE_RESIZE,
-  value
+  value,
 });
 
 export const updateAdvancedAccordionExpansions = (value: number[]): AdvancedAccordionExpansionAction => ({
   type: ADVANCED_ACCORDION_CHANGE,
-  value
+  value,
 });
 
 export const updateActiveRightPaneTab = (value: number): RightPaneTabChangeAction => ({
   type: RIGHT_PANE_TAB_CHANGE,
-  value
+  value,
 });
 
 export const clearForms = (): ClearFormsAction => ({
-  type: CLEAR_FORMS
+  type: CLEAR_FORMS,
 });

@@ -2,7 +2,7 @@ import {
   PlayerOptionsAction,
   SET_LOG_LEVEL,
   SET_PLAYER_CONFIGURATION,
-  TOGGLE_PLAYBACK_MONITOR
+  TOGGLE_PLAYBACK_MONITOR,
 } from '../actions/playerOptions';
 import { PlayerLogLevel } from '../model/streamDetails';
 import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../actions/history';
@@ -19,7 +19,7 @@ const initialState = {
   logLevel: PlayerLogLevel.ERROR,
   showPlaybackMonitor: false,
   customConfiguration: '',
-  isModified: false
+  isModified: false,
 };
 
 const isInitialState = ({ logLevel, showPlaybackMonitor, customConfiguration }: PlayerOptionsState) =>
@@ -36,19 +36,19 @@ const playerOptions = (
       return {
         ...state,
         logLevel: action.value,
-        isModified: !isInitialState({ ...state, logLevel: action.value })
+        isModified: !isInitialState({ ...state, logLevel: action.value }),
       };
     case TOGGLE_PLAYBACK_MONITOR:
       return {
         ...state,
         showPlaybackMonitor: action.value,
-        isModified: !isInitialState({ ...state, showPlaybackMonitor: action.value })
+        isModified: !isInitialState({ ...state, showPlaybackMonitor: action.value }),
       };
     case SET_PLAYER_CONFIGURATION:
       return {
         ...state,
         customConfiguration: action.value,
-        isModified: !isInitialState({ ...state, customConfiguration: action.value })
+        isModified: !isInitialState({ ...state, customConfiguration: action.value }),
       };
     case CLEAR_FORMS:
       return initialState;
@@ -58,7 +58,7 @@ const playerOptions = (
         if (playerOptions) {
           return {
             ...playerOptions,
-            isModified: !isInitialState({ ...playerOptions, isModified: false })
+            isModified: !isInitialState({ ...playerOptions, isModified: false }),
           };
         }
       }

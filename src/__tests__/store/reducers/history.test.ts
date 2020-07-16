@@ -6,7 +6,7 @@ import {
   HistoryEntryFilter,
   SELECT_HISTORY_ENTRY,
   SET_HISTORY_LIST_FILTER,
-  UPDATE_HISTORY_ENTRY_NAME
+  UPDATE_HISTORY_ENTRY_NAME,
 } from '../../../store/actions/history';
 import { PLAY, PLAYER_ERROR } from '../../../store/actions/player';
 import { BaseTech, PlayerLogLevel } from '../../../store/model/streamDetails';
@@ -15,21 +15,21 @@ const resourceData1 = {
   url: 'abc',
   useProxy: false,
   headers: [],
-  technology: BaseTech.AUTO
+  technology: BaseTech.AUTO,
 };
 
 const resourceData2 = {
   url: 'def',
   useProxy: true,
   headers: [],
-  technology: BaseTech.AUTO
+  technology: BaseTech.AUTO,
 };
 
 const resourceData3 = {
   url: 'ghi',
   useProxy: false,
   headers: [],
-  technology: BaseTech.AUTO
+  technology: BaseTech.AUTO,
 };
 
 const historyEntry1: HistoryEntry = {
@@ -40,14 +40,14 @@ const historyEntry1: HistoryEntry = {
       streamResource: resourceData1,
       drmLicenseResource: resourceData1,
       drmCertificateResource: resourceData1,
-      subtitlesResource: resourceData1
+      subtitlesResource: resourceData1,
     },
     playerOptions: {
       logLevel: PlayerLogLevel.WARNING,
       customConfiguration: '',
-      showPlaybackMonitor: true
-    }
-  }
+      showPlaybackMonitor: true,
+    },
+  },
 };
 
 const historyEntry2: HistoryEntry = {
@@ -58,9 +58,9 @@ const historyEntry2: HistoryEntry = {
       streamResource: resourceData2,
       drmLicenseResource: resourceData2,
       drmCertificateResource: resourceData2,
-      subtitlesResource: resourceData2
-    }
-  }
+      subtitlesResource: resourceData2,
+    },
+  },
 };
 
 const historyEntry3: HistoryEntry = {
@@ -71,9 +71,9 @@ const historyEntry3: HistoryEntry = {
       streamResource: resourceData3,
       drmLicenseResource: resourceData3,
       drmCertificateResource: resourceData3,
-      subtitlesResource: resourceData3
-    }
-  }
+      subtitlesResource: resourceData3,
+    },
+  },
 };
 
 describe('Form history reducer', () => {
@@ -85,7 +85,7 @@ describe('Form history reducer', () => {
     expect(newState).toEqual({
       history: [historyEntry1, historyEntry2],
       historyListFilter: HistoryEntryFilter.BOTH,
-      selectedEntry: historyEntry1
+      selectedEntry: historyEntry1,
     });
   });
   test('The SELECT_HISTORY_ENTRY action unselects an already selected history entry', () => {
@@ -93,14 +93,14 @@ describe('Form history reducer', () => {
       {
         history: [historyEntry1, historyEntry2],
         historyListFilter: HistoryEntryFilter.BOTH,
-        selectedEntry: historyEntry1
+        selectedEntry: historyEntry1,
       },
       { type: SELECT_HISTORY_ENTRY, value: historyEntry1 }
     );
     expect(newState).toEqual({
       history: [historyEntry1, historyEntry2],
       historyListFilter: HistoryEntryFilter.BOTH,
-      selectedEntry: undefined
+      selectedEntry: undefined,
     });
   });
   test('The DELETE_HISTORY_ENTRY removes an entry from the history list and from selection.', () => {
@@ -108,14 +108,14 @@ describe('Form history reducer', () => {
       {
         history: [historyEntry1, historyEntry2],
         selectedEntry: historyEntry1,
-        historyListFilter: HistoryEntryFilter.BOTH
+        historyListFilter: HistoryEntryFilter.BOTH,
       },
       { type: DELETE_HISTORY_ENTRY, value: historyEntry1 }
     );
     expect(newState).toEqual({
       history: [historyEntry2],
       historyListFilter: HistoryEntryFilter.BOTH,
-      selectedEntry: undefined
+      selectedEntry: undefined,
     });
   });
   test('The UPDATE_HISTORY_ENTRY_NAME action sets the name of the selected history entry, and updates the entry in the history list', () => {
@@ -123,7 +123,7 @@ describe('Form history reducer', () => {
       {
         history: [historyEntry1, historyEntry2],
         selectedEntry: historyEntry1,
-        historyListFilter: HistoryEntryFilter.BOTH
+        historyListFilter: HistoryEntryFilter.BOTH,
       },
       { type: UPDATE_HISTORY_ENTRY_NAME, value: 'A new name being typ' }
     );
@@ -138,15 +138,15 @@ describe('Form history reducer', () => {
             streamResource: resourceData1,
             drmLicenseResource: resourceData1,
             drmCertificateResource: resourceData1,
-            subtitlesResource: resourceData1
+            subtitlesResource: resourceData1,
           },
           playerOptions: {
             logLevel: PlayerLogLevel.WARNING,
             customConfiguration: '',
-            showPlaybackMonitor: true
-          }
-        }
-      }
+            showPlaybackMonitor: true,
+          },
+        },
+      },
     });
   });
   test('The DELETE_HISTORY action removes all entries from the history list, and also the selected entry.', () => {
@@ -154,14 +154,14 @@ describe('Form history reducer', () => {
       {
         history: [historyEntry1, historyEntry2],
         selectedEntry: historyEntry1,
-        historyListFilter: HistoryEntryFilter.UNNAMED
+        historyListFilter: HistoryEntryFilter.UNNAMED,
       },
       { type: DELETE_HISTORY }
     );
     expect(newState).toEqual({
       history: [],
       historyListFilter: HistoryEntryFilter.UNNAMED,
-      selectedEntry: undefined
+      selectedEntry: undefined,
     });
   });
   test('The SET_HISTORY_LIST_FILTER changes the current filter for the history list.', () => {
@@ -171,7 +171,7 @@ describe('Form history reducer', () => {
     );
     expect(newState).toEqual({
       history: [historyEntry1, historyEntry2],
-      historyListFilter: HistoryEntryFilter.NAMED
+      historyListFilter: HistoryEntryFilter.NAMED,
     });
   });
   test(
@@ -182,20 +182,20 @@ describe('Form history reducer', () => {
         {
           history: [historyEntry1, historyEntry2],
           selectedEntry: historyEntry1,
-          historyListFilter: HistoryEntryFilter.BOTH
+          historyListFilter: HistoryEntryFilter.BOTH,
         },
         {
           type: PLAY,
           value: {
             source: { streamUrl: '' },
-            historyEntry: historyEntry3
-          }
+            historyEntry: historyEntry3,
+          },
         }
       );
       expect(newState).toEqual({
         history: [historyEntry1, historyEntry2, historyEntry3],
         historyListFilter: HistoryEntryFilter.BOTH,
-        selectedEntry: historyEntry1
+        selectedEntry: historyEntry1,
       });
     }
   );
@@ -206,20 +206,20 @@ describe('Form history reducer', () => {
       {
         const duplicateEntry = {
           ...historyEntry2,
-          timestamp: '2020-01-16T20:36:29.713Z'
+          timestamp: '2020-01-16T20:36:29.713Z',
         };
         const newState = historyReducer(
           {
             history: [historyEntry1, historyEntry2, historyEntry3],
             historyListFilter: HistoryEntryFilter.BOTH,
-            selectedEntry: historyEntry2
+            selectedEntry: historyEntry2,
           },
           {
             type: PLAY,
             value: {
               source: { streamUrl: '' },
-              historyEntry: duplicateEntry
-            }
+              historyEntry: duplicateEntry,
+            },
           }
         );
         expect(newState).toEqual({
@@ -227,33 +227,33 @@ describe('Form history reducer', () => {
           historyListFilter: HistoryEntryFilter.BOTH,
           selectedEntry: {
             ...duplicateEntry,
-            name: historyEntry2.name
-          }
+            name: historyEntry2.name,
+          },
         });
       }
       {
         const duplicateEntry = {
           ...historyEntry2,
-          timestamp: '2020-01-16T20:36:29.713Z'
+          timestamp: '2020-01-16T20:36:29.713Z',
         };
         const newState = historyReducer(
           {
             history: [historyEntry1, historyEntry2, historyEntry3],
             historyListFilter: HistoryEntryFilter.BOTH,
-            selectedEntry: historyEntry1
+            selectedEntry: historyEntry1,
           },
           {
             type: PLAY,
             value: {
               source: { streamUrl: '' },
-              historyEntry: duplicateEntry
-            }
+              historyEntry: duplicateEntry,
+            },
           }
         );
         expect(newState).toEqual({
           history: [historyEntry1, historyEntry3, duplicateEntry],
           historyListFilter: HistoryEntryFilter.BOTH,
-          selectedEntry: historyEntry1
+          selectedEntry: historyEntry1,
         });
       }
     }
@@ -264,11 +264,11 @@ describe('Form history reducer', () => {
       {
         history: [historyEntry1, historyEntry2, historyEntry3],
         selectedEntry: historyEntry1,
-        historyListFilter: HistoryEntryFilter.BOTH
+        historyListFilter: HistoryEntryFilter.BOTH,
       },
       {
         type: PLAYER_ERROR,
-        error
+        error,
       }
     );
     expect(newState).toEqual({
@@ -284,13 +284,13 @@ describe('Form history reducer', () => {
               streamResource: resourceData3,
               drmLicenseResource: resourceData3,
               drmCertificateResource: resourceData3,
-              subtitlesResource: resourceData3
-            }
-          }
-        }
+              subtitlesResource: resourceData3,
+            },
+          },
+        },
       ],
       historyListFilter: HistoryEntryFilter.BOTH,
-      selectedEntry: historyEntry1
+      selectedEntry: historyEntry1,
     });
   });
   // TODO: Select another right pane tab unselects a history entry.

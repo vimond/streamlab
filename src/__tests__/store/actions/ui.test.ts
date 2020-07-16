@@ -8,7 +8,7 @@ import {
   ADVANCED_ACCORDION_CHANGE,
   RIGHT_PANE_TAB_CHANGE,
   clearForms,
-  CLEAR_FORMS
+  CLEAR_FORMS,
 } from '../../../store/actions/ui';
 
 describe('UI Redux actions', () => {

@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 
 const Sidebar: React.FC<{ activeTabIndex: number; handleActiveTabChange: (index: any) => void }> = ({
   activeTabIndex,
-  handleActiveTabChange
+  handleActiveTabChange,
 }) => (
   <Tabs
     flex="1 1 auto"
@@ -39,12 +39,12 @@ const Sidebar: React.FC<{ activeTabIndex: number; handleActiveTabChange: (index:
 );
 
 const mapStateToProps = (state: AppState) => ({
-  activeTabIndex: state.ui.rightPaneActiveTabIndex
+  activeTabIndex: state.ui.rightPaneActiveTabIndex,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   // @ts-ignore Typing not supported for thunk actions.
-  handleActiveTabChange: (index: number) => dispatch(updateActiveRightPaneTab(index))
+  handleActiveTabChange: (index: number) => dispatch(updateActiveRightPaneTab(index)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

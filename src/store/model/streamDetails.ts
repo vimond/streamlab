@@ -1,33 +1,33 @@
 import {
   streamTypes,
   isMicrosoft,
-  isSafari
+  isSafari,
   // @ts-ignore
 } from 'vimond-replay/components/player/VideoStreamer/CompoundVideoStreamer/helpers.js';
 import { PlaybackSource } from 'vimond-replay/default-player/Replay';
 import { PlayerConfiguration } from 'vimond-replay';
 
 export enum BaseTech {
-  AUTO
+  AUTO,
 }
 
 export enum StreamTechnology {
   DASH = 1,
   HLS,
   PROGRESSIVE,
-  MSS
+  MSS,
 }
 
 export enum DrmTechnology {
   WIDEVINE = 1,
   PLAYREADY,
-  FAIRPLAY
+  FAIRPLAY,
 }
 
 export enum SubtitlesFormat {
   WEBVTT = 1,
   TTML,
-  SRT
+  SRT,
 }
 
 export type AutoTechnology<T> = BaseTech | T;
@@ -57,7 +57,7 @@ export enum PlayerLogLevel {
   ERROR,
   WARNING,
   INFO,
-  DEBUG
+  DEBUG,
 }
 
 type PlayerOptions = {
@@ -70,72 +70,72 @@ const contentTypes = {
   [StreamTechnology.DASH]: 'application/dash+xml',
   [StreamTechnology.HLS]: 'application/x-mpegurl',
   [StreamTechnology.PROGRESSIVE]: 'video/mp4',
-  [StreamTechnology.MSS]: 'application/vnd.ms-sstr+xml'
+  [StreamTechnology.MSS]: 'application/vnd.ms-sstr+xml',
 };
 
 const drmTypes = {
   [DrmTechnology.WIDEVINE]: 'com.widevine.alpha',
   [DrmTechnology.PLAYREADY]: 'com.microsoft.playready',
-  [DrmTechnology.FAIRPLAY]: 'com.apple.fps.1_0'
+  [DrmTechnology.FAIRPLAY]: 'com.apple.fps.1_0',
 };
 
 const subtitlesContentTypes = {
   [SubtitlesFormat.WEBVTT]: 'text/vtt',
   [SubtitlesFormat.TTML]: 'application/ttml+xml',
-  [SubtitlesFormat.SRT]: 'text/srt'
+  [SubtitlesFormat.SRT]: 'text/srt',
 };
 
 export const streamTechLabels = [
   {
     key: BaseTech.AUTO,
-    label: 'Auto'
+    label: 'Auto',
   },
   {
     key: StreamTechnology.DASH,
-    label: 'MPEG-DASH'
+    label: 'MPEG-DASH',
   },
   {
     key: StreamTechnology.HLS,
-    label: 'HLS'
+    label: 'HLS',
   },
   {
     key: StreamTechnology.PROGRESSIVE,
-    label: 'Progressive video'
-  }
+    label: 'Progressive video',
+  },
 ];
 
 export const drmTechLabels = [
   {
     key: DrmTechnology.WIDEVINE,
-    label: 'Widevine'
+    label: 'Widevine',
   },
   {
     key: DrmTechnology.PLAYREADY,
-    label: 'PlayReady'
+    label: 'PlayReady',
   },
   {
     key: DrmTechnology.FAIRPLAY,
-    label: 'FairPlay'
-  }
+    label: 'FairPlay',
+  },
 ];
 
 export const subtitlesFormatLabels = [
   {
     key: BaseTech.AUTO,
-    label: 'Auto'
+    label: 'Auto',
   },
   {
     key: SubtitlesFormat.WEBVTT,
-    label: 'WebVTT'
+    label: 'WebVTT',
   },
   {
     key: SubtitlesFormat.TTML,
-    label: 'TTML (DXFP)'
+    label: 'TTML (DXFP)',
   } /*, // Not supported yet:
   {
     key: SubtitlesFormat.SRT,
     label: 'SRT (SubRip)'
-  }*/
+  }*/,
 ];
 
 const getContentType = (streamType?: { contentTypes: string[] }) => {
@@ -146,7 +146,7 @@ const getContentType = (streamType?: { contentTypes: string[] }) => {
 
 export const detectStreamType = (streamUrl: string) =>
   // @ts-ignore
-  streamTypes.find(type => {
+  streamTypes.find((type) => {
     const { urlMatch, urlNotMatch } = type;
     if (urlNotMatch) {
       return urlMatch.test(streamUrl) && !urlNotMatch.test(streamUrl);
@@ -183,7 +183,7 @@ export const createPlayerSource = ({
   drmLicenseResource,
   drmCertificateResource,
   subtitlesResource,
-  startOffset
+  startOffset,
 }: StreamDetails): PlaybackSource | undefined => {
   const streamUrl = streamResource.url;
   const startPosition = startOffset === '' ? undefined : startOffset;
@@ -196,7 +196,7 @@ export const createPlayerSource = ({
       const source: PlaybackSource = {
         streamUrl,
         contentType,
-        startPosition
+        startPosition,
       };
 
       if (drmLicenseResource) {
@@ -209,7 +209,7 @@ export const createPlayerSource = ({
 
           if (drmLicenseResource && drmLicenseResource.headers.length) {
             const headers: { [k: string]: string } = {};
-            drmLicenseResource.headers.forEach(h => (headers[h.name] = h.value));
+            drmLicenseResource.headers.forEach((h) => (headers[h.name] = h.value));
             source.licenseAcquisitionDetails.licenseRequestHeaders = headers;
           }
 

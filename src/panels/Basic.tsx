@@ -14,20 +14,20 @@ type StreamTech = AutoTechnology<StreamTechnology>;
 const techOptions = [
   {
     key: BaseTech.AUTO,
-    label: 'Autodetect stream technology'
+    label: 'Autodetect stream technology',
   },
   {
     key: StreamTechnology.DASH,
-    label: 'MPEG-DASH'
+    label: 'MPEG-DASH',
   },
   {
     key: StreamTechnology.HLS,
-    label: 'HLS'
+    label: 'HLS',
   },
   {
     key: StreamTechnology.PROGRESSIVE,
-    label: 'Progressive video'
-  }
+    label: 'Progressive video',
+  },
 ];
 
 const getLabel = (tech: StreamTech) => (techOptions.find(({ key }) => key === tech) || techOptions[0]).label;
@@ -45,7 +45,7 @@ const Basic: React.FC<Props> = ({
   handleStreamUrlChange,
   handleStreamTechnologyChange,
   handleFormSubmit,
-  handlePlay
+  handlePlay,
 }) => (
   <Box as="form" my={8} onSubmit={handleFormSubmit}>
     <Header level={Level.H3} fontSize="md" textAlign="center">
@@ -83,20 +83,20 @@ const Basic: React.FC<Props> = ({
 );
 
 const mapStateToProps = (state: AppState) => ({
-  streamResource: state.streamDetails.streamResource
+  streamResource: state.streamDetails.streamResource,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   handleStreamUrlChange: (evt: React.ChangeEvent<HTMLInputElement>) =>
     dispatch(
       updateStreamDetailsField({
-        streamResource: { url: evt.target.value }
+        streamResource: { url: evt.target.value },
       })
     ),
   handleStreamTechnologyChange: (technology: StreamTech) =>
     dispatch(
       updateStreamDetailsField({
-        streamResource: { technology }
+        streamResource: { technology },
       })
     ),
   // @ts-ignore Typing not supported for thunk actions.
@@ -105,7 +105,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     evt.preventDefault();
     // @ts-ignore
     dispatch(playBasic);
-  }
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Basic);

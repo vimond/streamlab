@@ -57,31 +57,31 @@ export const updateStreamDetailsField = (resourceUpdate: ResourceUpdate): Stream
   'streamResource' in resourceUpdate
     ? {
         type: STREAM_RESOURCE_FIELD_CHANGE,
-        value: resourceUpdate.streamResource
+        value: resourceUpdate.streamResource,
       }
     : 'drmLicenseResource' in resourceUpdate
     ? {
         type: DRM_LICENSE_RESOURCE_FIELD_CHANGE,
-        value: resourceUpdate.drmLicenseResource
+        value: resourceUpdate.drmLicenseResource,
       }
     : 'drmCertificateResource' in resourceUpdate
     ? {
         type: DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE,
-        value: resourceUpdate.drmCertificateResource
+        value: resourceUpdate.drmCertificateResource,
       }
     : 'subtitlesResource' in resourceUpdate
     ? {
         type: SUBTITLES_RESOURCE_FIELD_CHANGE,
-        value: resourceUpdate.subtitlesResource
+        value: resourceUpdate.subtitlesResource,
       }
     : {
         type: START_OFFSET_FIELD_CHANGE,
-        value: resourceUpdate.startOffset
+        value: resourceUpdate.startOffset,
       };
 
 export const setBrowserFeatures = (userAgent: string): SetBrowserFeaturesAction => ({
   type: SET_BROWSER_FEATURES,
   value: {
-    drmTechnology: detectDrmType(userAgent)
-  }
+    drmTechnology: detectDrmType(userAgent),
+  },
 });

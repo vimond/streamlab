@@ -9,7 +9,7 @@ const initialState = {
   customConfiguration: '',
   showPlaybackMonitor: false,
   logLevel: PlayerLogLevel.ERROR,
-  isModified: false
+  isModified: false,
 };
 
 describe('Player options reducer', () => {
@@ -19,7 +19,7 @@ describe('Player options reducer', () => {
       customConfiguration: '',
       showPlaybackMonitor: false,
       logLevel: PlayerLogLevel.INFO,
-      isModified: true
+      isModified: true,
     });
   });
   test('Toggling the playback monitor state', () => {
@@ -28,14 +28,14 @@ describe('Player options reducer', () => {
       customConfiguration: '',
       showPlaybackMonitor: true,
       logLevel: PlayerLogLevel.ERROR,
-      isModified: true
+      isModified: true,
     });
     const newState2 = playerOptionsReducer(newState1, { type: TOGGLE_PLAYBACK_MONITOR, value: false });
     expect(newState2).toEqual({
       customConfiguration: '',
       showPlaybackMonitor: false,
       logLevel: PlayerLogLevel.ERROR,
-      isModified: false
+      isModified: false,
     });
   });
   test('Updating the JSON string representation state', () => {
@@ -44,14 +44,14 @@ describe('Player options reducer', () => {
       customConfiguration: '{"key":"value"}',
       showPlaybackMonitor: false,
       logLevel: PlayerLogLevel.ERROR,
-      isModified: true
+      isModified: true,
     });
     const newState2 = playerOptionsReducer(newState1, { type: SET_PLAYER_CONFIGURATION, value: '' });
     expect(newState2).toEqual({
       customConfiguration: '',
       showPlaybackMonitor: false,
       logLevel: PlayerLogLevel.ERROR,
-      isModified: false
+      isModified: false,
     });
   });
   test('Restoring a history entry should overwrite all player options.', () => {
@@ -59,7 +59,7 @@ describe('Player options reducer', () => {
       url: '',
       technology: BaseTech.AUTO,
       headers: [],
-      useProxy: false
+      useProxy: false,
     };
     const historyEntry: AdvancedHistoryEntry = {
       timestamp: '2020-01-12T19:11:02.837Z',
@@ -70,29 +70,29 @@ describe('Player options reducer', () => {
             url: 'http://example.com/my-good-old-stream.mpd',
             technology: StreamTechnology.MSS,
             headers: [],
-            useProxy: true
+            useProxy: true,
           },
           drmLicenseResource: emptyResource,
           drmCertificateResource: emptyResource,
           subtitlesResource: emptyResource,
-          startOffset: ''
+          startOffset: '',
         },
         playerOptions: {
           customConfiguration: '{"key":"value"}',
           logLevel: PlayerLogLevel.WARNING,
-          showPlaybackMonitor: false
-        }
-      }
+          showPlaybackMonitor: false,
+        },
+      },
     };
     const action: HistoryEntryAction = {
       type: RESTORE_HISTORY_ENTRY,
-      value: historyEntry
+      value: historyEntry,
     };
     const oldState = {
       customConfiguration: '',
       showPlaybackMonitor: true,
       logLevel: PlayerLogLevel.ERROR,
-      isModified: true
+      isModified: true,
     };
     const newState = playerOptionsReducer(oldState, action);
     expect(newState).toEqual({ ...historyEntry.formData.playerOptions, isModified: true });
@@ -102,14 +102,14 @@ describe('Player options reducer', () => {
       customConfiguration: '{"key":"value"}',
       showPlaybackMonitor: true,
       logLevel: PlayerLogLevel.INFO,
-      isModified: true
+      isModified: true,
     };
     const newState = playerOptionsReducer(oldState, { type: CLEAR_FORMS });
     expect(newState).toEqual({
       logLevel: PlayerLogLevel.ERROR,
       showPlaybackMonitor: false,
       customConfiguration: '',
-      isModified: false
+      isModified: false,
     });
   });
 });

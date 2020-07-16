@@ -16,7 +16,7 @@ import {
   Input,
   List,
   PseudoBox,
-  Text
+  Text,
 } from '@chakra-ui/core';
 import Header, { Level } from '../components/Header';
 import { HistoryEntry, SimpleStreamResource } from '../store/model/history';
@@ -26,7 +26,7 @@ import {
   HistoryEntryFilter,
   restoreHistoryEntry,
   selectHistoryEntry,
-  updateSelectedHistoryEntryName
+  updateSelectedHistoryEntryName,
 } from '../store/actions/history';
 import {
   BaseTech,
@@ -40,7 +40,7 @@ import {
   streamTechLabels,
   StreamTechnology,
   SubtitlesFormat,
-  subtitlesFormatLabels
+  subtitlesFormatLabels,
 } from '../store/model/streamDetails';
 import { AppState } from '../store/reducers';
 import { connect } from 'react-redux';
@@ -79,7 +79,7 @@ const formatLabel = (entry: HistoryEntry) => {
 const HistoryListItem: React.FC<{ entry: HistoryEntry; isSelected: boolean; handleClick: () => void }> = ({
   entry,
   isSelected,
-  handleClick
+  handleClick,
 }) => (
   <PseudoBox
     as="li"
@@ -111,7 +111,7 @@ const inputStyle = {
   border: 'none',
   height: 'auto',
   lineHeight: 'normal',
-  marginBottom: '0.2rem'
+  marginBottom: '0.2rem',
 };
 
 const renderHeaderRow = ({ id, name, value }: Header) => (
@@ -163,7 +163,7 @@ const FormHistory: React.FC<Props> = ({
   handleRestoreEntryClick,
   handleDeleteEntryClick,
   handleEntryLabelChange,
-  handleDeleteHistory
+  handleDeleteHistory,
 }) => {
   const [isOpen, setIsOpen] = React.useState<boolean>();
   const handleCloseClick = () => setIsOpen(false);
@@ -184,7 +184,7 @@ const FormHistory: React.FC<Props> = ({
           {history
             .slice(0)
             .reverse()
-            .map(entry => (
+            .map((entry) => (
               <HistoryListItem
                 key={entry.timestamp}
                 entry={entry}
@@ -333,7 +333,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     dispatch(updateSelectedHistoryEntryName(evt.target.value)),
   handleRestoreEntryClick: (entry: HistoryEntry) => dispatch(restoreHistoryEntry(entry)),
   handleDeleteEntryClick: (entry: HistoryEntry) => dispatch(deleteHistoryEntry(entry)),
-  handleDeleteHistory: () => dispatch(deleteHistory())
+  handleDeleteHistory: () => dispatch(deleteHistory()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormHistory);

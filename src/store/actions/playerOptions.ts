@@ -23,15 +23,15 @@ export type PlayerOptionsAction = SetLogLevelAction | TogglePlaybackMonitorActio
 
 export const setLogLevel = (value: PlayerLogLevel): SetLogLevelAction => ({
   type: SET_LOG_LEVEL,
-  value
+  value,
 });
 
 export const togglePlaybackMonitor = (value: boolean): TogglePlaybackMonitorAction => ({
   type: TOGGLE_PLAYBACK_MONITOR,
-  value
+  value,
 });
 
 export const setPlayerConfiguration = (value: string): SetPlayerConfigurationAction => ({
   type: SET_PLAYER_CONFIGURATION,
-  value
+  value,
 });

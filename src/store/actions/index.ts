@@ -6,7 +6,7 @@ import {
   DeleteHistoryAction,
   HistoryEntryAction,
   SetHistoryFilterAction,
-  UpdateSelectedHistoryEntryNameAction
+  UpdateSelectedHistoryEntryNameAction,
 } from './history';
 
 export type Action =

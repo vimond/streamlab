@@ -55,7 +55,7 @@ class App extends Component<Props> {
 
 const mapStateToProps = (state: AppState) => ({
   advancedMode: state.ui.advancedMode,
-  rightPaneWidth: state.ui.rightPaneWidth
+  rightPaneWidth: state.ui.rightPaneWidth,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   },
   initializeFeatureState: (userAgent: string) => {
     dispatch(setBrowserFeatures(userAgent));
-  }
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

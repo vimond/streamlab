@@ -5,7 +5,7 @@ import {
   PLAY,
   STOP,
   handlePlayerError,
-  PLAYER_ERROR
+  PLAYER_ERROR,
 } from '../../../store/actions/player';
 import { BaseTech, DrmTechnology, PlayerLogLevel } from '../../../store/model/streamDetails';
 
@@ -13,36 +13,36 @@ const basicFormState = {
   streamDetails: {
     streamResource: {
       url: 'https://example.com/stream.mpd',
-      technology: BaseTech.AUTO
-    }
+      technology: BaseTech.AUTO,
+    },
   },
   ui: {
     advancedMode: false,
-    expandedAdvancedAccordionIndices: []
+    expandedAdvancedAccordionIndices: [],
   },
   playerOptions: {
     logLevel: PlayerLogLevel.DEBUG,
     showPlaybackMonitor: false,
-    customConfiguration: ''
-  }
+    customConfiguration: '',
+  },
 };
 
 const basicFormStateWithoutStreamUrl = {
   streamDetails: {
     streamResource: {
       url: '',
-      technology: BaseTech.AUTO
-    }
+      technology: BaseTech.AUTO,
+    },
   },
   ui: {
     advancedMode: false,
-    expandedAdvancedAccordionIndices: []
+    expandedAdvancedAccordionIndices: [],
   },
   playerOptions: {
     logLevel: PlayerLogLevel.DEBUG,
     showPlaybackMonitor: false,
-    customConfiguration: ''
-  }
+    customConfiguration: '',
+  },
 };
 
 const advancedFormState = {
@@ -51,7 +51,7 @@ const advancedFormState = {
       url: 'https://example.com/stream.m3u8',
       technology: BaseTech.AUTO,
       headers: [{ name: 'X-Header', value: '123' }],
-      useProxy: true
+      useProxy: true,
     },
     drmLicenseResource: {
       url: 'https://example.com/license',
@@ -59,29 +59,29 @@ const advancedFormState = {
       headers: [
         {
           name: 'Authorization',
-          value: 'Token'
+          value: 'Token',
         },
         {
           name: 'Something',
-          value: 'Somewhat'
-        }
-      ]
+          value: 'Somewhat',
+        },
+      ],
     },
     drmCertificateResource: {
       url: 'https://example.com/certificate',
-      technology: DrmTechnology.WIDEVINE
+      technology: DrmTechnology.WIDEVINE,
     },
     subtitlesResource: {
       url: 'https://example.com/subs.vtt',
-      technology: BaseTech.AUTO
+      technology: BaseTech.AUTO,
     },
-    startOffset: 123.456
+    startOffset: 123.456,
   },
   playerOptions: {
     logLevel: PlayerLogLevel.WARNING,
     showPlaybackMonitor: true,
-    customConfiguration: '{"some":"value"}'
-  }
+    customConfiguration: '{"some":"value"}',
+  },
 };
 
 const isoTimestamp = '2020-01-12T16:46:58.596Z';
@@ -97,12 +97,9 @@ describe('Player Redux actions', () => {
   afterAll(() => {
     global.Date = originalDate;
   });
-  describe('Playback start mapping form details to Replay source', function() {
+  describe('Playback start mapping form details to Replay source', function () {
     test('Basic playback start only applying visible stream details', () => {
-      const getState = jest
-        .fn()
-        .mockReturnValueOnce(basicFormState)
-        .mockReturnValue(advancedFormState);
+      const getState = jest.fn().mockReturnValueOnce(basicFormState).mockReturnValue(advancedFormState);
       const dispatch = jest.fn();
 
       playBasic(dispatch, getState);
@@ -113,7 +110,7 @@ describe('Player Redux actions', () => {
         value: {
           source: {
             streamUrl: 'https://example.com/stream.m3u8',
-            contentType: 'application/x-mpegurl'
+            contentType: 'application/x-mpegurl',
           },
           historyEntry: {
             timestamp: isoTimestamp,
@@ -122,28 +119,28 @@ describe('Player Redux actions', () => {
               streamDetails: {
                 streamResource: {
                   url: 'https://example.com/stream.m3u8',
-                  technology: BaseTech.AUTO
-                }
-              }
-            }
-          }
-        }
+                  technology: BaseTech.AUTO,
+                },
+              },
+            },
+          },
+        },
       });
       expect(dispatch).toHaveBeenCalledWith({
         type: PLAY,
         value: {
           source: {
             streamUrl: 'https://example.com/stream.mpd',
-            contentType: 'application/dash+xml'
+            contentType: 'application/dash+xml',
           },
           historyEntry: {
             timestamp: isoTimestamp,
             name: '',
             formData: {
-              streamDetails: basicFormState.streamDetails
-            }
-          }
-        }
+              streamDetails: basicFormState.streamDetails,
+            },
+          },
+        },
       });
     });
     test('Advanced playback start applying all advanced form details', () => {
@@ -154,7 +151,7 @@ describe('Player Redux actions', () => {
 
       const historyStreamDetails = {
         ...advancedFormState.streamDetails,
-        startOffset: ''
+        startOffset: '',
       };
 
       expect(dispatch).toHaveBeenCalledWith({
@@ -168,36 +165,36 @@ describe('Player Redux actions', () => {
             licenseAcquisitionDetails: {
               licenseRequestHeaders: {
                 Authorization: 'Token',
-                Something: 'Somewhat'
+                Something: 'Somewhat',
               },
-              widevineServiceCertificateUrl: 'https://example.com/certificate'
+              widevineServiceCertificateUrl: 'https://example.com/certificate',
             },
             textTracks: [
               {
                 src: 'https://example.com/subs.vtt',
-                contentType: 'text/vtt'
-              }
+                contentType: 'text/vtt',
+              },
             ],
-            startPosition: 123.456
+            startPosition: 123.456,
           },
           options: {
             some: 'value',
             videoStreamer: {
-              logLevel: 'WARNING'
+              logLevel: 'WARNING',
             },
             playbackMonitor: {
-              visibleAtStart: true
-            }
+              visibleAtStart: true,
+            },
           },
           historyEntry: {
             timestamp: isoTimestamp,
             name: '',
             formData: {
               streamDetails: historyStreamDetails,
-              playerOptions: advancedFormState.playerOptions
-            }
-          }
-        }
+              playerOptions: advancedFormState.playerOptions,
+            },
+          },
+        },
       });
     });
   });
@@ -206,8 +203,8 @@ describe('Player Redux actions', () => {
       ...advancedFormState,
       streamDetails: {
         ...advancedFormState.streamDetails,
-        startOffset: ''
-      }
+        startOffset: '',
+      },
     };
     const getState = jest.fn().mockReturnValue(s);
     const dispatch = jest.fn();
@@ -223,16 +220,16 @@ describe('Player Redux actions', () => {
       licenseAcquisitionDetails: {
         licenseRequestHeaders: {
           Authorization: 'Token',
-          Something: 'Somewhat'
+          Something: 'Somewhat',
         },
-        widevineServiceCertificateUrl: 'https://example.com/certificate'
+        widevineServiceCertificateUrl: 'https://example.com/certificate',
       },
       textTracks: [
         {
           src: 'https://example.com/subs.vtt',
-          contentType: 'text/vtt'
-        }
-      ]
+          contentType: 'text/vtt',
+        },
+      ],
     });
     expect(result.value.source.startPosition).toBeUndefined();
   });
@@ -271,10 +268,10 @@ describe('Player Redux actions', () => {
         loader: {},
         data: [
           {
-            url: 'https://example.com'
-          }
+            url: 'https://example.com',
+          },
         ],
-        context: {}
+        context: {},
       };
       // @ts-ignore
       err.severity = 'FATAL';
@@ -288,9 +285,9 @@ describe('Player Redux actions', () => {
       expect(error.sourceError).toEqual({
         data: [
           {
-            url: 'https://example.com'
-          }
-        ]
+            url: 'https://example.com',
+          },
+        ],
       });
     });
     test('Wrapping and passing on errors not being instances of Error', () => {

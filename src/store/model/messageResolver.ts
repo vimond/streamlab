@@ -5,7 +5,7 @@ export enum MessageLevel {
   INFO = 'info',
   SUCCESS = 'success',
   WARNING = 'warning',
-  ERROR = 'error'
+  ERROR = 'error',
 }
 
 export type Message = {
@@ -18,7 +18,7 @@ export type MessageRule = {
   displayCondition: ({
     action,
     prevState,
-    nextState
+    nextState,
   }: {
     action: Action;
     prevState: AppState | undefined;
@@ -36,5 +36,5 @@ export type MessageResolver = (
 
 export const resolveMessages: MessageResolver = (messageRules, prevState, action, nextState) =>
   messageRules
-    .filter(rule => rule.displayCondition({ action, prevState, nextState }))
-    .map(rule => (typeof rule.message === 'function' ? rule.message(nextState, action) : rule.message));
+    .filter((rule) => rule.displayCondition({ action, prevState, nextState }))
+    .map((rule) => (typeof rule.message === 'function' ? rule.message(nextState, action) : rule.message));

@@ -8,7 +8,7 @@ import {
   getLabel,
   StreamTechnology,
   SubtitlesFormat,
-  subtitlesFormatLabels
+  subtitlesFormatLabels,
 } from './streamDetails';
 import { PLAYER_ERROR } from '../actions/player';
 
@@ -19,8 +19,8 @@ export const messages: MessageRule[] = [
       nextState.streamDetails.streamResource.url === '' && nextState.history.history.length === 0,
     message: {
       level: MessageLevel.INFO,
-      text: 'Welcome to Streamlab'
-    }
+      text: 'Welcome to Streamlab',
+    },
   },
   {
     id: 'start-basic',
@@ -28,8 +28,8 @@ export const messages: MessageRule[] = [
       nextState.streamDetails.streamResource.url === '' && !nextState.ui.advancedMode,
     message: {
       level: MessageLevel.INFO,
-      text: 'Fill in an URL to the stream you want to test, and press Play. Flip the Advanced switch for more options.'
-    }
+      text: 'Fill in an URL to the stream you want to test, and press Play. Flip the Advanced switch for more options.',
+    },
   },
   {
     id: 'start-advanced',
@@ -37,8 +37,8 @@ export const messages: MessageRule[] = [
     message: {
       level: MessageLevel.INFO,
       text:
-        'Fill in an URL to the stream you want to test. Supplement with DRM information if required, or subtitle files if desired. Requests can have headers added for e.g. authorization.'
-    }
+        'Fill in an URL to the stream you want to test. Supplement with DRM information if required, or subtitle files if desired. Requests can have headers added for e.g. authorization.',
+    },
   },
   {
     id: 'stream-autodetect',
@@ -53,15 +53,15 @@ export const messages: MessageRule[] = [
           level: MessageLevel.INFO,
           text: `Auto detected stream type is ${streamType.label}. ${
             opened ? '' : 'Press Play to load it into the player.'
-          }`
+          }`,
         };
       } else {
         return {
           level: MessageLevel.WARNING,
-          text: `Unable to detect stream type based on URL content. Please select the technology from the dropdown.`
+          text: `Unable to detect stream type based on URL content. Please select the technology from the dropdown.`,
         };
       }
-    }
+    },
   },
   {
     id: 'subtitles-autodetect',
@@ -73,15 +73,15 @@ export const messages: MessageRule[] = [
       if (subtitlesType) {
         return {
           level: MessageLevel.INFO,
-          text: `Auto detected subtitles type is ${getLabel(subtitlesType, subtitlesFormatLabels)}.`
+          text: `Auto detected subtitles type is ${getLabel(subtitlesType, subtitlesFormatLabels)}.`,
         };
       } else {
         return {
           level: MessageLevel.WARNING,
-          text: `Unable to detect subtitles type based on URL content. Please select the technology from the dropdown.`
+          text: `Unable to detect subtitles type based on URL content. Please select the technology from the dropdown.`,
         };
       }
-    }
+    },
   },
   {
     id: 'subtitles-incompatible',
@@ -97,8 +97,8 @@ export const messages: MessageRule[] = [
       ),
     message: {
       level: MessageLevel.WARNING,
-      text: 'The subtitles format, TTML, is only supported for DASH streams through Shaka Player.'
-    }
+      text: 'The subtitles format, TTML, is only supported for DASH streams through Shaka Player.',
+    },
   },
   {
     id: 'basic-play',
@@ -107,17 +107,18 @@ export const messages: MessageRule[] = [
       nextState.streamDetails.streamResource.url !== '',
     message: {
       level: MessageLevel.INFO,
-      text: 'Press Play to load the specified stream URL in the player.'
-    }
+      text: 'Press Play to load the specified stream URL in the player.',
+    },
   },
   {
     id: 'player-error',
     displayCondition: ({ action }) => action.type === PLAYER_ERROR,
     message: (nextState, action) => ({
       level: MessageLevel.ERROR,
-      text: `Player error: ${action.type === PLAYER_ERROR &&
-        action.error.message}. The full error object is logged to the browser console.`
-    })
+      text: `Player error: ${
+        action.type === PLAYER_ERROR && action.error.message
+      }. The full error object is logged to the browser console.`,
+    }),
   },
   {
     id: 'drm-auto-detect',
@@ -127,8 +128,8 @@ export const messages: MessageRule[] = [
       text: `This browser supports ${getLabel(
         nextState.streamDetails.drmLicenseResource.technology,
         drmTechLabels
-      )} for DRM playback.`
-    })
+      )} for DRM playback.`,
+    }),
   },
   {
     id: 'drm-fairplay-certificate',
@@ -140,8 +141,8 @@ export const messages: MessageRule[] = [
     message: {
       level: MessageLevel.WARNING,
       text:
-        'When playing a stream with FairPlay DRM encryption, a certificate URL for the content provider needs to be specified.'
-    }
+        'When playing a stream with FairPlay DRM encryption, a certificate URL for the content provider needs to be specified.',
+    },
   },
   {
     id: 'drm-widevine-certificate',
@@ -153,8 +154,8 @@ export const messages: MessageRule[] = [
     message: {
       level: MessageLevel.INFO,
       text:
-        "When no DRM certificate URL is specified, the Widevine service's certificate will be fetched from the same URL as the DRM license."
-    }
+        "When no DRM certificate URL is specified, the Widevine service's certificate will be fetched from the same URL as the DRM license.",
+    },
   },
   {
     id: 'player-options-invalid-json',
@@ -176,7 +177,7 @@ export const messages: MessageRule[] = [
     },
     message: {
       level: MessageLevel.WARNING,
-      text: 'The player configuration overrides are not specified as valid JSON, and will be ignored.'
-    }
-  }
+      text: 'The player configuration overrides are not specified as valid JSON, and will be ignored.',
+    },
+  },
 ];

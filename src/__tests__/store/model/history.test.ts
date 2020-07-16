@@ -5,13 +5,13 @@ const base = {
   d: {
     e: 1,
     f: 2,
-    g: 'bar'
+    g: 'bar',
   },
   h: {
     i: null,
-    j: '42'
+    j: '42',
   },
-  k: []
+  k: [],
 };
 
 // Identical
@@ -20,14 +20,14 @@ const equal1 = {
   d: {
     e: 1,
     f: 2,
-    g: 'bar'
+    g: 'bar',
   },
   h: {
     i: null,
-    j: '42'
+    j: '42',
   },
   k: [],
-  l: ''
+  l: '',
 };
 
 // Undefined/null prop removed, but in array it would have significance.
@@ -36,11 +36,11 @@ const equal2 = {
   d: {
     e: 1,
     f: 2,
-    g: 'bar'
+    g: 'bar',
   },
   h: {
-    j: '42'
-  }
+    j: '42',
+  },
 };
 
 // Prop order changed.
@@ -48,15 +48,15 @@ const equal3 = {
   d: {
     e: 1,
     g: 'bar',
-    f: 2
+    f: 2,
   },
   a: [{ b: true }, { b: undefined }, { c: 'foo' }],
   h: {
     i: null,
-    j: '42'
+    j: '42',
   },
   k: [],
-  l: ''
+  l: '',
 };
 
 // Primitive value inequality 1.
@@ -65,14 +65,14 @@ const unequal1 = {
   d: {
     e: 1,
     f: 2,
-    g: 'bar'
+    g: 'bar',
   },
   h: {
     i: null,
-    j: '42'
+    j: '42',
   },
   k: [],
-  l: ''
+  l: '',
 };
 
 // Primitive value inequality 2.
@@ -81,14 +81,14 @@ const unequal2 = {
   d: {
     e: 1,
     f: 3,
-    g: 'bar'
+    g: 'bar',
   },
   h: {
     i: null,
-    j: '42'
+    j: '42',
   },
   k: [],
-  l: ''
+  l: '',
 };
 
 // Top level prop missing.
@@ -97,10 +97,10 @@ const unequal3 = {
   d: {
     e: 1,
     f: 2,
-    g: 'bar'
+    g: 'bar',
   },
   k: [],
-  l: ''
+  l: '',
 };
 
 // Obvious inequality
@@ -109,7 +109,7 @@ const unequal4 = {
   d: {},
   h: {},
   k: [],
-  l: ''
+  l: '',
 };
 
 // Changed array order is breaking equality. Arrays are currently used for
@@ -119,14 +119,14 @@ const unequal5 = {
   d: {
     e: 1,
     f: 2,
-    g: 'bar'
+    g: 'bar',
   },
   h: {
     i: null,
-    j: '42'
+    j: '42',
   },
   k: [],
-  l: ''
+  l: '',
 };
 
 describe('Form history model', () => {

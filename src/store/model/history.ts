@@ -58,13 +58,9 @@ export const isDeepEqual = (a: unknown, b: unknown): boolean => {
     }
   } else if (isObject(a) && isObject(b)) {
     // @ts-ignore Object (indexed property) type guards for the unknown type appears to not be supported.
-    const entriesA = Object.entries(a)
-      .filter(hasValue)
-      .sort(sortByKey);
+    const entriesA = Object.entries(a).filter(hasValue).sort(sortByKey);
     // @ts-ignore
-    const entriesB = Object.entries(b)
-      .filter(hasValue)
-      .sort(sortByKey);
+    const entriesB = Object.entries(b).filter(hasValue).sort(sortByKey);
     if (entriesA.length !== entriesB.length) {
       return false;
     }
@@ -78,14 +74,14 @@ export const isDeepEqual = (a: unknown, b: unknown): boolean => {
 };
 
 export const addOrUpdateEntry = (entries: HistoryEntry[], newEntry: HistoryEntry) => {
-  const foundIndex = entries.findIndex(e => isDeepEqual(e.formData, newEntry.formData));
+  const foundIndex = entries.findIndex((e) => isDeepEqual(e.formData, newEntry.formData));
   if (foundIndex !== -1) {
     const name = entries[foundIndex].name;
     const clonedEntries = entries.slice(0);
     clonedEntries.splice(foundIndex, 1);
     return clonedEntries.concat({
       ...newEntry,
-      name
+      name,
     });
   } else {
     return entries.concat(newEntry);

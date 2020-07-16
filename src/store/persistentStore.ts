@@ -9,7 +9,7 @@ import rootReducer from './reducers';
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['player', 'information']
+  blacklist: ['player', 'information'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

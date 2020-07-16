@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   player,
   playerOptions,
   history,
-  information: () => ({})
+  information: () => ({}),
 });
 
 const getRootState = createRootReducerWithInformation(messages, resolveMessages);

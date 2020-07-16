@@ -3,7 +3,7 @@ import {
   ADVANCED_ACCORDION_CHANGE,
   PANE_RESIZE,
   RIGHT_PANE_TAB_CHANGE,
-  TOGGLE_ADVANCED_MODE
+  TOGGLE_ADVANCED_MODE,
 } from '../../../store/actions/ui';
 import { RESTORE_HISTORY_ENTRY } from '../../../store/actions/history';
 import { BaseTech, PlayerLogLevel } from '../../../store/model/streamDetails';
@@ -13,7 +13,7 @@ const resourceData = {
   url: 'abc',
   useProxy: false,
   headers: [],
-  technology: BaseTech.AUTO
+  technology: BaseTech.AUTO,
 };
 
 const historyEntry: HistoryEntry = {
@@ -24,14 +24,14 @@ const historyEntry: HistoryEntry = {
       streamResource: resourceData,
       drmLicenseResource: resourceData,
       drmCertificateResource: resourceData,
-      subtitlesResource: resourceData
+      subtitlesResource: resourceData,
     },
     playerOptions: {
       logLevel: PlayerLogLevel.WARNING,
       customConfiguration: '',
-      showPlaybackMonitor: true
-    }
-  }
+      showPlaybackMonitor: true,
+    },
+  },
 };
 
 describe('UI reducer', () => {
@@ -44,7 +44,7 @@ describe('UI reducer', () => {
       advancedMode: true,
       rightPaneWidth: 313,
       expandedAdvancedAccordionIndices: [1],
-      rightPaneActiveTabIndex: 1
+      rightPaneActiveTabIndex: 1,
     });
   });
   test('Advanced mode switch should be applied to the UI state.', () => {
@@ -56,7 +56,7 @@ describe('UI reducer', () => {
       advancedMode: false,
       rightPaneWidth: 424,
       expandedAdvancedAccordionIndices: [1],
-      rightPaneActiveTabIndex: 1
+      rightPaneActiveTabIndex: 1,
     });
   });
   test('Change to advanced mode if restoring a history entry with data from the advanced forms.', () => {
@@ -64,14 +64,14 @@ describe('UI reducer', () => {
       { advancedMode: false, rightPaneWidth: 424, expandedAdvancedAccordionIndices: [1], rightPaneActiveTabIndex: 1 },
       {
         type: RESTORE_HISTORY_ENTRY,
-        value: historyEntry
+        value: historyEntry,
       }
     );
     expect(newState).toEqual({
       advancedMode: true,
       rightPaneWidth: 424,
       expandedAdvancedAccordionIndices: [1],
-      rightPaneActiveTabIndex: 1
+      rightPaneActiveTabIndex: 1,
     });
   });
   test('Changes to advanced accordion expansions is applied to UI state.', () => {
@@ -83,7 +83,7 @@ describe('UI reducer', () => {
       advancedMode: true,
       rightPaneWidth: 424,
       expandedAdvancedAccordionIndices: [0, 1],
-      rightPaneActiveTabIndex: 1
+      rightPaneActiveTabIndex: 1,
     });
   });
   test('Selection of active tab in the right pane is applied to UI state.', () => {
@@ -95,7 +95,7 @@ describe('UI reducer', () => {
       advancedMode: true,
       rightPaneWidth: 424,
       expandedAdvancedAccordionIndices: [1],
-      rightPaneActiveTabIndex: 2
+      rightPaneActiveTabIndex: 2,
     });
   });
 });

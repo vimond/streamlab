@@ -4,13 +4,13 @@ import { PANE_RESIZE } from '../../../store/actions/ui';
 
 const source = {
   streamUrl: 'https://example.com/stream.mpd',
-  contentType: 'application/dash+xml'
+  contentType: 'application/dash+xml',
 };
 
 const options = {
   videoStreamer: {
-    playsInline: true
-  }
+    playsInline: true,
+  },
 };
 
 describe('Player reducer', () => {
@@ -19,13 +19,13 @@ describe('Player reducer', () => {
     expect(newState).toEqual({
       source: {
         streamUrl: 'https://example.com/stream.mpd',
-        contentType: 'application/dash+xml'
+        contentType: 'application/dash+xml',
       },
       options: {
         videoStreamer: {
-          playsInline: true
-        }
-      }
+          playsInline: true,
+        },
+      },
     });
   });
   test(
@@ -37,18 +37,18 @@ describe('Player reducer', () => {
         source: undefined,
         options: {
           interactionDetector: {
-            inactivityDelay: -1
-          }
-        }
+            inactivityDelay: -1,
+          },
+        },
       });
       const newState2 = playerReducer({ source, options }, { type: PLAYER_ERROR, error: new Error('Playback bad.') });
       expect(newState2).toEqual({
         source: undefined,
         options: {
           interactionDetector: {
-            inactivityDelay: -1
-          }
-        }
+            inactivityDelay: -1,
+          },
+        },
       });
     }
   );

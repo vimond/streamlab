@@ -17,15 +17,15 @@ const createRootReducerWithInformation = (rules: MessageRule[], messageResolver:
       ...nextState,
       ...action.payload,
       information: {
-        messages: messageResolver(rules, prevState, action, { ...nextState, ...action.payload })
-      }
+        messages: messageResolver(rules, prevState, action, { ...nextState, ...action.payload }),
+      },
     };
   } else {
     return {
       ...nextState,
       information: {
-        messages: messageResolver(rules, prevState, action, nextState)
-      }
+        messages: messageResolver(rules, prevState, action, nextState),
+      },
     };
   }
 };

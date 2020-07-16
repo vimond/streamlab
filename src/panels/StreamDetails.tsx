@@ -10,7 +10,7 @@ import {
   MenuItem,
   MenuList,
   Switch,
-  FormHelperText
+  FormHelperText,
 } from '@chakra-ui/core';
 import Header, { Level } from '../components/Header';
 import {
@@ -23,7 +23,7 @@ import {
   subtitlesFormatLabels,
   drmTechLabels,
   streamTechLabels,
-  getLabel
+  getLabel,
 } from '../store/model/streamDetails';
 import { AppState } from '../store/reducers';
 import { Dispatch } from 'redux';
@@ -62,7 +62,7 @@ const StreamDetailRow: React.FC<RowProps> = ({
   techOptions,
   isTechOptionsEnabled,
   onChange,
-  isHeadersEnabled
+  isHeadersEnabled,
 }) => {
   return (
     <>
@@ -122,7 +122,7 @@ const StreamDetails: React.FC<Props> = ({
   drmCertificateResource,
   subtitlesResource,
   startOffset,
-  handleResourceFieldChange
+  handleResourceFieldChange,
 }) => (
   <form>
     <Box
@@ -206,11 +206,11 @@ const StreamDetails: React.FC<Props> = ({
 );
 
 const mapStateToProps = (state: AppState) => ({
-  ...state.streamDetails
+  ...state.streamDetails,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  handleResourceFieldChange: (resource: ResourceUpdate) => dispatch(updateStreamDetailsField(resource))
+  handleResourceFieldChange: (resource: ResourceUpdate) => dispatch(updateStreamDetailsField(resource)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StreamDetails);

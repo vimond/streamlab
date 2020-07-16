@@ -29,11 +29,11 @@ const HeaderBar: React.FC<Props> = ({ advancedMode, toggleAdvancedMode }) => (
 );
 
 const mapStateToProps = (state: AppState) => ({
-  advancedMode: state.ui.advancedMode
+  advancedMode: state.ui.advancedMode,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  toggleAdvancedMode: (evt: React.ChangeEvent<HTMLInputElement>) => dispatch(toggleAdvancedMode(evt.target.checked))
+  toggleAdvancedMode: (evt: React.ChangeEvent<HTMLInputElement>) => dispatch(toggleAdvancedMode(evt.target.checked)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderBar);

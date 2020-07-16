@@ -37,10 +37,10 @@ const createBasicHistoryEntry = (streamDetails: StreamDetailsState): BasicHistor
     streamDetails: {
       streamResource: {
         url: streamDetails.streamResource.url,
-        technology: streamDetails.streamResource.technology
-      }
-    }
-  }
+        technology: streamDetails.streamResource.technology,
+      },
+    },
+  },
 });
 
 const createAdvancedHistoryEntry = (
@@ -51,8 +51,8 @@ const createAdvancedHistoryEntry = (
   name: '',
   formData: {
     streamDetails,
-    playerOptions
-  }
+    playerOptions,
+  },
 });
 
 export const playBasic = (dispatch: Dispatch<Action>, getState: () => AppState) => {
@@ -64,8 +64,8 @@ export const playBasic = (dispatch: Dispatch<Action>, getState: () => AppState) 
       type: PLAY,
       value: {
         source,
-        historyEntry: createBasicHistoryEntry(streamDetails)
-      }
+        historyEntry: createBasicHistoryEntry(streamDetails),
+      },
     });
   }
 };
@@ -80,8 +80,8 @@ export const playAdvanced = (dispatch: Dispatch<Action>, getState: () => AppStat
       value: {
         source,
         options,
-        historyEntry: createAdvancedHistoryEntry({ ...streamDetails, startOffset: '' }, playerOptions)
-      }
+        historyEntry: createAdvancedHistoryEntry({ ...streamDetails, startOffset: '' }, playerOptions),
+      },
     });
   }
 };
@@ -100,19 +100,19 @@ export const handlePlayerError = (error: any) => (dispatch: Dispatch<Action>) =>
       error.sourceError = rest;
       dispatch({
         type: PLAYER_ERROR,
-        error
+        error,
       });
     } else {
       dispatch({
         type: PLAYER_ERROR,
-        error
+        error,
       });
     }
     console.error('Playback error: %s', error.message);
   } else {
     dispatch({
       type: PLAYER_ERROR,
-      error: new Error(error)
+      error: new Error(error),
     });
     console.error('Playback error:', error);
   }

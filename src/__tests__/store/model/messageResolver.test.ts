@@ -10,8 +10,8 @@ describe('Information message resolver', () => {
         displayCondition: ({ nextState }) => nextState.ui.rightPaneWidth === 313,
         message: {
           level: MessageLevel.SUCCESS,
-          text: 'Message A'
-        }
+          text: 'Message A',
+        },
       },
       {
         id: 'rule-b',
@@ -22,32 +22,32 @@ describe('Information message resolver', () => {
           action.type === PANE_RESIZE,
         message: {
           level: MessageLevel.INFO,
-          text: 'Message B'
-        }
+          text: 'Message B',
+        },
       },
       {
         id: 'rule-c',
         displayCondition: ({ action }) => action.type === PLAYER_ERROR,
         message: {
           level: MessageLevel.ERROR,
-          text: 'Message C'
-        }
+          text: 'Message C',
+        },
       },
       {
         id: 'rule-d',
         displayCondition: () => true,
         message: {
           level: MessageLevel.WARNING,
-          text: 'Message D'
-        }
-      }
+          text: 'Message D',
+        },
+      },
     ];
     const prevState1 = undefined;
     const nextState1 = {
       ui: {
         advancedMode: false,
-        rightPaneWidth: 0
-      }
+        rightPaneWidth: 0,
+      },
     };
     const action1 = { type: 'SOMETHING' };
 
@@ -57,14 +57,14 @@ describe('Information message resolver', () => {
 
     const prevState2 = {
       player: {
-        source: {}
-      }
+        source: {},
+      },
     };
     const nextState2 = {
       ui: {
         advancedMode: false,
-        rightPaneWidth: 424
-      }
+        rightPaneWidth: 424,
+      },
     };
     const action2 = { type: PANE_RESIZE };
 
@@ -73,18 +73,18 @@ describe('Information message resolver', () => {
     expect(result2).toEqual([
       {
         level: MessageLevel.INFO,
-        text: 'Message B'
+        text: 'Message B',
       },
       {
         level: MessageLevel.WARNING,
-        text: 'Message D'
-      }
+        text: 'Message D',
+      },
     ]);
 
     const nextState3 = {
       ui: {
-        rightPaneWidth: 313
-      }
+        rightPaneWidth: 313,
+      },
     };
 
     // @ts-ignore
@@ -92,16 +92,16 @@ describe('Information message resolver', () => {
     expect(result3).toEqual([
       {
         level: MessageLevel.SUCCESS,
-        text: 'Message A'
+        text: 'Message A',
       },
       {
         level: MessageLevel.WARNING,
-        text: 'Message D'
-      }
+        text: 'Message D',
+      },
     ]);
 
     const nextState4 = {
-      ui: {}
+      ui: {},
     };
     const action4 = { type: PLAYER_ERROR };
 
@@ -110,12 +110,12 @@ describe('Information message resolver', () => {
     expect(result4).toEqual([
       {
         level: MessageLevel.ERROR,
-        text: 'Message C'
+        text: 'Message C',
       },
       {
         level: MessageLevel.WARNING,
-        text: 'Message D'
-      }
+        text: 'Message D',
+      },
     ]);
   });
 
@@ -126,17 +126,17 @@ describe('Information message resolver', () => {
         displayCondition: () => true,
         message: (state, action) => ({
           level: MessageLevel.INFO,
-          text: `Message A: ${state.ui.rightPaneWidth} ${action.type}`
-        })
+          text: `Message A: ${state.ui.rightPaneWidth} ${action.type}`,
+        }),
       },
       {
         id: 'rule-b',
         displayCondition: () => true,
         message: (state, action) => ({
           level: MessageLevel.WARNING,
-          text: `Message B: ${JSON.stringify(action)}`
-        })
-      }
+          text: `Message B: ${JSON.stringify(action)}`,
+        }),
+      },
     ];
     const result = resolveMessages(
       rules,
@@ -148,12 +148,12 @@ describe('Information message resolver', () => {
     expect(result).toEqual([
       {
         level: MessageLevel.INFO,
-        text: 'Message A: 535 PANE_RESIZE'
+        text: 'Message A: 535 PANE_RESIZE',
       },
       {
         level: MessageLevel.WARNING,
-        text: 'Message B: {"type":"PANE_RESIZE","value":313}'
-      }
+        text: 'Message B: {"type":"PANE_RESIZE","value":313}',
+      },
     ]);
   });
 });

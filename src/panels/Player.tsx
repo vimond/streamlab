@@ -28,14 +28,14 @@ const Player: React.FC<Props> = ({ source, options, onError, onExit }) => (
 );
 
 const mapStateToProps = (state: AppState) => ({
-  ...state.player
+  ...state.player,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   // @ts-ignore No proper typing for thunks.
   onError: (err: any) => dispatch(handlePlayerError(err)),
   // @ts-ignore
-  onExit: () => dispatch(stop)
+  onExit: () => dispatch(stop),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

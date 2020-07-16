@@ -27,7 +27,7 @@ export const JsonEditor: React.FC<Props> = ({ value, onChange }) => (
       lineNumbers: true,
       tabSize: 2,
       gutters: ['CodeMirror-lint-markers'],
-      lint: value && value.trim()
+      lint: value && value.trim(),
     }}
     onBeforeChange={(editor, data, newValue) => onChange(newValue)}
   />

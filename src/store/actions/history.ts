@@ -10,7 +10,7 @@ export const SET_HISTORY_LIST_FILTER = 'SET_HISTORY_LIST_FILTER';
 export enum HistoryEntryFilter {
   BOTH,
   NAMED,
-  UNNAMED
+  UNNAMED,
 }
 
 export interface HistoryEntryAction {
@@ -34,29 +34,29 @@ export interface SetHistoryFilterAction {
 
 export const selectHistoryEntry = (value: HistoryEntry): HistoryEntryAction => ({
   type: SELECT_HISTORY_ENTRY,
-  value
+  value,
 });
 
 export const updateSelectedHistoryEntryName = (value: string): UpdateSelectedHistoryEntryNameAction => ({
   type: UPDATE_HISTORY_ENTRY_NAME,
-  value
+  value,
 });
 
 export const restoreHistoryEntry = (value: HistoryEntry): HistoryEntryAction => ({
   type: RESTORE_HISTORY_ENTRY,
-  value
+  value,
 });
 
 export const deleteHistoryEntry = (value: HistoryEntry): HistoryEntryAction => ({
   type: DELETE_HISTORY_ENTRY,
-  value
+  value,
 });
 
 export const deleteHistory = (): DeleteHistoryAction => ({
-  type: DELETE_HISTORY
+  type: DELETE_HISTORY,
 });
 
 export const setHistoryFilter = (value: HistoryEntryFilter): SetHistoryFilterAction => ({
   type: SET_HISTORY_LIST_FILTER,
-  value
+  value,
 });

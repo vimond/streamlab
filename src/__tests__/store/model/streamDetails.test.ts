@@ -28,15 +28,15 @@ describe('Stream details model', () => {
     const result = createPlayerOptions({
       logLevel: PlayerLogLevel.INFO,
       showPlaybackMonitor: false,
-      customConfiguration: ''
+      customConfiguration: '',
     });
     expect(result).toEqual({
       videoStreamer: {
-        logLevel: 'INFO'
+        logLevel: 'INFO',
       },
       playbackMonitor: {
-        visibleAtStart: false
-      }
+        visibleAtStart: false,
+      },
     });
   });
   test('Building player override structure from JSON string and distinct settings', () => {
@@ -44,19 +44,19 @@ describe('Stream details model', () => {
     const result = createPlayerOptions({
       logLevel: PlayerLogLevel.ERROR,
       showPlaybackMonitor: true,
-      customConfiguration: json
+      customConfiguration: json,
     });
     expect(result).toEqual({
       videoStreamer: {
-        logLevel: 'ERROR'
+        logLevel: 'ERROR',
       },
       playbackMonitor: {
-        visibleAtStart: true
+        visibleAtStart: true,
       },
       aspectRatio: {
         horizontal: 21,
-        vertical: 9
-      }
+        vertical: 9,
+      },
     });
   });
   test('Invalid JSON string is ignored when building player override structure', () => {
@@ -64,15 +64,15 @@ describe('Stream details model', () => {
     const result = createPlayerOptions({
       logLevel: PlayerLogLevel.ERROR,
       showPlaybackMonitor: true,
-      customConfiguration: json
+      customConfiguration: json,
     });
     expect(result).toEqual({
       videoStreamer: {
-        logLevel: 'ERROR'
+        logLevel: 'ERROR',
       },
       playbackMonitor: {
-        visibleAtStart: true
-      }
+        visibleAtStart: true,
+      },
     });
   });
   test('Building player override structure from JSON string overlapped by distinct settings', () => {
@@ -81,16 +81,16 @@ describe('Stream details model', () => {
     const result = createPlayerOptions({
       logLevel: PlayerLogLevel.DEBUG,
       showPlaybackMonitor: false,
-      customConfiguration: json
+      customConfiguration: json,
     });
     expect(result).toEqual({
       videoStreamer: {
-        logLevel: 'DEBUG'
+        logLevel: 'DEBUG',
       },
       playbackMonitor: {
-        visibleAtStart: false
+        visibleAtStart: false,
       },
-      classNamePrefix: 'my-player-'
+      classNamePrefix: 'my-player-',
     });
   });
 });

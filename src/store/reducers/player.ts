@@ -16,7 +16,7 @@ const player = (state: PlayerState = {}, action: PlayerAction | PlayerErrorActio
       const { source, options } = action.value;
       return {
         source,
-        options
+        options,
       };
     case STOP:
     case PLAYER_ERROR:
@@ -24,9 +24,9 @@ const player = (state: PlayerState = {}, action: PlayerAction | PlayerErrorActio
         source: undefined,
         options: {
           interactionDetector: {
-            inactivityDelay: -1
-          }
-        }
+            inactivityDelay: -1,
+          },
+        },
       };
   }
   return state;

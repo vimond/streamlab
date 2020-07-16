@@ -14,7 +14,7 @@ import {
   Button,
   Flex,
   Stack,
-  Text
+  Text,
 } from '@chakra-ui/core';
 import StreamDetails from './StreamDetails';
 import PlayerOptions from './PlayerOptions';
@@ -108,14 +108,14 @@ const Advanced: React.FC<{
 
 const mapStateToProps = (state: AppState) => ({
   expandedIndices: state.ui.expandedAdvancedAccordionIndices,
-  isPlayerOptionsModified: state.playerOptions.isModified
+  isPlayerOptionsModified: state.playerOptions.isModified,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   // @ts-ignore Typing not supported for thunk actions.
   handlePlay: () => dispatch(playAdvanced),
   handleAccordionChange: (indices: number[]) => dispatch(updateAdvancedAccordionExpansions(indices)),
-  handleClear: () => dispatch(clearForms())
+  handleClear: () => dispatch(clearForms()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Advanced);

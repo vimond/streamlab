@@ -4,7 +4,7 @@ import {
   setLogLevel,
   setPlayerConfiguration,
   TOGGLE_PLAYBACK_MONITOR,
-  togglePlaybackMonitor
+  togglePlaybackMonitor,
 } from '../../../store/actions/playerOptions';
 import { PlayerLogLevel } from '../../../store/model/streamDetails';
 
@@ -12,27 +12,27 @@ describe('Player options Redux actions', () => {
   test('Setting player log level', () => {
     expect(setLogLevel(PlayerLogLevel.DEBUG)).toEqual({
       type: SET_LOG_LEVEL,
-      value: PlayerLogLevel.DEBUG
+      value: PlayerLogLevel.DEBUG,
     });
     expect(setLogLevel(PlayerLogLevel.NONE)).toEqual({
       type: SET_LOG_LEVEL,
-      value: PlayerLogLevel.NONE
+      value: PlayerLogLevel.NONE,
     });
   });
   test('Toggling playback monitor visibility', () => {
     expect(togglePlaybackMonitor(true)).toEqual({
       type: TOGGLE_PLAYBACK_MONITOR,
-      value: true
+      value: true,
     });
     expect(togglePlaybackMonitor(false)).toEqual({
       type: TOGGLE_PLAYBACK_MONITOR,
-      value: false
+      value: false,
     });
   });
   test('Setting a player configuration as a JSON string', () => {
     expect(setPlayerConfiguration('{"some":{"key":"value"}}')).toEqual({
       type: SET_PLAYER_CONFIGURATION,
-      value: '{"some":{"key":"value"}}'
+      value: '{"some":{"key":"value"}}',
     });
   });
 });

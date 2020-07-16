@@ -8,7 +8,7 @@ export enum Level {
   H3 = 'h3',
   H4 = 'h4',
   H5 = 'h5',
-  H6 = 'h6'
+  H6 = 'h6',
 }
 
 const getStyles = (level: Level): HeadingProps => {
@@ -18,34 +18,34 @@ const getStyles = (level: Level): HeadingProps => {
         size: 'md',
         my: 1,
         mx: 4,
-        px: 1
+        px: 1,
       };
     case Level.H2:
       return {
         size: 'sm',
         m: 0,
         p: 1,
-        textAlign: 'left'
+        textAlign: 'left',
       };
     case Level.H3:
       return {
         size: 'md',
-        my: 4
+        my: 4,
       };
     case Level.H4:
       return {
         size: 'sm',
-        my: 4
+        my: 4,
       };
     case Level.H6:
       return {
         size: 'sm',
         fontWeight: 'normal',
-        justifySelf: 'center'
+        justifySelf: 'center',
       };
     default:
       return {
-        size: 'sm'
+        size: 'sm',
       };
   }
 };

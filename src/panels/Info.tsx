@@ -18,7 +18,7 @@ const Info: React.FC<{ messages: Message[] }> = ({ messages }) => (
 );
 
 const mapStateToProps = (state: AppState) => ({
-  messages: state.information.messages
+  messages: state.information.messages,
 });
 
 export default connect(mapStateToProps)(Info);

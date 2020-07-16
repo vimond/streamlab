@@ -6,7 +6,7 @@ import {
   START_OFFSET_FIELD_CHANGE,
   STREAM_RESOURCE_FIELD_CHANGE,
   SUBTITLES_RESOURCE_FIELD_CHANGE,
-  updateStreamDetailsField
+  updateStreamDetailsField,
 } from '../../../store/actions/streamDetails';
 import { DrmTechnology } from '../../../store/model/streamDetails';
 
@@ -15,72 +15,72 @@ describe('Stream details Redux actions', () => {
     expect(
       updateStreamDetailsField({
         streamResource: {
-          url: 'https://example.com/stream.m3u8'
-        }
+          url: 'https://example.com/stream.m3u8',
+        },
       })
     ).toEqual({
       type: STREAM_RESOURCE_FIELD_CHANGE,
       value: {
-        url: 'https://example.com/stream.m3u8'
-      }
+        url: 'https://example.com/stream.m3u8',
+      },
     });
     expect(
       updateStreamDetailsField({
         drmLicenseResource: {
           useProxy: true,
-          technology: DrmTechnology.PLAYREADY
-        }
+          technology: DrmTechnology.PLAYREADY,
+        },
       })
     ).toEqual({
       type: DRM_LICENSE_RESOURCE_FIELD_CHANGE,
       value: {
         useProxy: true,
-        technology: DrmTechnology.PLAYREADY
-      }
+        technology: DrmTechnology.PLAYREADY,
+      },
     });
     expect(
       updateStreamDetailsField({
         drmCertificateResource: {
           url: 'https://example.com/certificate',
-          technology: DrmTechnology.FAIRPLAY
-        }
+          technology: DrmTechnology.FAIRPLAY,
+        },
       })
     ).toEqual({
       type: DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE,
       value: {
         url: 'https://example.com/certificate',
-        technology: DrmTechnology.FAIRPLAY
-      }
+        technology: DrmTechnology.FAIRPLAY,
+      },
     });
     expect(
       updateStreamDetailsField({
         subtitlesResource: {
           url: 'https://example.com/subs.ttml',
-          useProxy: false
-        }
+          useProxy: false,
+        },
       })
     ).toEqual({
       type: SUBTITLES_RESOURCE_FIELD_CHANGE,
       value: {
         url: 'https://example.com/subs.ttml',
-        useProxy: false
-      }
+        useProxy: false,
+      },
     });
     expect(
       updateStreamDetailsField({
-        startOffset: 123.456
+        startOffset: 123.456,
       })
     ).toEqual({
       type: START_OFFSET_FIELD_CHANGE,
-      value: 123.456
+      value: 123.456,
     });
     expect(
       updateStreamDetailsField({
-        startOffset: ''
+        startOffset: '',
       })
     ).toEqual({
       type: START_OFFSET_FIELD_CHANGE,
-      value: ''
+      value: '',
     });
   });
   test('Setting browser specific stream details', () => {
@@ -92,8 +92,8 @@ describe('Stream details Redux actions', () => {
     ).toEqual({
       type: SET_BROWSER_FEATURES,
       value: {
-        drmTechnology: DrmTechnology.FAIRPLAY
-      }
+        drmTechnology: DrmTechnology.FAIRPLAY,
+      },
     });
   });
 });

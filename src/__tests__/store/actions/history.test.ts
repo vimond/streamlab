@@ -11,7 +11,7 @@ import {
   SET_HISTORY_LIST_FILTER,
   setHistoryFilter,
   UPDATE_HISTORY_ENTRY_NAME,
-  updateSelectedHistoryEntryName
+  updateSelectedHistoryEntryName,
 } from '../../../store/actions/history';
 import { HistoryEntry } from '../../../store/model/history';
 import { BaseTech } from '../../../store/model/streamDetails';
@@ -20,7 +20,7 @@ const resourceData = {
   url: '',
   useProxy: false,
   headers: [],
-  technology: BaseTech.AUTO
+  technology: BaseTech.AUTO,
 };
 
 const historyEntry: HistoryEntry = {
@@ -31,45 +31,45 @@ const historyEntry: HistoryEntry = {
       streamResource: resourceData,
       drmLicenseResource: resourceData,
       drmCertificateResource: resourceData,
-      subtitlesResource: resourceData
-    }
-  }
+      subtitlesResource: resourceData,
+    },
+  },
 };
 
 describe('History actions', () => {
   test('Select history entry', () => {
     expect(selectHistoryEntry(historyEntry)).toEqual({
       type: SELECT_HISTORY_ENTRY,
-      value: historyEntry
+      value: historyEntry,
     });
   });
   test('Update selected history entry name', () => {
     expect(updateSelectedHistoryEntryName('A history entry')).toEqual({
       type: UPDATE_HISTORY_ENTRY_NAME,
-      value: 'A history entry'
+      value: 'A history entry',
     });
   });
   test('Restore history entry to forms', () => {
     expect(restoreHistoryEntry(historyEntry)).toEqual({
       type: RESTORE_HISTORY_ENTRY,
-      value: historyEntry
+      value: historyEntry,
     });
   });
   test('Delete history entry', () => {
     expect(deleteHistoryEntry(historyEntry)).toEqual({
       type: DELETE_HISTORY_ENTRY,
-      value: historyEntry
+      value: historyEntry,
     });
   });
   test('Delete history', () => {
     expect(deleteHistory()).toEqual({
-      type: DELETE_HISTORY
+      type: DELETE_HISTORY,
     });
   });
   test('Set history filter', () => {
     expect(setHistoryFilter(HistoryEntryFilter.UNNAMED)).toEqual({
       type: SET_HISTORY_LIST_FILTER,
-      value: HistoryEntryFilter.UNNAMED
+      value: HistoryEntryFilter.UNNAMED,
     });
   });
 });
