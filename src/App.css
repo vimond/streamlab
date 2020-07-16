@@ -2,3 +2,7 @@
   display: inline;
   vertical-align: baseline;
 }
+
+.react-codemirror2 .CodeMirror {
+  height: 14.5rem;
+}

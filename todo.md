@@ -51,19 +51,28 @@ API plugin:
 * [x] Remember accordion expand states
 * [x] Accordion folds with "active" settings should be marked. `3.0.0`
 * [x] Move "use proxy" and all mentions to branch. `3.0.0`
+* [ ] Better pane component. Upgrade all libs.
 * [ ] Create "static"/"client side only" build and deployment. `3.0.0`
+* [ ] Better linting.
 * [ ] Feature toggle system where proxy or processor things are not visible in "static build/deploy". `3.2.0`
 * [ ] Responsive/mobile mode. `3.3.0`
 * [ ] Cypress tests?
+* [ ] Component tests?
+
+Better TS + thunks?
+https://levelup.gitconnected.com/set-up-a-typescript-react-redux-project-35d65f14b869
 
 #### Stream details
 
 * [x] All form fields. `3.0.0`
 * [x] Headers - disable for stream & subtitles `3.0.0`
-* [ ] Start from position `3.0.0`
-* [ ] Disable cert url for PlayReady  `3.0.0`
-* [ ] Message about Chromium Edge  `3.0.0`
-* [ ] Message about unsupported subtitle formats (remove SRT temporarily) `3.0.0`
+* [x] Start from position `3.0.0`
+* [ ] Disable cert url for PlayReady `3.0.0`
+* [ ] Message about Chromium Edge `3.0.0`
+* [x] Message about unsupported subtitle formats (remove SRT temporarily) `3.0.0`
+
+Next:
+
 * [ ] Parsers for TTML, VTT, SRT? `3.3.0`
 * [ ] Override HLS.js/Shaka selection. With DRM support. `3.3.0`
 * [ ] Smooth stream support with RxPlayer? Goes along with override. `3.3.0`
@@ -97,8 +106,11 @@ Create separate page with lookup, and then load Streamlab with details? Practica
 
 #### Player options
 
-* [ ] JSON editor for modern React. `3.0.0`
-* [ ] Log level. `3.0.0`
+https://github.com/satya164/react-simple-code-editor
+
+* [x] JSON editor for modern React. `3.0.0`
+* [ ] Log level. `3.1.0`
+* [ ] Expose video element...
 
 #### Proxy
 
@@ -116,7 +128,8 @@ Create separate page with lookup, and then load Streamlab with details? Practica
 #### Replay
 
 * [ ] Logo with link when not playing.
-* [ ] Make dependencies great again.
+* [x] Make dependencies great again.
 * [ ] Bring in RxVideoStreamer for smooth streams.
+* [ ] Edge/Chromium support.
 
 

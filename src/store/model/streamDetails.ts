@@ -131,7 +131,7 @@ export const subtitlesFormatLabels = [
   {
     key: SubtitlesFormat.TTML,
     label: 'TTML (DXFP)'
-  }/*, // Not supported yet:
+  } /*, // Not supported yet:
   {
     key: SubtitlesFormat.SRT,
     label: 'SRT (SubRip)'
