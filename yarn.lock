@@ -9081,10 +9081,10 @@ react-scripts@3.4.1:
   optionalDependencies:
     fsevents "2.1.2"
 
-react-spaces@0.1.22:
-  version "0.1.22"
-  resolved "https://registry.yarnpkg.com/react-spaces/-/react-spaces-0.1.22.tgz#21c270f24b4b490bf453c9bb13d8bfb68bdd5e74"
-  integrity sha512-98t1ygXzsVaM90ZNSJRH3bGKru7dbMZ92+QJd2PRfKpUdeR+kPffZOTn20H4DJ8nlye4FJE59Fe3jkcDt8hhag==
+react-spaces@0.1.24:
+  version "0.1.24"
+  resolved "https://registry.yarnpkg.com/react-spaces/-/react-spaces-0.1.24.tgz#3fe54ab33631dd9d7c98ff9ddcddf436833424ac"
+  integrity sha512-q4YxTQ2RKqNmc6C1Bb5kyGWxfv4xvwRAeqr0BOpePboje+b/EuNPtz9PPWIqi6lFynb5CpuoBcWiP4ocRcIIIw==
   dependencies:
     css-element-queries "^1.2.1"
 

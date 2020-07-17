@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Box, ColorModeProvider, CSSReset, Flex, ThemeProvider } from '@chakra-ui/core';
-import 'vimond-replay/index.css';
-import './App.css';
 import Advanced from './panels/Advanced';
 import Sidebar from './panels/Sidebar';
 import Basic from './panels/Basic';
-import * as Space from 'react-spaces';
+import { ViewPort, Fill, RightResizable } from 'react-spaces';
 import { AppState } from './store/reducers';
 import { connect } from 'react-redux';
 import Player from './panels/Player';
@@ -14,6 +12,9 @@ import { Action } from './store/actions';
 import { Dispatch } from 'redux';
 import { updatePaneSize } from './store/actions/ui';
 import { setBrowserFeatures } from './store/actions/streamDetails';
+
+import 'vimond-replay/index.css';
+import './App.css';
 
 type Props = {
   advancedMode: boolean;
@@ -29,12 +30,13 @@ class App extends Component<Props> {
 
   render() {
     const { advancedMode, handlePaneResize, rightPaneWidth = '33%' } = this.props;
+    console.log(rightPaneWidth);
     return (
       <ThemeProvider>
         <ColorModeProvider value="light">
           <CSSReset />
-          <Space.ViewPort>
-            <Space.Fill>
+          <ViewPort>
+            <Fill>
               <Flex height="100vh" direction="column">
                 <HeaderBar />
                 <Box flex="1 1 auto" overflowY="auto">
@@ -42,11 +44,11 @@ class App extends Component<Props> {
                   <Player />
                 </Box>
               </Flex>
-            </Space.Fill>
-            <Space.RightResizable size={rightPaneWidth} trackSize={true} onResizeEnd={handlePaneResize}>
+            </Fill>
+            <RightResizable size={rightPaneWidth} trackSize={true} onResizeEnd={handlePaneResize} minimumSize={100}>
               <Sidebar />
-            </Space.RightResizable>
-          </Space.ViewPort>
+            </RightResizable>
+          </ViewPort>
         </ColorModeProvider>
       </ThemeProvider>
     );
