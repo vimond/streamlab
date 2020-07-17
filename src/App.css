@@ -8,3 +8,8 @@
   border-radius: 0.25rem;
   border: 1px solid #E2E8F0;
 }
+
+
+.gutter {
+  cursor: col-resize;
+}

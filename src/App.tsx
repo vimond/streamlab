@@ -3,7 +3,7 @@ import { Box, ColorModeProvider, CSSReset, Flex, ThemeProvider } from '@chakra-u
 import Advanced from './panels/Advanced';
 import Sidebar from './panels/Sidebar';
 import Basic from './panels/Basic';
-import { ViewPort, Fill, RightResizable } from 'react-spaces';
+import Split from 'react-split';
 import { AppState } from './store/reducers';
 import { connect } from 'react-redux';
 import Player from './panels/Player';
@@ -18,8 +18,8 @@ import './App.css';
 
 type Props = {
   advancedMode: boolean;
-  rightPaneWidth?: number | string;
-  handlePaneResize: (size: number) => void;
+  rightPaneWidth?: number;
+  handlePaneResize: (sizes: number[]) => void;
   initializeFeatureState: (userAgent: string) => void;
 };
 
@@ -29,26 +29,31 @@ class App extends Component<Props> {
   }
 
   render() {
-    const { advancedMode, handlePaneResize, rightPaneWidth = '33%' } = this.props;
+    const { advancedMode, handlePaneResize, rightPaneWidth = 33 } = this.props;
     console.log(rightPaneWidth);
     return (
       <ThemeProvider>
         <ColorModeProvider value="light">
           <CSSReset />
-          <ViewPort>
-            <Fill>
-              <Flex height="100vh" direction="column">
-                <HeaderBar />
-                <Box flex="1 1 auto" overflowY="auto">
-                  {advancedMode ? <Advanced /> : <Basic />}
-                  <Player />
-                </Box>
-              </Flex>
-            </Fill>
-            <RightResizable size={rightPaneWidth} trackSize={true} onResizeEnd={handlePaneResize} minimumSize={100}>
-              <Sidebar />
-            </RightResizable>
-          </ViewPort>
+          <Split
+            onDragEnd={handlePaneResize}
+            sizes={[100 - rightPaneWidth, rightPaneWidth]}
+            direction="horizontal"
+            cursor="col-resize"
+            gutterAlign="end"
+            gutterSize={4}
+            minSize={300}
+            style={{ display: 'flex' }}
+          >
+            <Flex height="100vh" direction="column">
+              <HeaderBar />
+              <Box flex="1 1 auto" overflowY="auto">
+                {advancedMode ? <Advanced /> : <Basic />}
+                <Player />
+              </Box>
+            </Flex>
+            <Sidebar />
+          </Split>
         </ColorModeProvider>
       </ThemeProvider>
     );
@@ -61,8 +66,8 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  handlePaneResize: (size: number) => {
-    dispatch(updatePaneSize(size));
+  handlePaneResize: (sizes: number[]) => {
+    dispatch(updatePaneSize(sizes[1]));
     return null;
   },
   initializeFeatureState: (userAgent: string) => {

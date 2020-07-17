@@ -202,7 +202,9 @@ const FormHistory: React.FC<Props> = ({
             alignItems="center"
             title={
               selectedEntry.error
-                ? `This playback attempt failed with an error: ${selectedEntry.error.message || selectedEntry.error}`
+                ? `Unsuccessful playback attempt: ${
+                    selectedEntry.error.message || selectedEntry.error.code || selectedEntry.error
+                  }`
                 : undefined
             }
           >

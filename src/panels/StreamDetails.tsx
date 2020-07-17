@@ -97,15 +97,17 @@ const StreamDetailRow: React.FC<RowProps> = ({
       ) : (
         <Button isDisabled={true}>{getLabel(technology, techOptions)}</Button>
       )}
-      <FormControl justifySelf="center" style={{ visibility: isProxyVisible ? 'visible' : 'hidden' }}>
-        <Switch
-          onChange={(evt: React.ChangeEvent<HTMLInputElement>) => onChange({ useProxy: evt.target.checked })}
-          id={`${id}-proxy-activate`}
-          isChecked={useProxy}
-        >
-          Activate proxy for {label}
-        </Switch>
-      </FormControl>
+      {isProxyVisible && (
+        <FormControl justifySelf="center">
+          <Switch
+            onChange={(evt: React.ChangeEvent<HTMLInputElement>) => onChange({ useProxy: evt.target.checked })}
+            id={`${id}-proxy-activate`}
+            isChecked={useProxy}
+          >
+            Activate proxy for {label}
+          </Switch>
+        </FormControl>
+      )}
       <Box gridColumn="1/span 4">
         <HeaderRows
           onHeadersChange={(headers: { name: string; value: string; id: number }[]) => onChange({ headers })}
@@ -127,7 +129,7 @@ const StreamDetails: React.FC<Props> = ({
   <form>
     <Box
       display="grid"
-      gridTemplateColumns={`1fr auto auto ${isProxyVisible ? 'auto' : '0'}`}
+      gridTemplateColumns={isProxyVisible ? `1fr auto auto auto` : `1fr auto auto`}
       gridAutoRows="auto"
       gridGap={2}
       alignItems="center"
@@ -136,9 +138,7 @@ const StreamDetails: React.FC<Props> = ({
         URLs
       </Header>
       <Header level={Level.H6}>Technology</Header>
-      <Header level={Level.H6} style={{ visibility: isProxyVisible ? 'visible' : 'hidden' }}>
-        Proxy
-      </Header>
+      {isProxyVisible && <Header level={Level.H6}>Proxy</Header>}
       <StreamDetailRow
         id="stream"
         label="Stream URL"
