@@ -1,7 +1,7 @@
 {
   "name": "streamlab-ui-2",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.9.0",
+  "homepage": "https://vimond.github.io/streamlab-2",
   "dependencies": {
     "@chakra-ui/core": "^0.8.0",
     "@emotion/core": "^10.0.17",
@@ -14,6 +14,7 @@
     "@types/react-redux": "^7.1.4",
     "codemirror": "^5.55.0",
     "emotion-theming": "^10.0.17",
+    "gh-pages": "^3.1.0",
     "jsonlint-mod": "^1.7.5",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
@@ -35,7 +36,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --write \"src/**/*.ts*\"",
-    "lint": "eslint . --ext ts --ext tsx --ext js --ext jsx"
+    "lint": "eslint . --ext ts --ext tsx --ext js --ext jsx",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -30,7 +30,6 @@ class App extends Component<Props> {
 
   render() {
     const { advancedMode, handlePaneResize, rightPaneWidth = 33 } = this.props;
-    console.log(rightPaneWidth);
     return (
       <ThemeProvider>
         <ColorModeProvider value="light">
