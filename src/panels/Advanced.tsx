@@ -44,7 +44,7 @@ const SectionHeader: React.FC<{ header: string; isRequired?: boolean }> = ({ hea
 const Advanced: React.FC<{
   expandedIndices: number[];
   isPlayerOptionsModified: boolean;
-  handlePlay: () => void;
+  handlePlay: (evt: React.MouseEvent<HTMLButtonElement>) => void;
   handleClear: () => void;
   handleAccordionChange: (indices: number[]) => void;
 }> = ({ expandedIndices, isPlayerOptionsModified, handlePlay, handleClear, handleAccordionChange }) => {
@@ -112,8 +112,11 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  // @ts-ignore Typing not supported for thunk actions.
-  handlePlay: () => dispatch(playAdvanced),
+  handlePlay: (evt: React.MouseEvent<HTMLButtonElement>) => {
+    evt.currentTarget.blur(); // Otherwise Replay's Ctrl+Alt+M short cut will be captured as a click on this button.
+    // @ts-ignore Typing not supported for thunk actions.
+    return dispatch(playAdvanced);
+  },
   handleAccordionChange: (indices: number[]) => dispatch(updateAdvancedAccordionExpansions(indices)),
   handleClear: () => dispatch(clearForms()),
 });

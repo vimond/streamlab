@@ -121,6 +121,14 @@ export const messages: MessageRule[] = [
     }),
   },
   {
+    id: 'monitor',
+    displayCondition: ({ nextState }) => !!nextState.player.source && !nextState.playerOptions.showPlaybackMonitor,
+    message: {
+      level: MessageLevel.INFO,
+      text: 'Press Ctrl+Alt+M to reveal a panel with all properties of the playback state.',
+    },
+  },
+  {
     id: 'drm-auto-detect',
     displayCondition: ({ nextState }) => nextState.ui.advancedMode,
     message: (nextState, action) => ({
