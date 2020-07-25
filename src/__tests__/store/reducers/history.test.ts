@@ -296,5 +296,4 @@ describe('Form history reducer', () => {
   // TODO: Select another right pane tab unselects a history entry.
 });
 
-// TODO: RESTORE_HISTORY_ENTRY must be handled and tested in another reducer.
 // TODO: The history panel should display a message when the history list shrinks by one. This means an entry is deleted.

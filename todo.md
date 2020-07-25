@@ -19,8 +19,6 @@
 
 ## Some implementation notes
 
-Layout with [React spaces](https://www.allaneagle.com/projects/react-spaces)
-
 API plugin:
 
 * API host
@@ -51,9 +49,9 @@ API plugin:
 * [x] Remember accordion expand states
 * [x] Accordion folds with "active" settings should be marked. `3.0.0`
 * [x] Move "use proxy" and all mentions to branch. `3.0.0`
-* [ ] Better pane component.
-* [ ] Create "static"/"client side only" build and deployment. `3.0.0`
-* [ ] Better linting.
+* [x] Better pane component.
+* [x] Create "static"/"client side only" build and deployment. `3.0.0`
+* [x] Better linting.
 * [ ] Feature toggle system where proxy or processor things are not visible in "static build/deploy". `3.2.0`
 * [ ] Responsive/mobile mode. `3.3.0`
 * [ ] Cypress tests?
