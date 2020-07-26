@@ -1,8 +1,10 @@
-<img src="/src/graphics/streamlab-logo.svg" alt="Streamlab" width="50%"/>
+<img src="/src/graphics/streamlab-logo.svg" alt="Streamlab" width="40%"/>
 
 [Streamlab](https://vimond.github.io/streamlab-2/) is a cross-technology stream test tool for the browser from [Vimond](https://vimond.com) developers.
 
-Experiment with, verify, or troubleshoot MPEG-DASH, HLS, and CMAF streams, or progressive video files. Streamlab provides a consistent and convenient user interface for playing adaptive streams through [Shaka Player](https://github.com/google/shaka-player) and [HLS.js](https://github.com/video-dev/hls.js), or directly through the browser's internal stream support in the HTML `<video>` element.
+Experiment with, verify, or troubleshoot MPEG-DASH, HLS, and CMAF streams, or progressive video files. 
+
+Streamlab provides a consistent and convenient user interface for playing adaptive streams through [Shaka Player](https://github.com/google/shaka-player) and [HLS.js](https://github.com/video-dev/hls.js), or directly through the browser's internal stream support in the HTML `<video>` element.
 
 Streamlab is built upon [Replay](https://github.com/vimond/replay), a full-featured React video player component facilitating adaptive stream playback, wrapping the mentioned adaptive streaming players.
 
