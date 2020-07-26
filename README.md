@@ -1,4 +1,4 @@
-![Streamlab](/src/graphics/streamlab-logo.svg)
+<img src="/src/graphics/streamlab-logo.svg" alt="Streamlab" width="50%"/>
 
 [Streamlab](https://vimond.github.io/streamlab-2/) is a cross-technology stream test tool for the browser from [Vimond](https://vimond.com) developers.
 
