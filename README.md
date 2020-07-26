@@ -1,4 +1,4 @@
-# Streamlab
+![Streamlab](/src/graphics/streamlab-logo.svg)
 
 [Streamlab](https://vimond.github.io/streamlab-2/) is a cross-technology stream test tool for the browser from [Vimond](https://vimond.com) developers.
 
@@ -13,6 +13,8 @@ Streamlab is intended to bring convenience to trying out streams in the browser.
 All playback attempts are added to a history, and earlier stream URLs and other details can be restored and retried. 
 
 It displays context-aware messages providing information and guidance on technical stream details, and attempts to bring error details up to the surface when the stream doesn't play.
+
+[Try it out here](https://vimond.github.io/streamlab-2/)
 
 ## Roadmap
 

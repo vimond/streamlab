@@ -14,12 +14,12 @@ import { PLAYER_ERROR } from '../actions/player';
 
 export const messages: MessageRule[] = [
   {
-    id: 'welcome',
+    id: 'welcome-1',
     displayCondition: ({ nextState }) =>
       nextState.streamDetails.streamResource.url === '' && nextState.history.history.length === 0,
     message: {
       level: MessageLevel.INFO,
-      text: 'Welcome to Streamlab',
+      text: 'Welcome to Streamlab, created by Vimond developers.',
     },
   },
   {
