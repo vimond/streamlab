@@ -7,7 +7,7 @@ import { Action } from '../store/actions';
 import { updateStreamDetailsField } from '../store/actions/streamDetails';
 import { connect } from 'react-redux';
 import { AutoTechnology, BaseTech, Resource, StreamTechnology } from '../store/model/streamDetails';
-import { playAdvanced, playBasic } from '../store/actions/player';
+import { playBasic } from '../store/actions/player';
 
 type StreamTech = AutoTechnology<StreamTechnology>;
 
@@ -102,7 +102,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   handlePlay: (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.currentTarget.blur(); // Otherwise Replay's Ctrl+Alt+M short cut will be captured as a click on this button.
     // @ts-ignore Typing not supported for thunk actions.
-    return dispatch(playAdvanced);
+    return dispatch(playBasic);
   },
   handleFormSubmit: (evt: React.FormEvent) => {
     evt.preventDefault();
