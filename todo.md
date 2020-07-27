@@ -56,6 +56,7 @@ API plugin:
 * [ ] Responsive/mobile mode. `3.3.0`
 * [ ] Cypress tests?
 * [ ] Component tests?
+* [ ] Link to Shaka Player error/HLS.js codes (and PlayReady etc.)
 
 Better TS + thunks?
 https://levelup.gitconnected.com/set-up-a-typescript-react-redux-project-35d65f14b869
