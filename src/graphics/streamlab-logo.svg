@@ -55,7 +55,7 @@
           </cc:Agent>
         </dc:creator>
         <cc:license
-           rdf:resource="https://github.com/vimond/replay/blob/master/LICENSE" />
+           rdf:resource="https://github.com/vimond/streamlab-v3/blob/master/LICENSE" />
         <dc:publisher>
           <cc:Agent>
             <dc:title />

@@ -1,6 +1,6 @@
 <img src="/src/graphics/streamlab-logo.svg" alt="Streamlab" width="40%"/>
 
-[Streamlab](https://vimond.github.io/streamlab-2/) is a cross-technology stream test tool for the browser from [Vimond](https://vimond.com) developers.
+[Streamlab](https://vimond.github.io/streamlab-v3/) is a cross-technology stream test tool for the browser from [Vimond](https://vimond.com) developers.
 
 Experiment with, verify, or troubleshoot MPEG-DASH, HLS, and CMAF streams, or progressive video files. 
 
@@ -18,7 +18,7 @@ Fill in stream URLs and configure playback, and the setup will be persisted betw
 
 It displays context-aware messages providing information and guidance on technical stream details, and attempts to bring error details up to the surface when the stream doesn't play.
 
-[Try it out here](https://vimond.github.io/streamlab-2/)
+[Try it out here](https://vimond.github.io/streamlab-v3/)
 
 ## Roadmap
 
@@ -57,7 +57,7 @@ Streamlab is an open source initiative from [Vimond Media Solutions](https://vim
 
 ### License
 
-Streamlab is released under the [Apache 2.0 License](https://github.com/vimond/streamlab-2/blob/master/LICENSE).
+Streamlab is released under the [Apache 2.0 License](https://github.com/vimond/streamlab-v3/blob/master/LICENSE).
 
 ### Authors
 
