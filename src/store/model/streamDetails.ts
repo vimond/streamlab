@@ -1,6 +1,7 @@
 import {
   streamTypes,
-  isMicrosoft,
+  isLegacyMicrosoft,
+  isChromiumEdgeOnWindows,
   isSafari,
   // @ts-ignore
 } from 'vimond-replay/components/player/VideoStreamer/CompoundVideoStreamer/helpers.js';
@@ -155,13 +156,16 @@ export const detectStreamType = (streamUrl: string) =>
     }
   });
 
-export const detectDrmType = (userAgent: string) => {
-  if (isMicrosoft(userAgent)) {
-    return DrmTechnology.PLAYREADY;
+export const detectSupportedDrmTypes = (userAgent: string) => {
+  if (isLegacyMicrosoft(userAgent)) {
+    return [DrmTechnology.PLAYREADY];
+  } else if (isChromiumEdgeOnWindows(userAgent)) {
+    return [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE];
   } else if (isSafari(userAgent)) {
-    return DrmTechnology.FAIRPLAY;
+    return [DrmTechnology.FAIRPLAY];
   } else {
-    return DrmTechnology.WIDEVINE;
+    // Firefox, Chrome, Chromium Edge on Mac etc.
+    return [DrmTechnology.WIDEVINE];
   }
 };
 
@@ -176,7 +180,7 @@ export const detectSubtitlesType = (subtitlesUrl: string) => {
 };
 
 export const getLabel = <T extends unknown>(tech: AutoTechnology<T>, options: LabeledTechOption[]) =>
-  (options.find(({ key }) => key === tech) || options[0]).label;
+  (options.find(({ key }) => key === tech) || options[0] || { label: '' }).label;
 
 export const createPlayerSource = ({
   streamResource,

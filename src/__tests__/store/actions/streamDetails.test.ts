@@ -92,7 +92,18 @@ describe('Stream details Redux actions', () => {
     ).toEqual({
       type: SET_BROWSER_FEATURES,
       value: {
-        drmTechnology: DrmTechnology.FAIRPLAY,
+        supportedDrmTypes: [DrmTechnology.FAIRPLAY],
+      },
+    });
+    expect(
+      setBrowserFeatures(
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' +
+          'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36 Edg/84.0.522.44'
+      )
+    ).toEqual({
+      type: SET_BROWSER_FEATURES,
+      value: {
+        supportedDrmTypes: [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE],
       },
     });
   });

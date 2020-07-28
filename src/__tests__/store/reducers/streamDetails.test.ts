@@ -70,6 +70,8 @@ const oldState: StreamDetailsState = {
   drmLicenseResource,
   drmCertificateResource,
   subtitlesResource,
+  isDrmCertificateApplicable: true,
+  supportedDrmTypes: [DrmTechnology.WIDEVINE],
   startOffset: 123,
 };
 
@@ -99,18 +101,39 @@ describe('Stream details reducer', () => {
         type: DRM_LICENSE_RESOURCE_FIELD_CHANGE,
         value: { technology: DrmTechnology.WIDEVINE },
       });
-      const { technology, ...rest } = drmLicenseResource;
-      expect(newState.drmLicenseResource.technology).toBe(DrmTechnology.WIDEVINE);
-      expect(newState.drmLicenseResource).toMatchObject(rest);
+      {
+        const { technology, ...rest } = drmLicenseResource;
+        expect(newState.drmLicenseResource.technology).toBe(DrmTechnology.WIDEVINE);
+        expect(newState.drmLicenseResource).toMatchObject(rest);
+      }
+      {
+        const { technology, ...rest } = drmCertificateResource;
+        expect(newState.drmCertificateResource.technology).toBe(DrmTechnology.WIDEVINE);
+        expect(newState.drmCertificateResource).toMatchObject(rest);
+      }
+    }
+    {
+      const newState = streamDetailsReducer(oldState, {
+        type: DRM_LICENSE_RESOURCE_FIELD_CHANGE,
+        value: { technology: DrmTechnology.PLAYREADY },
+      });
+      expect(newState.isDrmCertificateApplicable).toBe(false);
     }
     {
       const newState = streamDetailsReducer(oldState, {
         type: DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE,
         value: { technology: BaseTech.AUTO },
       });
-      const { technology, ...rest } = drmCertificateResource;
-      expect(newState.drmCertificateResource.technology).toBe(BaseTech.AUTO);
-      expect(newState.drmCertificateResource).toMatchObject(rest);
+      {
+        const { technology, ...rest } = drmCertificateResource;
+        expect(newState.drmCertificateResource.technology).toBe(BaseTech.AUTO);
+        expect(newState.drmCertificateResource).toMatchObject(rest);
+      }
+      {
+        const { technology, ...rest } = drmLicenseResource;
+        expect(newState.drmLicenseResource.technology).toBe(BaseTech.AUTO);
+        expect(newState.drmLicenseResource).toMatchObject(rest);
+      }
     }
     {
       const newState = streamDetailsReducer(oldState, {
@@ -134,20 +157,56 @@ describe('Stream details reducer', () => {
     expect(newState.drmCertificateResource).toBe(oldState.drmCertificateResource);
     expect(newState.subtitlesResource).toBe(oldState.subtitlesResource);
   });
-  test('DRM technology should be applied to the DRM related resources when browser features are detected.', () => {
-    const action = {
-      type: SET_BROWSER_FEATURES,
-      value: {
-        drmTechnology: DrmTechnology.WIDEVINE,
-      },
-    };
-    // @ts-ignore
-    const newState = streamDetailsReducer(oldState, action);
-    const { drmLicenseResource, drmCertificateResource, ...rest } = newState;
-    expect(drmLicenseResource.technology).toBe(DrmTechnology.WIDEVINE);
-    expect(drmCertificateResource.technology).toBe(DrmTechnology.WIDEVINE);
-    expect(oldState).toMatchObject(rest);
-  });
+  test(
+    'DRM technology and support should be applied to the DRM related ' +
+      'resources when browser features are detected.',
+    () => {
+      {
+        const action = {
+          type: SET_BROWSER_FEATURES,
+          value: {
+            supportedDrmTypes: [DrmTechnology.PLAYREADY],
+          },
+        };
+        // @ts-ignore
+        const newState = streamDetailsReducer(oldState, action);
+        const {
+          drmLicenseResource,
+          drmCertificateResource,
+          isDrmCertificateApplicable,
+          supportedDrmTypes,
+          ...rest
+        } = newState;
+        expect(drmLicenseResource.technology).toBe(DrmTechnology.PLAYREADY);
+        expect(drmCertificateResource.technology).toBe(DrmTechnology.PLAYREADY);
+        expect(supportedDrmTypes).toEqual([DrmTechnology.PLAYREADY]);
+        expect(isDrmCertificateApplicable).toBe(false);
+        expect(oldState).toMatchObject(rest);
+      }
+      {
+        const action = {
+          type: SET_BROWSER_FEATURES,
+          value: {
+            supportedDrmTypes: [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE],
+          },
+        };
+        // @ts-ignore
+        const newState = streamDetailsReducer(oldState, action);
+        const {
+          drmLicenseResource,
+          drmCertificateResource,
+          isDrmCertificateApplicable,
+          supportedDrmTypes,
+          ...rest
+        } = newState;
+        expect(drmLicenseResource.technology).toBe(DrmTechnology.PLAYREADY);
+        expect(drmCertificateResource.technology).toBe(DrmTechnology.PLAYREADY);
+        expect(supportedDrmTypes).toEqual([DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE]);
+        expect(isDrmCertificateApplicable).toBe(false);
+        expect(oldState).toMatchObject(rest);
+      }
+    }
+  );
   test(
     'Restoring a history entry should overwrite all stream details with the history ' +
       'entry, and pad with the initial state for entries containing basic playback data only.',
@@ -179,6 +238,8 @@ describe('Stream details reducer', () => {
         drmCertificateResource: emptyResource,
         subtitlesResource: emptyResource,
         startOffset: '',
+        isDrmCertificateApplicable: true,
+        supportedDrmTypes: [DrmTechnology.WIDEVINE],
       });
       const action2: HistoryEntryAction = {
         type: RESTORE_HISTORY_ENTRY,
@@ -223,21 +284,27 @@ describe('Stream details reducer', () => {
                 headers: [],
               },
               startOffset: '',
+              isDrmCertificateApplicable: true,
             },
           },
         },
       };
       const newState2 = streamDetailsReducer(oldState, action2);
-      expect(newState2).toEqual(action2.value.formData.streamDetails);
+      expect(newState2).toEqual({
+        ...action2.value.formData.streamDetails,
+        supportedDrmTypes: [DrmTechnology.WIDEVINE],
+      });
     }
   );
-  test('Clearing forms reverts stream details to the initial state', () => {
+  test('Clearing forms reverts stream details to the initial state, except for browser features', () => {
     const oldState: StreamDetailsState = {
       streamResource,
       drmLicenseResource,
       drmCertificateResource,
       subtitlesResource,
       startOffset: '',
+      isDrmCertificateApplicable: false,
+      supportedDrmTypes: [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE],
     };
     const blankResource = {
       url: '',
@@ -259,6 +326,8 @@ describe('Stream details reducer', () => {
       },
       subtitlesResource: blankResource,
       startOffset: '',
+      isDrmCertificateApplicable: false,
+      supportedDrmTypes: [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE],
     });
   });
 });

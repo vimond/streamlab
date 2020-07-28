@@ -1,11 +1,11 @@
 import {
-  playBasic,
-  playAdvanced,
-  stop,
-  PLAY,
-  STOP,
   handlePlayerError,
+  PLAY,
+  playAdvanced,
+  playBasic,
   PLAYER_ERROR,
+  stop,
+  STOP,
 } from '../../../store/actions/player';
 import { BaseTech, DrmTechnology, PlayerLogLevel } from '../../../store/model/streamDetails';
 
@@ -76,6 +76,8 @@ const advancedFormState = {
       technology: BaseTech.AUTO,
     },
     startOffset: 123.456,
+    supportedDrmTypes: [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE],
+    isDrmCertificateApplicable: true,
   },
   playerOptions: {
     logLevel: PlayerLogLevel.WARNING,
@@ -149,8 +151,10 @@ describe('Player Redux actions', () => {
 
       playAdvanced(dispatch, getState);
 
+      const { supportedDrmTypes, ...streamDetails } = advancedFormState.streamDetails;
+
       const historyStreamDetails = {
-        ...advancedFormState.streamDetails,
+        ...streamDetails,
         startOffset: '',
       };
 

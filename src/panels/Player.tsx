@@ -20,6 +20,12 @@ type Props = {
   onError: (err: any) => void;
 };
 
+const stickyPlayerControls = {
+  interactionDetector: {
+    inactivityDelay: -1,
+  },
+};
+
 const Player: React.FC<Props> = ({ source, options, onError, onExit }) => (
   <Box my={1} p={4} position="relative">
     {!source && (
@@ -51,7 +57,12 @@ const Player: React.FC<Props> = ({ source, options, onError, onExit }) => (
         </Text>
       </Flex>
     )}
-    <Replay source={source} options={options} onError={onError} onExit={source ? onExit : undefined}>
+    <Replay
+      source={source}
+      options={source ? options : { ...options, ...stickyPlayerControls }}
+      onError={onError}
+      onExit={source ? onExit : undefined}
+    >
       <CompoundVideoStreamer />
     </Replay>
   </Box>

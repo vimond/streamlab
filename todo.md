@@ -66,16 +66,16 @@ https://levelup.gitconnected.com/set-up-a-typescript-react-redux-project-35d65f1
 * [x] All form fields. `3.0.0`
 * [x] Headers - disable for stream & subtitles `3.0.0`
 * [x] Start from position `3.0.0`
-* [ ] Disable cert url for PlayReady `3.0.0`
-* [ ] Message about Chromium Edge `3.0.0`
-* [x] Message about unsupported subtitle formats (remove SRT temporarily) `3.0.0`
+* [x] Message about unsupported subtitle formats (remove SRT temporarily) `3.0.
+* [x] Message about Chromium Edge and PlayReady `3.0.0`
+* [x] Disable cert url for PlayReady `3.1.0`0`
 
 Next:
 
+* [ ] Support for both Widevine and PlayReady in Chromium Edge, Windows `3.1.0`
 * [ ] Parsers for TTML, VTT, SRT? `3.3.0`
 * [ ] Override HLS.js/Shaka selection. With DRM support. `3.3.0`
 * [ ] Smooth stream support with RxPlayer? Goes along with override. `3.3.0`
-* [ ] Support for both Widevine and PlayReady in Chromium Edge `3.3.0`
 
 #### History
 
@@ -126,9 +126,10 @@ https://github.com/satya164/react-simple-code-editor
 
 #### Replay
 
-* [ ] Logo with link when not playing.
+* [x] Logo with link when not playing.
 * [x] Make dependencies great again.
-* [ ] Bring in RxVideoStreamer for smooth streams.
-* [ ] Edge/Chromium support.
+* [x] Edge/Chromium support.
+* [ ] Complete and bring in RxVideoStreamer for smooth streams.
+
 
 

@@ -46,11 +46,13 @@ type RowProps<T = any> = {
   useProxy: boolean;
   onChange: (resource: Partial<Resource<T>>) => void;
   techOptions: LabeledTechOption[];
-  isTechOptionsEnabled?: boolean;
   isHeadersEnabled?: boolean;
 };
 
 const isProxyVisible = false;
+
+const filterDrmTechLabels = (drmTypes: AutoTechnology<DrmTechnology>[]) =>
+  drmTechLabels.filter(({ key }) => drmTypes.indexOf(key) >= 0);
 
 const StreamDetailRow: React.FC<RowProps> = ({
   id,
@@ -60,10 +62,10 @@ const StreamDetailRow: React.FC<RowProps> = ({
   headers,
   technology,
   techOptions,
-  isTechOptionsEnabled,
   onChange,
   isHeadersEnabled,
 }) => {
+  console.log(techOptions);
   return (
     <>
       <FormControl gridColumn={isHeadersEnabled ? 1 : '1/span 2'}>
@@ -79,11 +81,11 @@ const StreamDetailRow: React.FC<RowProps> = ({
           Add header
         </Button>
       )}
-      {isTechOptionsEnabled ? (
+      {techOptions.length > 1 ? (
         <Menu>
           {/*
             // @ts-ignore */}
-          <MenuButton as={Button} rightIcon="chevron-down" isDisabled={!isTechOptionsEnabled}>
+          <MenuButton as={Button} rightIcon="chevron-down">
             {getLabel(technology, techOptions)}
           </MenuButton>
           <MenuList>
@@ -125,6 +127,8 @@ const StreamDetails: React.FC<Props> = ({
   subtitlesResource,
   startOffset,
   handleResourceFieldChange,
+  supportedDrmTypes = [DrmTechnology.WIDEVINE],
+  isDrmCertificateApplicable,
 }) => (
   <form>
     <Box
@@ -143,7 +147,6 @@ const StreamDetails: React.FC<Props> = ({
         id="stream"
         label="Stream URL"
         techOptions={streamTechLabels}
-        isTechOptionsEnabled
         isHeadersEnabled={false}
         onChange={(streamResource: Partial<Resource<StreamTechnology>>) =>
           handleResourceFieldChange({ streamResource })
@@ -153,30 +156,29 @@ const StreamDetails: React.FC<Props> = ({
       <StreamDetailRow
         label="DRM license URL"
         id="license"
-        techOptions={drmTechLabels}
-        isTechOptionsEnabled={false}
+        techOptions={filterDrmTechLabels(supportedDrmTypes)}
         isHeadersEnabled
         onChange={(drmLicenseResource: Partial<Resource<DrmTechnology>>) =>
           handleResourceFieldChange({ drmLicenseResource })
         }
         {...drmLicenseResource}
       />
-      <StreamDetailRow
-        id="certificate"
-        label="DRM certificate URL"
-        techOptions={drmTechLabels}
-        isTechOptionsEnabled={false}
-        isHeadersEnabled={false}
-        onChange={(drmCertificateResource: Partial<Resource<DrmTechnology>>) =>
-          handleResourceFieldChange({ drmCertificateResource })
-        }
-        {...drmCertificateResource}
-      />
+      {isDrmCertificateApplicable && (
+        <StreamDetailRow
+          id="certificate"
+          label="DRM certificate URL"
+          techOptions={filterDrmTechLabels([drmLicenseResource.technology])}
+          isHeadersEnabled={false}
+          onChange={(drmCertificateResource: Partial<Resource<DrmTechnology>>) =>
+            handleResourceFieldChange({ drmCertificateResource })
+          }
+          {...drmCertificateResource}
+        />
+      )}
       <StreamDetailRow
         id="subtitles"
         label="Subtitles URL"
         techOptions={subtitlesFormatLabels}
-        isTechOptionsEnabled
         isHeadersEnabled={false}
         onChange={(subtitlesResource: Partial<Resource<SubtitlesFormat>>) =>
           handleResourceFieldChange({ subtitlesResource })

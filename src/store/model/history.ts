@@ -23,7 +23,7 @@ export type BasicHistoryEntry = HistoryEntryBase & {
 
 export type AdvancedHistoryEntry = HistoryEntryBase & {
   formData: {
-    streamDetails: StreamDetailsState;
+    streamDetails: Omit<StreamDetailsState, 'supportedDrmTypes'>;
     playerOptions?: Omit<PlayerOptionsState, 'isModified'>;
   };
 };

@@ -1,4 +1,10 @@
-import { detectDrmType, DrmTechnology, Resource, StreamTechnology, SubtitlesFormat } from '../model/streamDetails';
+import {
+  detectSupportedDrmTypes,
+  DrmTechnology,
+  Resource,
+  StreamTechnology,
+  SubtitlesFormat,
+} from '../model/streamDetails';
 
 export const STREAM_RESOURCE_FIELD_CHANGE = 'STREAM_RESOURCE_FIELD_CHANGE';
 export const DRM_LICENSE_RESOURCE_FIELD_CHANGE = 'DRM_LICENSE_RESOURCE_FIELD_CHANGE';
@@ -10,7 +16,7 @@ export const SET_BROWSER_FEATURES = 'SET_BROWSER_FEATURES';
 export type SetBrowserFeaturesAction = {
   type: typeof SET_BROWSER_FEATURES;
   value: {
-    drmTechnology: DrmTechnology;
+    supportedDrmTypes: DrmTechnology[];
   };
 };
 
@@ -79,9 +85,12 @@ export const updateStreamDetailsField = (resourceUpdate: ResourceUpdate): Stream
         value: resourceUpdate.startOffset,
       };
 
-export const setBrowserFeatures = (userAgent: string): SetBrowserFeaturesAction => ({
-  type: SET_BROWSER_FEATURES,
-  value: {
-    drmTechnology: detectDrmType(userAgent),
-  },
-});
+export const setBrowserFeatures = (userAgent: string): SetBrowserFeaturesAction => {
+  const supportedDrmTypes = detectSupportedDrmTypes(userAgent);
+  return {
+    type: SET_BROWSER_FEATURES,
+    value: {
+      supportedDrmTypes,
+    },
+  };
+};

@@ -18,6 +18,8 @@ export interface StreamDetailsState {
   drmCertificateResource: Resource<DrmTechnology>;
   subtitlesResource: Resource<SubtitlesFormat>;
   startOffset: number | '';
+  isDrmCertificateApplicable: boolean;
+  supportedDrmTypes: DrmTechnology[];
 }
 
 const initResource = () => ({ url: '', headers: [], useProxy: false, technology: BaseTech.AUTO });
@@ -27,8 +29,12 @@ const initState = (): StreamDetailsState => ({
   drmLicenseResource: initResource(),
   drmCertificateResource: initResource(),
   subtitlesResource: initResource(),
+  supportedDrmTypes: [],
+  isDrmCertificateApplicable: true,
   startOffset: '',
 });
+
+const drmSupportsCertificate = (drmType: DrmTechnology | BaseTech | undefined) => drmType !== DrmTechnology.PLAYREADY;
 
 const streamDetails = (
   state: StreamDetailsState = initState(),
@@ -36,15 +42,20 @@ const streamDetails = (
 ): StreamDetailsState => {
   switch (action.type) {
     case SET_BROWSER_FEATURES:
+      const { supportedDrmTypes } = action.value;
+      const technology = supportedDrmTypes[0];
+      const isDrmCertificateApplicable = drmSupportsCertificate(technology);
       return {
         ...state,
+        supportedDrmTypes,
+        isDrmCertificateApplicable,
         drmLicenseResource: {
           ...state.drmLicenseResource,
-          technology: action.value.drmTechnology,
+          technology,
         },
         drmCertificateResource: {
           ...state.drmCertificateResource,
-          technology: action.value.drmTechnology,
+          technology,
         },
       };
     case STREAM_RESOURCE_FIELD_CHANGE:
@@ -56,21 +67,46 @@ const streamDetails = (
         },
       };
     case DRM_LICENSE_RESOURCE_FIELD_CHANGE:
-      return {
+      // TODO: Refactor into something nicer.
+      const newStateFromLicenseField = {
         ...state,
+        isDrmCertificateApplicable: drmSupportsCertificate(action.value.technology),
         drmLicenseResource: {
           ...state.drmLicenseResource,
           ...action.value,
         },
       };
+      if ('technology' in action.value && action.value.technology) {
+        return {
+          ...newStateFromLicenseField,
+          drmCertificateResource: {
+            ...state.drmCertificateResource,
+            technology: action.value.technology,
+          },
+        };
+      } else {
+        return newStateFromLicenseField;
+      }
     case DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE:
-      return {
+      const newStateFromCertificateField = {
         ...state,
+        isDrmCertificateApplicable: drmSupportsCertificate(action.value.technology),
         drmCertificateResource: {
           ...state.drmCertificateResource,
           ...action.value,
         },
       };
+      if ('technology' in action.value && action.value.technology != null) {
+        return {
+          ...newStateFromCertificateField,
+          drmLicenseResource: {
+            ...state.drmLicenseResource,
+            technology: action.value.technology,
+          },
+        };
+      } else {
+        return newStateFromCertificateField;
+      }
     case SUBTITLES_RESOURCE_FIELD_CHANGE:
       return {
         ...state,
@@ -84,8 +120,9 @@ const streamDetails = (
         ...state,
         startOffset: action.value,
       };
-    case RESTORE_HISTORY_ENTRY:
+    case RESTORE_HISTORY_ENTRY: {
       const initialState = initState();
+      const { supportedDrmTypes } = state;
       return {
         ...initialState,
         ...action.value.formData.streamDetails,
@@ -93,9 +130,13 @@ const streamDetails = (
           ...initialState.streamResource,
           ...action.value.formData.streamDetails.streamResource,
         },
+        supportedDrmTypes,
       };
+    }
     case CLEAR_FORMS:
       return {
+        isDrmCertificateApplicable: state.isDrmCertificateApplicable,
+        supportedDrmTypes: state.supportedDrmTypes,
         streamResource: initResource(),
         drmLicenseResource: {
           ...initResource(),

@@ -43,6 +43,11 @@ const createBasicHistoryEntry = (streamDetails: StreamDetailsState): BasicHistor
   },
 });
 
+const omitSupportedDrmTypes = (streamDetails: StreamDetailsState): Omit<StreamDetailsState, 'supportedDrmTypes'> => {
+  const { supportedDrmTypes, ...rest } = streamDetails;
+  return rest;
+};
+
 const createAdvancedHistoryEntry = (
   streamDetails: StreamDetailsState,
   playerOptions: PlayerOptionsState
@@ -50,7 +55,7 @@ const createAdvancedHistoryEntry = (
   timestamp: new Date().toISOString(),
   name: '',
   formData: {
-    streamDetails,
+    streamDetails: omitSupportedDrmTypes(streamDetails),
     playerOptions,
   },
 });
