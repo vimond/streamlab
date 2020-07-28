@@ -133,7 +133,7 @@ export const messages: MessageRule[] = [
     displayCondition: ({ nextState }) => nextState.ui.advancedMode,
     message: (nextState, action) => ({
       level: MessageLevel.INFO,
-      text: `This browser supports ${nextState.streamDetails.supportedDrmTypes
+      text: `This browser supports ${(nextState.streamDetails.supportedDrmTypes || [])
         .map((t) => getLabel(t, drmTechLabels))
         .join(' and ')} for DRM playback.`,
     }),
