@@ -52,9 +52,10 @@ API plugin:
 * [x] Better pane component.
 * [x] Create "static"/"client side only" build and deployment. `3.0.0`
 * [x] Better linting.
+* [ ] Collapse right pane.
 * [ ] Feature toggle system where proxy or processor things are not visible in "static build/deploy". `3.2.0`
 * [ ] Responsive/mobile mode. `3.3.0`
-* [ ] Nudge controls, configurable interval.
+* [ ] Nudge and seek controls, configurable interval. Extra panels/controls for different use, toggleable.
 * [ ] Cypress tests?
 * [ ] Component tests?
 * [ ] Link to Shaka Player error/HLS.js codes (and PlayReady etc.)

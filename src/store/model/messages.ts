@@ -104,7 +104,8 @@ export const messages: MessageRule[] = [
     id: 'basic-play',
     displayCondition: ({ nextState }) =>
       nextState.streamDetails.streamResource.technology !== BaseTech.AUTO &&
-      nextState.streamDetails.streamResource.url !== '',
+      nextState.streamDetails.streamResource.url !== '' &&
+      !nextState.player.source,
     message: {
       level: MessageLevel.INFO,
       text: 'Press Play to load the specified stream URL in the player.',

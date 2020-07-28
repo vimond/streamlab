@@ -8,11 +8,13 @@ Streamlab provides a consistent and convenient user interface for playing adapti
 
 Streamlab is built upon [Replay](https://github.com/vimond/replay), a full-featured React video player component facilitating adaptive stream playback, wrapping the mentioned adaptive streaming players.
 
+## Features
+
 It supports live/DVR streams, DRM, subtitles, multiple audio tracks, according to the mentioned adaptive player libraries' features. All modern browsers are supported.
 
-Streamlab is intended to bring convenience to trying out streams in the browser. 
+Streamlab is intended to bring convenience to trying out streams in the browser.
 
-All playback attempts are added to a history, and earlier stream URLs and other details can be restored and retried. 
+Fill in stream URLs and configure playback, and the setup will be persisted between browser sessions (and closed/reopened tabs). All playback attempts are added to a history, and earlier stream URLs and other details can be restored and retried. 
 
 It displays context-aware messages providing information and guidance on technical stream details, and attempts to bring error details up to the surface when the stream doesn't play.
 
