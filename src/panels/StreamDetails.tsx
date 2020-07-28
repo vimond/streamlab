@@ -64,61 +64,58 @@ const StreamDetailRow: React.FC<RowProps> = ({
   techOptions,
   onChange,
   isHeadersEnabled,
-}) => {
-  console.log(techOptions);
-  return (
-    <>
-      <FormControl gridColumn={isHeadersEnabled ? 1 : '1/span 2'}>
-        <Input
-          onChange={(evt: React.ChangeEvent<HTMLInputElement>) => onChange({ url: evt.target.value })}
-          placeholder={label}
-          type="url"
-          value={url}
-        />
-      </FormControl>
-      {isHeadersEnabled && (
-        <Button onClick={() => onChange({ headers: headers.concat({ name: '', value: '', id: Date.now() }) })}>
-          Add header
-        </Button>
-      )}
-      {techOptions.length > 1 ? (
-        <Menu>
-          {/*
+}) => (
+  <>
+    <FormControl gridColumn={isHeadersEnabled ? 1 : '1/span 2'}>
+      <Input
+        onChange={(evt: React.ChangeEvent<HTMLInputElement>) => onChange({ url: evt.target.value })}
+        placeholder={label}
+        type="url"
+        value={url}
+      />
+    </FormControl>
+    {isHeadersEnabled && (
+      <Button onClick={() => onChange({ headers: headers.concat({ name: '', value: '', id: Date.now() }) })}>
+        Add header
+      </Button>
+    )}
+    {techOptions.length > 1 ? (
+      <Menu>
+        {/*
             // @ts-ignore */}
-          <MenuButton as={Button} rightIcon="chevron-down">
-            {getLabel(technology, techOptions)}
-          </MenuButton>
-          <MenuList>
-            {techOptions.map(({ key, label }: LabeledTechOption, i: number) => (
-              <MenuItem key={i} onClick={() => onChange({ technology: key })}>
-                {label}
-              </MenuItem>
-            ))}
-          </MenuList>
-        </Menu>
-      ) : (
-        <Button isDisabled={true}>{getLabel(technology, techOptions)}</Button>
-      )}
-      {isProxyVisible && (
-        <FormControl justifySelf="center">
-          <Switch
-            onChange={(evt: React.ChangeEvent<HTMLInputElement>) => onChange({ useProxy: evt.target.checked })}
-            id={`${id}-proxy-activate`}
-            isChecked={useProxy}
-          >
-            Activate proxy for {label}
-          </Switch>
-        </FormControl>
-      )}
-      <Box gridColumn="1/span 4">
-        <HeaderRows
-          onHeadersChange={(headers: { name: string; value: string; id: number }[]) => onChange({ headers })}
-          headers={headers}
-        />
-      </Box>
-    </>
-  );
-};
+        <MenuButton as={Button} rightIcon="chevron-down">
+          {getLabel(technology, techOptions)}
+        </MenuButton>
+        <MenuList>
+          {techOptions.map(({ key, label }: LabeledTechOption, i: number) => (
+            <MenuItem key={i} onClick={() => onChange({ technology: key })}>
+              {label}
+            </MenuItem>
+          ))}
+        </MenuList>
+      </Menu>
+    ) : (
+      <Button isDisabled={true}>{getLabel(technology, techOptions)}</Button>
+    )}
+    {isProxyVisible && (
+      <FormControl justifySelf="center">
+        <Switch
+          onChange={(evt: React.ChangeEvent<HTMLInputElement>) => onChange({ useProxy: evt.target.checked })}
+          id={`${id}-proxy-activate`}
+          isChecked={useProxy}
+        >
+          Activate proxy for {label}
+        </Switch>
+      </FormControl>
+    )}
+    <Box gridColumn="1/span 4">
+      <HeaderRows
+        onHeadersChange={(headers: { name: string; value: string; id: number }[]) => onChange({ headers })}
+        headers={headers}
+      />
+    </Box>
+  </>
+);
 
 const StreamDetails: React.FC<Props> = ({
   streamResource,

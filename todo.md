@@ -54,6 +54,7 @@ API plugin:
 * [x] Better linting.
 * [ ] Feature toggle system where proxy or processor things are not visible in "static build/deploy". `3.2.0`
 * [ ] Responsive/mobile mode. `3.3.0`
+* [ ] Nudge controls, configurable interval.
 * [ ] Cypress tests?
 * [ ] Component tests?
 * [ ] Link to Shaka Player error/HLS.js codes (and PlayReady etc.)
