@@ -39,6 +39,8 @@ declare module 'react-split' {
 
     style?: CSSStyleDeclarationPartial;
 
+    collapsed?: number | undefined;
+
     // Called to set the style of each element.
     elementStyle?(
       dimension: 'width' | 'height',

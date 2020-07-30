@@ -8,7 +8,7 @@ import {
   ADVANCED_ACCORDION_CHANGE,
   RIGHT_PANE_TAB_CHANGE,
   clearForms,
-  CLEAR_FORMS,
+  CLEAR_FORMS, toggleRightPane, TOGGLE_RIGHT_PANE
 } from '../../../store/actions/ui';
 
 describe('UI Redux actions', () => {
@@ -27,4 +27,9 @@ describe('UI Redux actions', () => {
   test('Clear forms', () => {
     expect(clearForms()).toEqual({ type: CLEAR_FORMS });
   });
+  test('Collapse/expand sidebar', () => {
+    expect(toggleRightPane(false)).toEqual({ type: TOGGLE_RIGHT_PANE, value: false });
+    expect(toggleRightPane(true)).toEqual({ type: TOGGLE_RIGHT_PANE, value: true });
+  });
+
 });

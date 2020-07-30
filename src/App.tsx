@@ -19,9 +19,12 @@ import './App.css';
 type Props = {
   advancedMode: boolean;
   rightPaneWidth?: number;
+  isRightPaneExpanded: boolean;
   handlePaneResize: (sizes: number[]) => void;
   initializeFeatureState: (userAgent: string) => void;
 };
+
+const gutterStyle = () => ({ backgroundColor: '#E2E8F0', width: '4px'});
 
 class App extends Component<Props> {
   componentDidMount(): void {
@@ -29,7 +32,7 @@ class App extends Component<Props> {
   }
 
   render() {
-    const { advancedMode, handlePaneResize, rightPaneWidth = 33 } = this.props;
+    const { advancedMode, handlePaneResize, isRightPaneExpanded, rightPaneWidth = 33 } = this.props;
     return (
       <ThemeProvider>
         <ColorModeProvider value="light">
@@ -41,7 +44,9 @@ class App extends Component<Props> {
             cursor="col-resize"
             gutterAlign="end"
             gutterSize={4}
-            minSize={300}
+            gutterStyle={gutterStyle}
+            collapsed={isRightPaneExpanded ? undefined : 1}
+            minSize={isRightPaneExpanded ? 300 : 0}
             style={{ display: 'flex' }}
           >
             <Flex height="100vh" direction="column">
@@ -62,6 +67,7 @@ class App extends Component<Props> {
 const mapStateToProps = (state: AppState) => ({
   advancedMode: state.ui.advancedMode,
   rightPaneWidth: state.ui.rightPaneWidth,
+  isRightPaneExpanded: state.ui.isRightPaneExpanded,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({

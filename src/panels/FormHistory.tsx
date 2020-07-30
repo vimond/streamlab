@@ -6,6 +6,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
+  Badge,
   Box,
   Button,
   Checkbox,
@@ -93,7 +94,7 @@ const HistoryListItem: React.FC<{ entry: HistoryEntry; isSelected: boolean; hand
   >
     {formatDate(entry.timestamp)}{' '}
     {entry.error && (
-      <Icon name="warning" mx={1} mb={1} title={`This playback attempt failed with an error: ${entry.error.message}`} />
+      <Badge variantColor="red" mt="-0.2em" title={`This playback attempt failed with an error: ${entry.error.message}`}>Err</Badge>
     )}{' '}
     {formatLabel(entry)}
   </PseudoBox>

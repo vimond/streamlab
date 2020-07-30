@@ -37,7 +37,17 @@ export const messages: MessageRule[] = [
     message: {
       level: MessageLevel.INFO,
       text:
-        'Fill in an URL to the stream you want to test. Supplement with DRM information if required, or subtitle files if desired. Requests can have headers added for e.g. authorization.',
+        'Fill in an URL to the stream you want to test. Supplement with DRM information if required, ' +
+        'or subtitle file URLs if desired. Requests can have headers added for e.g. authorization.',
+    },
+  },
+  {
+    id: 'pane-resize',
+    displayCondition: ({ nextState }) =>
+      nextState.streamDetails.streamResource.url === '' && !nextState.ui.rightPaneWidth,
+    message: {
+      level: MessageLevel.INFO,
+      text: 'This pane can be resized by dragging the gutter to the left.',
     },
   },
   {

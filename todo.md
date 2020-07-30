@@ -52,12 +52,17 @@ API plugin:
 * [x] Better pane component.
 * [x] Create "static"/"client side only" build and deployment. `3.0.0`
 * [x] Better linting.
-* [ ] Collapse right pane.
+
+Next:
+
+* [ ] Collapse right pane.  `3.1.0`
+* [ ] Version label. `3.2.0`
+* [ ] Nudge and seek controls, configurable interval. Extra panels/controls for different use, toggleable. `3.2.0`
 * [ ] Feature toggle system where proxy or processor things are not visible in "static build/deploy". `3.2.0`
 * [ ] Responsive/mobile mode. `3.3.0`
-* [ ] Nudge and seek controls, configurable interval. Extra panels/controls for different use, toggleable.
-* [ ] Cypress tests?
+* [ ] Resizable player `3.3.0`
 * [ ] Component tests?
+* [ ] Cypress tests?
 * [ ] Link to Shaka Player error/HLS.js codes (and PlayReady etc.)
 
 Better TS + thunks?
@@ -70,11 +75,11 @@ https://levelup.gitconnected.com/set-up-a-typescript-react-redux-project-35d65f1
 * [x] Start from position `3.0.0`
 * [x] Message about unsupported subtitle formats (remove SRT temporarily) `3.0.
 * [x] Message about Chromium Edge and PlayReady `3.0.0`
-* [x] Disable cert url for PlayReady `3.1.0`0`
+* [x] Disable cert url for PlayReady `3.1.0`
+* [ ] Support for both Widevine and PlayReady in Chromium Edge, Windows `3.0.0`
 
 Next:
 
-* [ ] Support for both Widevine and PlayReady in Chromium Edge, Windows `3.1.0`
 * [ ] Parsers for TTML, VTT, SRT? `3.3.0`
 * [ ] Override HLS.js/Shaka selection. With DRM support. `3.3.0`
 * [ ] Smooth stream support with RxPlayer? Goes along with override. `3.3.0`
@@ -90,7 +95,7 @@ Reconsider what to save/load. Easy export/import. Autosave history after each st
 
 #### Share
 
-* [ ] Categories `3.1.0`
+* [ ] Overall, divided by categories `3.1.0`
 * [ ] Proxy URLs `3.3.0`
 * [ ] History transfer `3.1.0`
 
