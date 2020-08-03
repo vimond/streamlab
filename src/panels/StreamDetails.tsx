@@ -32,6 +32,7 @@ import { ResourceUpdate, updateStreamDetailsField } from '../store/actions/strea
 import { StreamDetailsState } from '../store/reducers/streamDetails';
 import { connect } from 'react-redux';
 import HeaderRows from '../components/HeaderRows';
+import { updateAddressBar } from '../store/model/sharing';
 
 type Props = StreamDetailsState & {
   handleResourceFieldChange: (resource: ResourceUpdate) => void;
@@ -209,7 +210,10 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  handleResourceFieldChange: (resource: ResourceUpdate) => dispatch(updateStreamDetailsField(resource)),
+  handleResourceFieldChange: (resource: ResourceUpdate) => {
+    updateAddressBar();
+    return dispatch(updateStreamDetailsField(resource));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StreamDetails);

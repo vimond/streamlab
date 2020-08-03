@@ -3,7 +3,7 @@ import { BaseTech, DrmTechnology, StreamTechnology, SubtitlesFormat } from '../.
 import {
   DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE,
   DRM_LICENSE_RESOURCE_FIELD_CHANGE,
-  SET_BROWSER_FEATURES,
+  APPLY_BROWSER_ENVIRONMENT,
   START_OFFSET_FIELD_CHANGE,
   STREAM_RESOURCE_FIELD_CHANGE,
   SUBTITLES_RESOURCE_FIELD_CHANGE,
@@ -163,7 +163,7 @@ describe('Stream details reducer', () => {
     () => {
       {
         const action = {
-          type: SET_BROWSER_FEATURES,
+          type: APPLY_BROWSER_ENVIRONMENT,
           value: {
             supportedDrmTypes: [DrmTechnology.PLAYREADY],
           },
@@ -185,7 +185,7 @@ describe('Stream details reducer', () => {
       }
       {
         const action = {
-          type: SET_BROWSER_FEATURES,
+          type: APPLY_BROWSER_ENVIRONMENT,
           value: {
             supportedDrmTypes: [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE],
           },

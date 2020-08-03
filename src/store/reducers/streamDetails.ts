@@ -1,8 +1,8 @@
 import {
   DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE,
   DRM_LICENSE_RESOURCE_FIELD_CHANGE,
-  SET_BROWSER_FEATURES,
-  setBrowserFeatures,
+  APPLY_BROWSER_ENVIRONMENT,
+  applyBrowserEnvironment,
   START_OFFSET_FIELD_CHANGE,
   STREAM_RESOURCE_FIELD_CHANGE,
   StreamDetailsFieldChangeAction,
@@ -38,26 +38,44 @@ const drmSupportsCertificate = (drmType: DrmTechnology | BaseTech | undefined) =
 
 const streamDetails = (
   state: StreamDetailsState = initState(),
-  action: StreamDetailsFieldChangeAction | ReturnType<typeof setBrowserFeatures> | HistoryEntryAction | ClearFormsAction
+  action:
+    | StreamDetailsFieldChangeAction
+    | ReturnType<typeof applyBrowserEnvironment>
+    | HistoryEntryAction
+    | ClearFormsAction
 ): StreamDetailsState => {
   switch (action.type) {
-    case SET_BROWSER_FEATURES:
-      const { supportedDrmTypes } = action.value;
+    case APPLY_BROWSER_ENVIRONMENT:
+      const { supportedDrmTypes, urlSetup } = action.value;
       const technology = supportedDrmTypes[0];
       const isDrmCertificateApplicable = drmSupportsCertificate(technology);
-      return {
-        ...state,
-        supportedDrmTypes,
-        isDrmCertificateApplicable,
-        drmLicenseResource: {
-          ...state.drmLicenseResource,
-          technology,
-        },
-        drmCertificateResource: {
-          ...state.drmCertificateResource,
-          technology,
-        },
-      };
+      if (urlSetup) {
+        const initialState = initState();
+        return {
+          ...initialState,
+          isDrmCertificateApplicable,
+          ...urlSetup.streamDetails,
+          streamResource: {
+            ...initialState.streamResource,
+            ...urlSetup.streamDetails.streamResource,
+          },
+          supportedDrmTypes,
+        };
+      } else {
+        return {
+          ...state,
+          supportedDrmTypes,
+          isDrmCertificateApplicable,
+          drmLicenseResource: {
+            ...state.drmLicenseResource,
+            technology,
+          },
+          drmCertificateResource: {
+            ...state.drmCertificateResource,
+            technology,
+          },
+        };
+      }
     case STREAM_RESOURCE_FIELD_CHANGE:
       return {
         ...state,

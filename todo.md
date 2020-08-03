@@ -55,7 +55,7 @@ API plugin:
 
 Next:
 
-* [ ] Collapse right pane.  `3.1.0`
+* [x] Collapse right pane.  `3.1.0`
 * [ ] Version label. `3.2.0`
 * [ ] Nudge and seek controls, configurable interval. Extra panels/controls for different use, toggleable. `3.2.0`
 * [ ] Feature toggle system where proxy or processor things are not visible in "static build/deploy". `3.2.0`
@@ -76,7 +76,7 @@ https://levelup.gitconnected.com/set-up-a-typescript-react-redux-project-35d65f1
 * [x] Message about unsupported subtitle formats (remove SRT temporarily) `3.0.
 * [x] Message about Chromium Edge and PlayReady `3.0.0`
 * [x] Disable cert url for PlayReady `3.1.0`
-* [ ] Support for both Widevine and PlayReady in Chromium Edge, Windows `3.0.0`
+* [ ] Complete support for both Widevine and PlayReady in Chromium Edge, Windows `3.0.0`
 
 Next:
 
@@ -95,9 +95,10 @@ Reconsider what to save/load. Easy export/import. Autosave history after each st
 
 #### Share
 
-* [ ] Overall, divided by categories `3.1.0`
+* [x] Overall `3.1.0`
+* [ ] Fine-grained category inclusion/exclusion `3.2.0`
 * [ ] Proxy URLs `3.3.0`
-* [ ] History transfer `3.1.0`
+* [ ] History transfer `3.3.0`
 
 #### API lookup
 

@@ -5,7 +5,6 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-
 import createPersistentStore from './store/persistentStore';
 
 const { store, persistor } = createPersistentStore();

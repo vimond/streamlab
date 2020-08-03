@@ -1,5 +1,11 @@
-import { AdvancedAccordionExpansionAction, ClearFormsAction, PaneResizeAction, ToggleAdvancedModeAction, ToggleRightPaneAction } from './ui';
-import { SetBrowserFeaturesAction, StreamDetailsFieldChangeAction } from './streamDetails';
+import {
+  AdvancedAccordionExpansionAction,
+  ClearFormsAction,
+  PaneResizeAction,
+  ToggleAdvancedModeAction,
+  ToggleRightPaneAction,
+} from './ui';
+import { ApplyBrowserEnvironmentAction, StreamDetailsFieldChangeAction } from './streamDetails';
 import { PlayerAction, PlayerErrorAction } from './player';
 import { SetLogLevelAction, SetPlayerConfigurationAction, TogglePlaybackMonitorAction } from './playerOptions';
 import {
@@ -10,7 +16,7 @@ import {
 } from './history';
 
 export type Action =
-  | SetBrowserFeaturesAction
+  | ApplyBrowserEnvironmentAction
   | ToggleAdvancedModeAction
   | PaneResizeAction
   | ToggleRightPaneAction

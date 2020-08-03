@@ -7,6 +7,7 @@ import { Action } from '../store/actions';
 import { toggleAdvancedMode, toggleRightPane } from '../store/actions/ui';
 import { connect } from 'react-redux';
 import StreamlabLogo from '../graphics/streamlab-logo.svg';
+import { updateAddressBar } from '../store/model/sharing';
 
 type Props = {
   advancedMode: boolean;
@@ -28,7 +29,16 @@ const HeaderBar: React.FC<Props> = ({ advancedMode, isRightPaneExpanded, toggleA
         Advanced
       </FormLabel>
     </FormControl>
-    <Button size="xs" flex="0" ml={4} mt={1} title={`${isRightPaneExpanded ? 'Collapse' : 'Expand'} sidebar`} onClick={toggleRightPane}>{isRightPaneExpanded ? '›' : '‹'}</Button>
+    <Button
+      size="xs"
+      flex="0"
+      ml={4}
+      mt={1}
+      title={`${isRightPaneExpanded ? 'Collapse' : 'Expand'} sidebar`}
+      onClick={toggleRightPane}
+    >
+      {isRightPaneExpanded ? '›' : '‹'}
+    </Button>
   </Flex>
 );
 
@@ -38,8 +48,12 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  toggleAdvancedMode: (evt: React.ChangeEvent<HTMLInputElement>) => dispatch(toggleAdvancedMode(evt.target.checked)),
-  toggleRightPane: (evt: React.MouseEvent<HTMLButtonElement>) => dispatch(toggleRightPane(evt.currentTarget.textContent === '‹' ? true : false)),
+  toggleAdvancedMode: (evt: React.ChangeEvent<HTMLInputElement>) => {
+    updateAddressBar();
+    return dispatch(toggleAdvancedMode(evt.target.checked));
+  },
+  toggleRightPane: (evt: React.MouseEvent<HTMLButtonElement>) =>
+    dispatch(toggleRightPane(evt.currentTarget.textContent === '‹' ? true : false)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderBar);

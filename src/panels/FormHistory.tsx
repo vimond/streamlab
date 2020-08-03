@@ -48,6 +48,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Action } from '../store/actions';
 import { UserSelectProperty } from 'csstype';
+import { updateAddressBar } from '../store/model/sharing';
 
 type Props = {
   selectedEntry?: HistoryEntry;
@@ -94,7 +95,13 @@ const HistoryListItem: React.FC<{ entry: HistoryEntry; isSelected: boolean; hand
   >
     {formatDate(entry.timestamp)}{' '}
     {entry.error && (
-      <Badge variantColor="red" mt="-0.2em" title={`This playback attempt failed with an error: ${entry.error.message}`}>Err</Badge>
+      <Badge
+        variantColor="red"
+        mt="-0.2em"
+        title={`This playback attempt failed with an error: ${entry.error.message}`}
+      >
+        Err
+      </Badge>
     )}{' '}
     {formatLabel(entry)}
   </PseudoBox>
@@ -177,10 +184,6 @@ const FormHistory: React.FC<Props> = ({
     <Box mx={4}>
       <Box>
         <Header level={Level.H3}>Form history</Header>
-        <Text>
-          The form data from each playback attempt is registered in the entries below. Duplicates are listed once with
-          their last playback time. Select for inspection and restoration:
-        </Text>
         <List overflowY="scroll" backgroundColor="white" maxHeight={64} my={2}>
           {history
             .slice(0)
@@ -334,7 +337,10 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   handleEntryClick: (entry: HistoryEntry) => dispatch(selectHistoryEntry(entry)),
   handleEntryLabelChange: (evt: React.ChangeEvent<HTMLInputElement>) =>
     dispatch(updateSelectedHistoryEntryName(evt.target.value)),
-  handleRestoreEntryClick: (entry: HistoryEntry) => dispatch(restoreHistoryEntry(entry)),
+  handleRestoreEntryClick: (entry: HistoryEntry) => {
+    updateAddressBar();
+    return dispatch(restoreHistoryEntry(entry));
+  },
   handleDeleteEntryClick: (entry: HistoryEntry) => dispatch(deleteHistoryEntry(entry)),
   handleDeleteHistory: () => dispatch(deleteHistory()),
 });

@@ -25,6 +25,7 @@ import { playAdvanced } from '../store/actions/player';
 import { connect } from 'react-redux';
 import { clearForms, updateAdvancedAccordionExpansions } from '../store/actions/ui';
 import { AppState } from '../store/reducers';
+import { updateAddressBar } from '../store/model/sharing';
 
 const SectionHeader: React.FC<{ header: string; isRequired?: boolean }> = ({ header, isRequired }) => (
   <AccordionHeader backgroundColor="gray.100">
@@ -118,7 +119,10 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     return dispatch(playAdvanced);
   },
   handleAccordionChange: (indices: number[]) => dispatch(updateAdvancedAccordionExpansions(indices)),
-  handleClear: () => dispatch(clearForms()),
+  handleClear: () => {
+    updateAddressBar();
+    return dispatch(clearForms());
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Advanced);

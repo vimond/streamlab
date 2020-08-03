@@ -7,6 +7,7 @@ import { Action } from '../store/actions';
 import { setLogLevel, togglePlaybackMonitor, setPlayerConfiguration } from '../store/actions/playerOptions';
 import { getLogLevelLabel, PlayerLogLevel } from '../store/model/streamDetails';
 import { JsonEditor } from '../components/JsonEditor';
+import { updateAddressBar } from '../store/model/sharing';
 
 type Props = {
   logLevel: PlayerLogLevel;
@@ -90,10 +91,18 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  handleLogLevelClick: (value: PlayerLogLevel) => dispatch(setLogLevel(value)),
-  handlePlayerConfigurationChange: (value: string) => dispatch(setPlayerConfiguration(value)),
-  handlePlaybackMonitorToggle: (evt: React.ChangeEvent<HTMLInputElement>) =>
-    dispatch(togglePlaybackMonitor(evt.target.checked)),
+  handleLogLevelClick: (value: PlayerLogLevel) => {
+    updateAddressBar();
+    return dispatch(setLogLevel(value));
+  },
+  handlePlayerConfigurationChange: (value: string) => {
+    updateAddressBar();
+    return dispatch(setPlayerConfiguration(value));
+  },
+  handlePlaybackMonitorToggle: (evt: React.ChangeEvent<HTMLInputElement>) => {
+    updateAddressBar();
+    return dispatch(togglePlaybackMonitor(evt.target.checked));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayerOptions);

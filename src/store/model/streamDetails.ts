@@ -12,6 +12,9 @@ export enum BaseTech {
   AUTO,
 }
 
+// The following enum member orders should be considered as "sealed"/"final",
+// and never be changed, for backward compatibility in history and link sharing.
+
 export enum StreamTechnology {
   DASH = 1,
   HLS,

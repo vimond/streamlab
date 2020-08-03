@@ -5,18 +5,21 @@ import {
   StreamTechnology,
   SubtitlesFormat,
 } from '../model/streamDetails';
+import { PersistibleFormData } from '../model/history';
+import { parseSetupFromQueryString } from '../model/sharing';
 
 export const STREAM_RESOURCE_FIELD_CHANGE = 'STREAM_RESOURCE_FIELD_CHANGE';
 export const DRM_LICENSE_RESOURCE_FIELD_CHANGE = 'DRM_LICENSE_RESOURCE_FIELD_CHANGE';
 export const DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE = 'DRM_CERTIFICATE_RESOURCE_FIELD_CHANGE';
 export const SUBTITLES_RESOURCE_FIELD_CHANGE = 'SUBTITLES_RESOURCE_FIELD_CHANGE';
 export const START_OFFSET_FIELD_CHANGE = 'START_OFFSET_FIELD_CHANGE';
-export const SET_BROWSER_FEATURES = 'SET_BROWSER_FEATURES';
+export const APPLY_BROWSER_ENVIRONMENT = 'APPLY_BROWSER_ENVIRONMENT';
 
-export type SetBrowserFeaturesAction = {
-  type: typeof SET_BROWSER_FEATURES;
+export type ApplyBrowserEnvironmentAction = {
+  type: typeof APPLY_BROWSER_ENVIRONMENT;
   value: {
     supportedDrmTypes: DrmTechnology[];
+    urlSetup: PersistibleFormData | undefined;
   };
 };
 
@@ -85,12 +88,13 @@ export const updateStreamDetailsField = (resourceUpdate: ResourceUpdate): Stream
         value: resourceUpdate.startOffset,
       };
 
-export const setBrowserFeatures = (userAgent: string): SetBrowserFeaturesAction => {
+export const applyBrowserEnvironment = (userAgent: string, queryString: string): ApplyBrowserEnvironmentAction => {
   const supportedDrmTypes = detectSupportedDrmTypes(userAgent);
   return {
-    type: SET_BROWSER_FEATURES,
+    type: APPLY_BROWSER_ENVIRONMENT,
     value: {
       supportedDrmTypes,
+      urlSetup: parseSetupFromQueryString(queryString),
     },
   };
 };

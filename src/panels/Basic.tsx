@@ -8,6 +8,7 @@ import { updateStreamDetailsField } from '../store/actions/streamDetails';
 import { connect } from 'react-redux';
 import { AutoTechnology, BaseTech, Resource, StreamTechnology } from '../store/model/streamDetails';
 import { playBasic } from '../store/actions/player';
+import { updateAddressBar } from '../store/model/sharing';
 
 type StreamTech = AutoTechnology<StreamTechnology>;
 
@@ -87,18 +88,22 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  handleStreamUrlChange: (evt: React.ChangeEvent<HTMLInputElement>) =>
-    dispatch(
+  handleStreamUrlChange: (evt: React.ChangeEvent<HTMLInputElement>) => {
+    updateAddressBar();
+    return dispatch(
       updateStreamDetailsField({
         streamResource: { url: evt.target.value },
       })
-    ),
-  handleStreamTechnologyChange: (technology: StreamTech) =>
-    dispatch(
+    );
+  },
+  handleStreamTechnologyChange: (technology: StreamTech) => {
+    updateAddressBar();
+    return dispatch(
       updateStreamDetailsField({
         streamResource: { technology },
       })
-    ),
+    );
+  },
   handlePlay: (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.currentTarget.blur(); // Otherwise Replay's Ctrl+Alt+M short cut will be captured as a click on this button.
     // @ts-ignore Typing not supported for thunk actions.

@@ -28,17 +28,16 @@ const stickyPlayerControls = {
 
 const Player: React.FC<Props> = ({ source, options, onError, onExit }) => (
   <Box my={1} p={4} position="relative">
+    <Replay
+      source={source}
+      options={source ? options : { ...options, ...stickyPlayerControls }}
+      onError={onError}
+      onExit={source ? onExit : undefined}
+    >
+      <CompoundVideoStreamer />
+    </Replay>
     {!source && (
-      <Flex
-        position="absolute"
-        left={0}
-        right={0}
-        zIndex={33}
-        direction="column"
-        pt={12}
-        alignItems="center"
-        opacity={0.7}
-      >
+      <Flex position="absolute" left={0} right={0} top={0} direction="column" pt={12} alignItems="center" opacity={0.7}>
         <Text width="20%" mt={6}>
           <Link href="https://vimond.github.io/replay/" isExternal>
             <Image src={ReplayLogo} alt="Replay" />
@@ -57,14 +56,6 @@ const Player: React.FC<Props> = ({ source, options, onError, onExit }) => (
         </Text>
       </Flex>
     )}
-    <Replay
-      source={source}
-      options={source ? options : { ...options, ...stickyPlayerControls }}
-      onError={onError}
-      onExit={source ? onExit : undefined}
-    >
-      <CompoundVideoStreamer />
-    </Replay>
   </Box>
 );
 

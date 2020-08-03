@@ -13,7 +13,7 @@ const renderMessage = ({ text, level }: Message, i: number) => (
   </ListItem>
 );
 
-const Info: React.FC<{ messages: Message[] }> = ({ messages }) => (
+const Information: React.FC<{ messages: Message[] }> = ({ messages }) => (
   <List styleType="none">{messages.map(renderMessage)}</List>
 );
 
@@ -21,4 +21,4 @@ const mapStateToProps = (state: AppState) => ({
   messages: state.information.messages,
 });
 
-export default connect(mapStateToProps)(Info);
+export default connect(mapStateToProps)(Information);

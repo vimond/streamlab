@@ -4,6 +4,7 @@ import { BaseTech, PlayerLogLevel, StreamTechnology } from '../../../store/model
 import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../../../store/actions/history';
 import { AdvancedHistoryEntry } from '../../../store/model/history';
 import { CLEAR_FORMS } from '../../../store/actions/ui';
+import { APPLY_BROWSER_ENVIRONMENT } from '../../../store/actions/streamDetails';
 
 const initialState = {
   customConfiguration: '',
@@ -12,7 +13,66 @@ const initialState = {
   isModified: false,
 };
 
+const simpleUrlSetup = {
+  streamDetails: {
+    streamResource: {
+      url: 'https://example.com/stream.m3u8',
+      technology: BaseTech.AUTO,
+    },
+  },
+};
+const resourceData = {
+  url: 'abc',
+  useProxy: false,
+  headers: [{ id: '20202', name: 'Authorization', value: 'abc123' }],
+  technology: BaseTech.AUTO,
+};
+const advancedUrlSetup = {
+  streamDetails: {
+    streamResource: resourceData,
+    drmLicenseResource: resourceData,
+    drmCertificateResource: resourceData,
+    subtitlesResource: resourceData,
+  },
+  playerOptions: {
+    logLevel: PlayerLogLevel.WARNING,
+    customConfiguration: '{"hello":"world"}',
+    showPlaybackMonitor: true,
+  },
+};
+
 describe('Player options reducer', () => {
+  test('Including options found in share URL', () => {
+    const newState1 = playerOptionsReducer(initialState, {
+      type: APPLY_BROWSER_ENVIRONMENT,
+      value: {
+        supportedDrmTypes: [],
+        urlSetup: advancedUrlSetup,
+      },
+    });
+    expect(newState1).toEqual({
+      customConfiguration: '{"hello":"world"}',
+      showPlaybackMonitor: true,
+      logLevel: PlayerLogLevel.WARNING,
+      isModified: true,
+    });
+    const newState2 = playerOptionsReducer(initialState, {
+      type: APPLY_BROWSER_ENVIRONMENT,
+      value: {
+        supportedDrmTypes: [],
+        urlSetup: simpleUrlSetup,
+      },
+    });
+    expect(newState2).toEqual(initialState);
+    const newState3 = playerOptionsReducer(initialState, {
+      type: APPLY_BROWSER_ENVIRONMENT,
+      value: {
+        supportedDrmTypes: [],
+        urlSetup: undefined,
+      },
+    });
+    expect(newState3).toEqual(initialState);
+  });
   test('Updating the log level state when set', () => {
     const newState = playerOptionsReducer(initialState, { type: SET_LOG_LEVEL, value: PlayerLogLevel.INFO });
     expect(newState).toEqual({
@@ -76,6 +136,7 @@ describe('Player options reducer', () => {
           drmCertificateResource: emptyResource,
           subtitlesResource: emptyResource,
           startOffset: '',
+          isDrmCertificateApplicable: false,
         },
         playerOptions: {
           customConfiguration: '{"key":"value"}',

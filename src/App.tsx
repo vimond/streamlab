@@ -11,7 +11,7 @@ import HeaderBar from './panels/HeaderBar';
 import { Action } from './store/actions';
 import { Dispatch } from 'redux';
 import { updatePaneSize } from './store/actions/ui';
-import { setBrowserFeatures } from './store/actions/streamDetails';
+import { applyBrowserEnvironment } from './store/actions/streamDetails';
 
 import 'vimond-replay/index.css';
 import './App.css';
@@ -21,14 +21,14 @@ type Props = {
   rightPaneWidth?: number;
   isRightPaneExpanded: boolean;
   handlePaneResize: (sizes: number[]) => void;
-  initializeFeatureState: (userAgent: string) => void;
+  initializeFeatureState: (userAgent: string, queryString: string) => void;
 };
 
-const gutterStyle = () => ({ backgroundColor: '#E2E8F0', width: '4px'});
+const gutterStyle = () => ({ backgroundColor: '#E2E8F0', width: '4px' });
 
 class App extends Component<Props> {
   componentDidMount(): void {
-    this.props.initializeFeatureState(navigator.userAgent);
+    this.props.initializeFeatureState(navigator.userAgent, document.location.search);
   }
 
   render() {
@@ -75,8 +75,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     dispatch(updatePaneSize(sizes[1]));
     return null;
   },
-  initializeFeatureState: (userAgent: string) => {
-    dispatch(setBrowserFeatures(userAgent));
+  initializeFeatureState: (userAgent: string, queryString: string) => {
+    dispatch(applyBrowserEnvironment(userAgent, queryString));
   },
 });
 

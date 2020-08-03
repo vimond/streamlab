@@ -8,7 +8,9 @@ import {
   ADVANCED_ACCORDION_CHANGE,
   RIGHT_PANE_TAB_CHANGE,
   clearForms,
-  CLEAR_FORMS, toggleRightPane, TOGGLE_RIGHT_PANE
+  CLEAR_FORMS,
+  toggleRightPane,
+  TOGGLE_RIGHT_PANE,
 } from '../../../store/actions/ui';
 
 describe('UI Redux actions', () => {
@@ -31,5 +33,4 @@ describe('UI Redux actions', () => {
     expect(toggleRightPane(false)).toEqual({ type: TOGGLE_RIGHT_PANE, value: false });
     expect(toggleRightPane(true)).toEqual({ type: TOGGLE_RIGHT_PANE, value: true });
   });
-
 });

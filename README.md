@@ -51,14 +51,3 @@ Version 3.0 is the first public release of Streamlab, rebuilt based on two earli
 
 Streamlab is built with React, TypeScript, and the magnificent UI library [Chakra UI](https://chakra-ui.com/).
 
-## About
-
-Streamlab is an open source initiative from [Vimond Media Solutions](https://vimond.com).
-
-### License
-
-Streamlab is released under the [Apache 2.0 License](https://github.com/vimond/streamlab-v3/blob/master/LICENSE).
-
-### Authors
-
-Replay is developed by Tor Erik Alræk.

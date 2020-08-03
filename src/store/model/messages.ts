@@ -11,6 +11,7 @@ import {
   subtitlesFormatLabels,
 } from './streamDetails';
 import { PLAYER_ERROR } from '../actions/player';
+import { APPLY_BROWSER_ENVIRONMENT } from '../actions/streamDetails';
 
 export const messages: MessageRule[] = [
   {
@@ -20,6 +21,15 @@ export const messages: MessageRule[] = [
     message: {
       level: MessageLevel.INFO,
       text: 'Welcome to Streamlab, created by Vimond developers.',
+    },
+  },
+  {
+    id: 'share',
+    displayCondition: ({ action }) => action.type === APPLY_BROWSER_ENVIRONMENT && !!action.value.urlSetup,
+    message: {
+      level: MessageLevel.SUCCESS,
+      text:
+        'The shared stream setup found in the URL is now applied to the form to the left. Press play to try it out.',
     },
   },
   {
@@ -137,6 +147,25 @@ export const messages: MessageRule[] = [
     message: {
       level: MessageLevel.INFO,
       text: 'Press Ctrl+Alt+M to reveal a panel with all properties of the playback state.',
+    },
+  },
+  {
+    id: 'share-incompatible-drm',
+    displayCondition: ({ nextState, action }) =>
+      !!(
+        action.type === APPLY_BROWSER_ENVIRONMENT &&
+        action.value.urlSetup &&
+        'drmLicenseResource' in action.value.urlSetup.streamDetails &&
+        action.value.urlSetup.streamDetails.drmLicenseResource.technology &&
+        nextState.streamDetails.supportedDrmTypes.indexOf(
+          action.value.urlSetup.streamDetails.drmLicenseResource.technology
+        ) < 0
+      ),
+    message: {
+      level: MessageLevel.ERROR,
+      text:
+        'The shared link specified an unsupported DRM technology, and can perhaps not be used for playback in this browser. Consider testing it in a diff' +
+        'erent browser.',
     },
   },
   {

@@ -13,19 +13,25 @@ export type SimpleStreamResource = {
   technology: AutoTechnology<StreamTechnology>;
 };
 
-export type BasicHistoryEntry = HistoryEntryBase & {
-  formData: {
-    streamDetails: {
-      streamResource: SimpleStreamResource;
-    };
+export type SimplePersistableFormData = {
+  streamDetails: {
+    streamResource: SimpleStreamResource;
   };
 };
 
+export type AdvancedPersistableFormData = {
+  streamDetails: Omit<StreamDetailsState, 'supportedDrmTypes'>;
+  playerOptions?: Omit<PlayerOptionsState, 'isModified'>;
+};
+
+export type PersistibleFormData = SimplePersistableFormData | AdvancedPersistableFormData;
+
+export type BasicHistoryEntry = HistoryEntryBase & {
+  formData: SimplePersistableFormData;
+};
+
 export type AdvancedHistoryEntry = HistoryEntryBase & {
-  formData: {
-    streamDetails: Omit<StreamDetailsState, 'supportedDrmTypes'>;
-    playerOptions?: Omit<PlayerOptionsState, 'isModified'>;
-  };
+  formData: AdvancedPersistableFormData;
 };
 
 export type HistoryEntry = BasicHistoryEntry | AdvancedHistoryEntry;

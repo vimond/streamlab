@@ -1,7 +1,8 @@
 import React from 'react';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/core';
-import Info from './Info';
+import Information from './Information';
 import FormHistory from './FormHistory';
+import Sharing from './Sharing';
 import { AppState } from '../store/reducers';
 import { Dispatch } from 'redux';
 import { Action } from '../store/actions';
@@ -26,13 +27,17 @@ const Sidebar: React.FC<{ activeTabIndex: number; handleActiveTabChange: (index:
     <TabList flex="0 0 auto" backgroundColor="white">
       <Tab>Info</Tab>
       <Tab>History</Tab>
+      <Tab>Sharing</Tab>
     </TabList>
     <TabPanels flex="1 1 auto" overflowY="auto" outline="none">
       <TabPanel>
-        <Info />
+        <Information />
       </TabPanel>
       <TabPanel>
         <FormHistory />
+      </TabPanel>
+      <TabPanel>
+        <Sharing />
       </TabPanel>
     </TabPanels>
   </Tabs>
