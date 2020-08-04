@@ -43,7 +43,7 @@ API plugin:
 
 ## Tasks
 
-#### Overall
+### v3.0.0
 
 * [x] Rename layout to panels
 * [x] Remember accordion expand states
@@ -52,92 +52,63 @@ API plugin:
 * [x] Better pane component.
 * [x] Create "static"/"client side only" build and deployment. `3.0.0`
 * [x] Better linting.
-
-Next:
-
 * [x] Collapse right pane.  `3.1.0`
-* [ ] Version label. `3.2.0`
-* [ ] Nudge and seek controls, configurable interval. Extra panels/controls for different use, toggleable. `3.2.0`
-* [ ] Feature toggle system where proxy or processor things are not visible in "static build/deploy". `3.2.0`
-* [ ] Responsive/mobile mode. `3.3.0`
+* [x] Version label. `3.2.0`
+* [x] All form fields. `3.0.0`
+* [x] Headers - disable for stream & subtitles `3.0.0`
+* [x] Start from position `3.0.0`
+* [x] Message about unsupported subtitle formats (remove SRT temporarily) `3.1.0`
+* [x] Message about Chromium Edge and PlayReady `3.0.0`
+* [x] Disable cert url for PlayReady `3.1.0`
+* [x] Linear history `3.0.0`
+* [x] Clear history `3.0.0`
+* [x] Sharing `3.1.0`
+* [x] JSON editor for modern React. `3.0.0`
+* [ ] Rename repos etc.
+* [ ] Complete support for both Widevine and PlayReady in Chromium Edge, Windows `3.0.0`
+* [x] Expose Replay and playback methods `3.1.0`
+
+### v3.1.0
+
+* [ ] Nudge and seek controls, configurable intervals. Extra panels/controls for different use, toggleable? `3.2.0`
+* [ ] Responsive/mobile mode. Just four tabs with badge on Info for important stuff?
+* [ ] Override HLS.js/Shaka selection. With DRM support. `3.3.0`
+* [ ] Smooth stream support with RxPlayer? Goes along with override. `3.3.0`
+* [ ] Log level.
+* [ ] Special Shaka video streamer with debug/verbose logging. `'shaka-player/dist/shaka-player.compiled.debug'`
+
+### v3.2.0
+
+* [ ] Proxy running only in localhost. Rewrite in TS with tests? Separate repo? Don't break create-react-app...
+* [ ] Toggles for proxying different URLs. `3.2.0`
+* [ ] Sbaring: Fine-grained category inclusion/exclusion `3.2.0`
+* [ ] Feature toggle system where proxy or processor things are not visible in static build/deploy. `3.2.0`
+
+### v3.3.0
+
+* [ ] postMessage solution for filling forms with Vimond API lookups
+* [ ] Practical example with either (VCC API, content discovery, REST API)
 * [ ] Resizable player `3.3.0`
+* [ ] Parsers for TTML, VTT, SRT? `3.3.0`
+
+### v3.4.0
+
+* [ ] Link to Shaka Player error/HLS.js codes (and PlayReady etc.)
+* [ ] History transfer `3.3.0`
+* [ ] Stream processor with regex, HLS, MPD tools.
+
+#### Whenever
+
 * [ ] Component tests?
 * [ ] Cypress tests?
-* [ ] Link to Shaka Player error/HLS.js codes (and PlayReady etc.)
+* [ ] Undo clear button after clear `3.1.0`
+* [ ] Save only specific forms `3.3.0`
 
 Better TS + thunks?
 https://levelup.gitconnected.com/set-up-a-typescript-react-redux-project-35d65f14b869
 
-#### Stream details
 
-* [x] All form fields. `3.0.0`
-* [x] Headers - disable for stream & subtitles `3.0.0`
-* [x] Start from position `3.0.0`
-* [x] Message about unsupported subtitle formats (remove SRT temporarily) `3.0.
-* [x] Message about Chromium Edge and PlayReady `3.0.0`
-* [x] Disable cert url for PlayReady `3.1.0`
-* [ ] Complete support for both Widevine and PlayReady in Chromium Edge, Windows `3.0.0`
 
-Next:
-
-* [ ] Parsers for TTML, VTT, SRT? `3.3.0`
-* [ ] Override HLS.js/Shaka selection. With DRM support. `3.3.0`
-* [ ] Smooth stream support with RxPlayer? Goes along with override. `3.3.0`
-
-#### History
-
-Reconsider what to save/load. Easy export/import. Autosave history after each stream start? And then later give names?
-
-* [x] Linear history `3.0.0`
-* [x] Clear history `3.0.0`
-* [ ] Undo clear button after clear `3.1.0`
-* [ ] Save only specific forms `3.3.0`
-
-#### Share
-
-* [x] Overall `3.1.0`
-* [ ] Fine-grained category inclusion/exclusion `3.2.0`
-* [ ] Proxy URLs `3.3.0`
-* [ ] History transfer `3.3.0`
-
-#### API lookup
-
-Only available on localhost?
-
-Create separate page with lookup, and then load Streamlab with details? Practicalities with such a flow can be unclear.
-
-* [ ] Pluggable architecture? `3.4.0`
-* [ ] Content delivery API `3.4.0`
-* [ ] Rest API `3.4.0`
-* [ ] Auth0
-
-#### Player options
-
-https://github.com/satya164/react-simple-code-editor
-
-* [x] JSON editor for modern React. `3.0.0`
-* [ ] Log level. `3.1.0`
-* [ ] Expose video element...
-
-#### Proxy
-
-* [ ] Feature toggle activation in frontend. `3.2.0`
-* [ ] Start localhost with both backend (proxy) and frontend. `3.2.0`
-* [ ] Implement with tests. `3.2.0`
-* [ ] Toggles for different URLs. `3.2.0`
-
-#### Processor
-
-* [ ] Regex. `3.4.0`
-* [ ] HLS tools. `3.6.0`
-* [ ] MPD tools. `3.6.0`
-
-#### Replay
-
-* [x] Logo with link when not playing.
-* [x] Make dependencies great again.
-* [x] Edge/Chromium support.
-* [ ] Complete and bring in RxVideoStreamer for smooth streams.
 
 
 

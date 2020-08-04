@@ -184,6 +184,10 @@ const FormHistory: React.FC<Props> = ({
     <Box mx={4}>
       <Box>
         <Header level={Level.H3}>Form history</Header>
+        <Text>
+          The form data from each playback attempt is registered in the entries below. Duplicates are listed once with
+          their last playback time. Select for inspection and restoration back into the forms:
+        </Text>
         <List overflowY="scroll" backgroundColor="white" maxHeight={64} my={2}>
           {history
             .slice(0)
