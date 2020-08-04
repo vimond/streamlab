@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/core';
+import { Badge, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/core';
 import Information from './Information';
 import FormHistory from './FormHistory';
 import Sharing from './Sharing';
@@ -8,9 +8,11 @@ import { Dispatch } from 'redux';
 import { Action } from '../store/actions';
 import { updateActiveRightPaneTab } from '../store/actions/ui';
 import { connect } from 'react-redux';
+import { MessageLevel } from '../store/model/messageResolver';
 
-const Sidebar: React.FC<{ activeTabIndex: number; handleActiveTabChange: (index: any) => void }> = ({
+const Sidebar: React.FC<{ activeTabIndex: number; errorMessageCount: number, handleActiveTabChange: (index: any) => void }> = ({
   activeTabIndex,
+  errorMessageCount,
   handleActiveTabChange,
 }) => (
   <Tabs
@@ -25,7 +27,7 @@ const Sidebar: React.FC<{ activeTabIndex: number; handleActiveTabChange: (index:
     onChange={handleActiveTabChange}
   >
     <TabList flex="0 0 auto" backgroundColor="white">
-      <Tab>Info</Tab>
+      <Tab>Info {activeTabIndex > 0 && errorMessageCount > 0 && <Badge ml={2} variantColor="red" variant="solid">{errorMessageCount}</Badge>}</Tab>
       <Tab>History</Tab>
       <Tab>Sharing</Tab>
     </TabList>
@@ -45,6 +47,7 @@ const Sidebar: React.FC<{ activeTabIndex: number; handleActiveTabChange: (index:
 
 const mapStateToProps = (state: AppState) => ({
   activeTabIndex: state.ui.rightPaneActiveTabIndex,
+  errorMessageCount: state.information.messages.filter(m => m.level === MessageLevel.ERROR).length,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({

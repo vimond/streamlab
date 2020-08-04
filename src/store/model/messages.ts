@@ -133,11 +133,11 @@ export const messages: MessageRule[] = [
   },
   {
     id: 'player-error',
-    displayCondition: ({ action }) => action.type === PLAYER_ERROR,
+    displayCondition: ({ nextState }) => 'error' in nextState.player,
     message: (nextState, action) => ({
       level: MessageLevel.ERROR,
       text: `Player error: ${
-        action.type === PLAYER_ERROR && action.error.message
+        'error' in nextState.player && nextState.player.error && nextState.player.error.message
       }. The full error object is logged to the browser console.`,
     }),
   },
