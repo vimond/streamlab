@@ -1,7 +1,7 @@
 import { Replay } from 'vimond-replay';
 import React from 'react';
 import { Box, Text, Flex, Link, Image } from '@chakra-ui/core';
-import { PlaybackSource } from 'vimond-replay/default-player/Replay';
+import { PlaybackActions, PlaybackSource, VideoStreamState } from 'vimond-replay/default-player/Replay';
 import { PlayerConfiguration } from 'vimond-replay';
 import ReplayLogo from '../graphics/replay-logo.svg';
 
@@ -26,6 +26,42 @@ const stickyPlayerControls = {
   },
 };
 
+const onStreamStateChange = (streamState: VideoStreamState) => {
+  // @ts-ignore
+  if (!window.player) {
+    // @ts-ignore
+    window.player = {};
+  }
+  // @ts-ignore
+  if (!window.player.state) {
+    // @ts-ignore
+    window.player.state = {};
+  }
+  for (const [key, value] of Object.entries(streamState)) {
+    // @ts-ignore
+    window.player.state[key] = value;
+  }
+};
+
+const highlightConsoleStyle = 'font-weight: bold; color: orange;';
+const normalConsoleStyle = 'font-weight: normal; color: inherit';
+
+const onPlaybackActionsReady = (actions: PlaybackActions) => {
+  // @ts-ignore
+  window.player = actions;
+  console.info(
+    'Playback methods and playback state is exposed to a global %cplayer %cobject. Expand for details:',
+    highlightConsoleStyle,
+    normalConsoleStyle,
+  );
+  // @ts-ignore
+  console.dir(window.player);
+  console.info(
+    'Type e.g. %cplayer.setPosition(33), %cto seek to 0:33, or %cplayer.state.position %cto get the current playback position.',
+    highlightConsoleStyle, normalConsoleStyle, highlightConsoleStyle, normalConsoleStyle
+  );
+};
+
 const Player: React.FC<Props> = ({ source, options, onError, onExit }) => (
   <Box my={1} p={4} position="relative">
     <Replay
@@ -33,6 +69,8 @@ const Player: React.FC<Props> = ({ source, options, onError, onExit }) => (
       options={source ? options : { ...options, ...stickyPlayerControls }}
       onError={onError}
       onExit={source ? onExit : undefined}
+      onStreamStateChange={onStreamStateChange}
+      onPlaybackActionsReady={onPlaybackActionsReady}
     >
       <CompoundVideoStreamer />
     </Replay>
