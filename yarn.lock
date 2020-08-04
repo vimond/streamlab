@@ -10896,10 +10896,10 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-vimond-replay@^1.10.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/vimond-replay/-/vimond-replay-1.11.0.tgz#722936f7f8aad29200d49b3cec0101ac8b2554bb"
-  integrity sha512-ObLELzBuW5XhQQAfZC9A2HkpzYBouOPUGrmIt31TbHjAggB9zMfCODuAJ4XeBPMxaFUi2xCpuVfK0rIGFfCZqQ==
+vimond-replay@^1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/vimond-replay/-/vimond-replay-1.11.1.tgz#f075d25a01bc87c68e49c4aa8889a78c4b62b963"
+  integrity sha512-Gm2O4LkhmE2wfEjOYxBmjjeonL7lGoVpdkC0XsGccGhAN8dvWoD5Xv3nagsCa9q+5lwRbIoQR64ZMv5SUjUlYw==
   dependencies:
     hls.js "^0.14.0"
     memoize-one "^5.1.1"
