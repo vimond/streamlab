@@ -52,13 +52,16 @@ const onPlaybackActionsReady = (actions: PlaybackActions) => {
   console.info(
     'Playback methods and playback state is exposed to a global %cplayer %cobject. Expand for details:',
     highlightConsoleStyle,
-    normalConsoleStyle,
+    normalConsoleStyle
   );
   // @ts-ignore
   console.dir(window.player);
   console.info(
     'Type e.g. %cplayer.setPosition(33), %cto seek to 0:33, or %cplayer.state.position %cto get the current playback position.',
-    highlightConsoleStyle, normalConsoleStyle, highlightConsoleStyle, normalConsoleStyle
+    highlightConsoleStyle,
+    normalConsoleStyle,
+    highlightConsoleStyle,
+    normalConsoleStyle
   );
 };
 

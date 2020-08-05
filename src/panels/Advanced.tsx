@@ -21,7 +21,7 @@ import PlayerOptions from './PlayerOptions';
 import Header, { Level } from '../components/Header';
 import { Dispatch } from 'redux';
 import { Action } from '../store/actions';
-import { playAdvanced } from '../store/actions/player';
+import { playAdvanced, stop } from '../store/actions/player';
 import { connect } from 'react-redux';
 import { clearForms, updateAdvancedAccordionExpansions } from '../store/actions/ui';
 import { AppState } from '../store/reducers';
@@ -45,10 +45,20 @@ const SectionHeader: React.FC<{ header: string; isRequired?: boolean }> = ({ hea
 const Advanced: React.FC<{
   expandedIndices: number[];
   isPlayerOptionsModified: boolean;
+  isPlaying: boolean;
   handlePlay: (evt: React.MouseEvent<HTMLButtonElement>) => void;
+  handleStop: (evt: React.MouseEvent<HTMLButtonElement>) => void;
   handleClear: () => void;
   handleAccordionChange: (indices: number[]) => void;
-}> = ({ expandedIndices, isPlayerOptionsModified, handlePlay, handleClear, handleAccordionChange }) => {
+}> = ({
+  expandedIndices,
+  isPlayerOptionsModified,
+  isPlaying,
+  handlePlay,
+  handleStop,
+  handleClear,
+  handleAccordionChange,
+}) => {
   const [isOpen, setIsOpen] = React.useState<boolean>();
   const handleCloseClick = () => setIsOpen(false);
   const handleClearClick = () => {
@@ -78,7 +88,10 @@ const Advanced: React.FC<{
         <Button variantColor="green" onClick={handlePlay} mx={4}>
           Play
         </Button>
-        <Button variantColor="red" onClick={() => setIsOpen(true)}>
+        <Button variantColor="red" onClick={handleStop} isDisabled={!isPlaying}>
+          Stop
+        </Button>
+        <Button variantColor="red" variant="outline" onClick={() => setIsOpen(true)} mx={4}>
           Clear all forms
         </Button>
         {/*
@@ -109,6 +122,7 @@ const Advanced: React.FC<{
 
 const mapStateToProps = (state: AppState) => ({
   expandedIndices: state.ui.expandedAdvancedAccordionIndices,
+  isPlaying: !!state.player.source,
   isPlayerOptionsModified: state.playerOptions.isModified,
 });
 
@@ -121,8 +135,11 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   handleAccordionChange: (indices: number[]) => dispatch(updateAdvancedAccordionExpansions(indices)),
   handleClear: () => {
     updateAddressBar();
-    return dispatch(clearForms());
+    // @ts-ignore
+    return dispatch(clearForms);
   },
+  // @ts-ignore
+  handleStop: () => dispatch(stop),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Advanced);

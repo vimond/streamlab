@@ -13,10 +13,17 @@ const renderMessage = ({ text, level }: Message, i: number) => (
   </ListItem>
 );
 
-const Information: React.FC<{ messages: Message[], isRightPaneExpanded: boolean }> = ({ messages, isRightPaneExpanded }) => (
+const Information: React.FC<{ messages: Message[]; isRightPaneExpanded: boolean }> = ({
+  messages,
+  isRightPaneExpanded,
+}) => (
   <Box height="100%">
     <List styleType="none">{messages.map(renderMessage)}</List>
-    {isRightPaneExpanded && <Badge position="absolute" bottom={2} right={2}>{process.env.REACT_APP_VERSION}</Badge>}
+    {isRightPaneExpanded && (
+      <Badge position="absolute" bottom={2} right={2}>
+        {process.env.REACT_APP_VERSION}
+      </Badge>
+    )}
   </Box>
 );
 

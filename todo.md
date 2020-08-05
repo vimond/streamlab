@@ -71,7 +71,7 @@ API plugin:
 ### v3.1.0
 
 * [ ] Nudge and seek controls, configurable intervals. Extra panels/controls for different use, toggleable? `3.2.0`
-* [ ] Responsive/mobile mode. Just four tabs with badge on Info for important stuff?
+* [ ] Responsive/mobile mode. Replace with drawer? Might get full rerender when e.g. rotating. Perhaps keep both, and move the sidebar origin accordingly.
 * [ ] Override HLS.js/Shaka selection. With DRM support. `3.3.0`
 * [ ] Smooth stream support with RxPlayer? Goes along with override. `3.3.0`
 * [ ] Log level.

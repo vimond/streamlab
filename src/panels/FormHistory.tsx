@@ -306,7 +306,7 @@ const FormHistory: React.FC<Props> = ({
         </Box>
       )}
       <Flex justify="center" py={1}>
-        <Button m={2} variantColor="red" onClick={() => setIsOpen(true)}>
+        <Button m={2} variantColor="red" variant="outline" onClick={() => setIsOpen(true)}>
           Clear history
         </Button>
         {/*
