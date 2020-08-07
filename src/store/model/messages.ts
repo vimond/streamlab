@@ -134,7 +134,6 @@ export const messages: MessageRule[] = [
     id: 'limited-smooth-support',
     displayCondition: ({ nextState }) =>
       (!('error' in nextState.player) || !nextState.player.error) &&
-      !nextState.player.source &&
       nextState.streamDetails.streamResource.url !== '' &&
       (nextState.streamDetails.streamResource.technology === StreamTechnology.MSS ||
         (nextState.streamDetails.streamResource.technology === BaseTech.AUTO &&

@@ -136,7 +136,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   handleClear: () => {
     updateAddressBar();
     // @ts-ignore
-    return dispatch(clearForms);
+    return dispatch(clearForms());
   },
   // @ts-ignore
   handleStop: () => dispatch(stop),
