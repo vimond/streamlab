@@ -17,7 +17,7 @@ export interface PlayerOptionsState extends IsModifiedBaseState {
 }
 
 const initialState = {
-  logLevel: PlayerLogLevel.ERROR,
+  logLevel: PlayerLogLevel.WARNING,
   showPlaybackMonitor: false,
   customConfiguration: '',
   isModified: false,

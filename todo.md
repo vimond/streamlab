@@ -66,30 +66,35 @@ API plugin:
 * [x] JSON editor for modern React. `3.0.0`
 * [ ] Rename repos etc.
 * [ ] Complete support for both Widevine and PlayReady in Chromium Edge, Windows `3.0.0`
+* [ ] Messages with links explaining which player lib being used.
+* [ ] Better naming of unlabeled history entries - detected type, e.g. "DASH on example.com"
 * [x] Expose Replay and playback methods `3.1.0`
 
 ### v3.1.0
 
-* [ ] Nudge and seek controls, configurable intervals. Extra panels/controls for different use, toggleable? `3.2.0`
-* [ ] Responsive/mobile mode. Replace with drawer? Might get full rerender when e.g. rotating. Perhaps keep both, and move the sidebar origin accordingly.
 * [ ] Override HLS.js/Shaka selection. With DRM support. `3.3.0`
-* [ ] Smooth stream support with RxPlayer? Goes along with override. `3.3.0`
-* [ ] Log level.
-* [ ] Special Shaka video streamer with debug/verbose logging. `'shaka-player/dist/shaka-player.compiled.debug'`
+* [x] Special Shaka video streamer with debug/verbose logging. `'shaka-player/dist/shaka-player.compiled.debug'`
+* [ ] Try to make Shaka Player (and HLS.js) debuggable as source.
+* [ ] Nudge and seek controls, configurable intervals. Extra panels/controls for different use, toggleable? `3.2.0`
+* [ ] Responsive/mobile mode. Replace with drawer? Might get full rerender when e.g. rotating. Perhaps keep both, and move the sidebar insertion accordingly.
+* [x] Smooth stream support with RxPlayer? Goes along with override. `3.3.0`
+* [x] Log level.
+* [ ] Clear unlabeled entries from history. Rename unlabeled entries, make them a bit more gray.
 
 ### v3.2.0
 
 * [ ] Proxy running only in localhost. Rewrite in TS with tests? Separate repo? Don't break create-react-app...
 * [ ] Toggles for proxying different URLs. `3.2.0`
-* [ ] Sbaring: Fine-grained category inclusion/exclusion `3.2.0`
+* [ ] Sharing: Fine-grained category inclusion/exclusion `3.2.0`
 * [ ] Feature toggle system where proxy or processor things are not visible in static build/deploy. `3.2.0`
 
 ### v3.3.0
 
-* [ ] postMessage solution for filling forms with Vimond API lookups
+* [ ] postMessage solution for filling forms with Vimond API lookups. Reverse message for license details renewal?
 * [ ] Practical example with either (VCC API, content discovery, REST API)
 * [ ] Resizable player `3.3.0`
 * [ ] Parsers for TTML, VTT, SRT? `3.3.0`
+* [ ] Guidance for custom configs for Shaka Player.
 
 ### v3.4.0
 
@@ -100,7 +105,7 @@ API plugin:
 #### Whenever
 
 * [ ] Component tests?
-* [ ] Cypress tests?
+* [ ] Cypress tests? Need example streams.
 * [ ] Undo clear button after clear `3.1.0`
 * [ ] Save only specific forms `3.3.0`
 

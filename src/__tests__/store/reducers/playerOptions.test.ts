@@ -9,7 +9,7 @@ import { APPLY_BROWSER_ENVIRONMENT } from '../../../store/actions/streamDetails'
 const initialState = {
   customConfiguration: '',
   showPlaybackMonitor: false,
-  logLevel: PlayerLogLevel.ERROR,
+  logLevel: PlayerLogLevel.WARNING,
   isModified: false,
 };
 
@@ -35,7 +35,7 @@ const advancedUrlSetup = {
     subtitlesResource: resourceData,
   },
   playerOptions: {
-    logLevel: PlayerLogLevel.WARNING,
+    logLevel: PlayerLogLevel.DEBUG,
     customConfiguration: '{"hello":"world"}',
     showPlaybackMonitor: true,
   },
@@ -53,7 +53,7 @@ describe('Player options reducer', () => {
     expect(newState1).toEqual({
       customConfiguration: '{"hello":"world"}',
       showPlaybackMonitor: true,
-      logLevel: PlayerLogLevel.WARNING,
+      logLevel: PlayerLogLevel.DEBUG,
       isModified: true,
     });
     const newState2 = playerOptionsReducer(initialState, {
@@ -87,14 +87,14 @@ describe('Player options reducer', () => {
     expect(newState1).toEqual({
       customConfiguration: '',
       showPlaybackMonitor: true,
-      logLevel: PlayerLogLevel.ERROR,
+      logLevel: PlayerLogLevel.WARNING,
       isModified: true,
     });
     const newState2 = playerOptionsReducer(newState1, { type: TOGGLE_PLAYBACK_MONITOR, value: false });
     expect(newState2).toEqual({
       customConfiguration: '',
       showPlaybackMonitor: false,
-      logLevel: PlayerLogLevel.ERROR,
+      logLevel: PlayerLogLevel.WARNING,
       isModified: false,
     });
   });
@@ -103,14 +103,14 @@ describe('Player options reducer', () => {
     expect(newState1).toEqual({
       customConfiguration: '{"key":"value"}',
       showPlaybackMonitor: false,
-      logLevel: PlayerLogLevel.ERROR,
+      logLevel: PlayerLogLevel.WARNING,
       isModified: true,
     });
     const newState2 = playerOptionsReducer(newState1, { type: SET_PLAYER_CONFIGURATION, value: '' });
     expect(newState2).toEqual({
       customConfiguration: '',
       showPlaybackMonitor: false,
-      logLevel: PlayerLogLevel.ERROR,
+      logLevel: PlayerLogLevel.WARNING,
       isModified: false,
     });
   });
@@ -167,7 +167,7 @@ describe('Player options reducer', () => {
     };
     const newState = playerOptionsReducer(oldState, { type: CLEAR_FORMS });
     expect(newState).toEqual({
-      logLevel: PlayerLogLevel.ERROR,
+      logLevel: PlayerLogLevel.WARNING,
       showPlaybackMonitor: false,
       customConfiguration: '',
       isModified: false,

@@ -13,6 +13,23 @@ import {
 import { PLAYER_ERROR } from '../actions/player';
 import { APPLY_BROWSER_ENVIRONMENT } from '../actions/streamDetails';
 
+const streamTypeToLibMappings = {
+  dash: 'the Shaka Player library',
+  hls: 'the HLS.js library',
+  hlsSafari: "Safari's native HLS support through HTML video element",
+  smooth: 'the RxPlayer library',
+  progressive: "the browser's HTML video element directly",
+};
+
+// TODO: Unify StreamTechnology and the mappings in detectStreamType.
+const streamTechToLibMappings = {
+  [StreamTechnology.DASH]: streamTypeToLibMappings.dash,
+  [StreamTechnology.HLS]: streamTypeToLibMappings.hls,
+  [StreamTechnology.MSS]: streamTypeToLibMappings.smooth,
+  [StreamTechnology.PROGRESSIVE]: streamTypeToLibMappings.progressive,
+  [BaseTech.AUTO]: 'Undetected stream technology',
+};
+
 export const messages: MessageRule[] = [
   {
     id: 'welcome-1',
@@ -48,7 +65,7 @@ export const messages: MessageRule[] = [
       level: MessageLevel.INFO,
       text:
         'Fill in an URL to the stream you want to test. Supplement with DRM information if required, ' +
-        'or subtitle file URLs if desired. Requests can have headers added for e.g. authorization.',
+        'or subtitles file URLs if desired. Requests can have headers added for e.g. authorization.',
     },
   },
   {
@@ -70,7 +87,7 @@ export const messages: MessageRule[] = [
       const opened = action.type === PLAYER_ERROR || nextState.player.source;
       if (streamType) {
         return {
-          level: MessageLevel.INFO,
+          level: MessageLevel.SUCCESS,
           text: `Auto detected stream type is ${streamType.label}. ${
             opened ? '' : 'Press Play to load it into the player.'
           }`,
@@ -81,6 +98,51 @@ export const messages: MessageRule[] = [
           text: `Unable to detect stream type based on URL content. Please select the technology from the dropdown.`,
         };
       }
+    },
+  },
+  {
+    id: 'player-lib-support',
+    displayCondition: ({ nextState }) =>
+      (!('error' in nextState.player) || !nextState.player.error) &&
+      !nextState.player.source &&
+      nextState.streamDetails.streamResource.url !== '',
+    message: (nextState, action) => {
+      const { technology } = nextState.streamDetails.streamResource;
+      const level = MessageLevel.INFO;
+      const isSafari = nextState.streamDetails.supportedDrmTypes[0] === DrmTechnology.FAIRPLAY; // Not exactly to the point...
+      if (technology === BaseTech.AUTO) {
+        const streamType = detectStreamType(nextState.streamDetails.streamResource.url);
+        const safariHls = isSafari && streamType.name === 'hls' ? 'hlsSafari' : undefined;
+        return {
+          level,
+          text: `The player will use ${
+            // @ts-ignore Add types for detectStreamType()
+            streamTypeToLibMappings[safariHls || streamType.name]
+          } for playing this stream.`,
+        };
+      } else {
+        const safariHls = isSafari && technology === StreamTechnology.HLS;
+        const lib = safariHls ? streamTypeToLibMappings.hlsSafari : streamTechToLibMappings[technology];
+        return {
+          level,
+          text: `The player will use ${lib} for playing this stream.`,
+        };
+      }
+    },
+  },
+  {
+    id: 'limited-smooth-support',
+    displayCondition: ({ nextState }) =>
+      (!('error' in nextState.player) || !nextState.player.error) &&
+      !nextState.player.source &&
+      nextState.streamDetails.streamResource.url !== '' &&
+      (nextState.streamDetails.streamResource.technology === StreamTechnology.MSS ||
+        (nextState.streamDetails.streamResource.technology === BaseTech.AUTO &&
+          detectStreamType(nextState.streamDetails.streamResource.url).name === 'smooth')),
+    message: {
+      level: MessageLevel.WARNING,
+      text:
+        'Note that the integration with this library is not complete, and lacks support for subtitles and controls for bitrate + multiple audio tracks.',
     },
   },
   {
@@ -156,6 +218,7 @@ export const messages: MessageRule[] = [
         action.type === APPLY_BROWSER_ENVIRONMENT &&
         action.value.urlSetup &&
         'drmLicenseResource' in action.value.urlSetup.streamDetails &&
+        action.value.urlSetup.streamDetails.drmLicenseResource.url !== '' &&
         action.value.urlSetup.streamDetails.drmLicenseResource.technology &&
         nextState.streamDetails.supportedDrmTypes.indexOf(
           action.value.urlSetup.streamDetails.drmLicenseResource.technology
@@ -201,7 +264,8 @@ export const messages: MessageRule[] = [
     message: {
       level: MessageLevel.INFO,
       text:
-        "When no DRM certificate URL is specified, the Widevine service's certificate will be fetched from the same URL as the DRM license.",
+        "When no DRM certificate URL is specified, the Widevine service's certificate will be fetched from the same URL as the DRM license. This will appear " +
+        'in DevTools as two similar requests to the license URL, however the payloads are different.',
     },
   },
   {

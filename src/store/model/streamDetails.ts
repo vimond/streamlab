@@ -62,6 +62,7 @@ export enum PlayerLogLevel {
   WARNING,
   INFO,
   DEBUG,
+  VERBOSE,
 }
 
 type PlayerOptions = {
@@ -70,7 +71,7 @@ type PlayerOptions = {
   customConfiguration: string;
 };
 
-const contentTypes = {
+export const contentTypes = {
   [StreamTechnology.DASH]: 'application/dash+xml',
   [StreamTechnology.HLS]: 'application/x-mpegurl',
   [StreamTechnology.PROGRESSIVE]: 'video/mp4',
@@ -101,6 +102,10 @@ export const streamTechLabels = [
   {
     key: StreamTechnology.HLS,
     label: 'HLS',
+  },
+  {
+    key: StreamTechnology.MSS,
+    label: 'Smooth stream',
   },
   {
     key: StreamTechnology.PROGRESSIVE,
@@ -238,7 +243,10 @@ export const createPlayerSource = ({
             subtitlesResource.technology === BaseTech.AUTO ? detectSubtitlesType(src) : subtitlesResource.technology;
           if (subtitlesFormat) {
             const contentType = subtitlesContentTypes[subtitlesFormat];
-            source.textTracks = [{ contentType, src }];
+            const match = src.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i);
+            const hostname = match && match[2];
+            const label = `Subtitles file from ${hostname}`;
+            source.textTracks = [{ contentType, src, label }];
           }
         }
       }

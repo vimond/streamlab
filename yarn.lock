@@ -5337,9 +5337,9 @@ hex-color-regex@^1.1.0:
   integrity sha512-l9sfDFsuqtOqKDsQdqrMRk0U85RZc0RtOR9yPI7mRVOa4FsR/BVnZ0shmQRM96Ji99kYZP/7hn1cedc1+ApsTQ==
 
 hls.js@^0.14.0:
-  version "0.14.6"
-  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-0.14.6.tgz#f5ea8412ccd980fec67ec94a40b65adcc0bf75d1"
-  integrity sha512-6s8L+Pzed3Gyf7wDxQNx9TP9y9clCDIPW8cQdDV7PF7npI75BbCbUZSQQclnt20442Ay1NL3vg2WXeSEYNiuAw==
+  version "0.14.7"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-0.14.7.tgz#47fbd2662b13121ab17c07aea06b1c07828240cf"
+  integrity sha512-9JY0D9nwMrfQPRWc8/kEJTKK0TYfDTzIs6Xq+gdCvasRxdvQKQ2T76rdueTkS0AsFV6sQlJN0wxbnI44aRvvUA==
   dependencies:
     eventemitter3 "^4.0.3"
     url-toolkit "^2.1.6"
@@ -7287,6 +7287,11 @@ neo-async@^2.5.0, neo-async@^2.6.1:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
+next-tick@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.1.0.tgz#1836ee30ad56d67ef281b22bd199f709449b35eb"
+  integrity sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==
+
 next-tick@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
@@ -7940,7 +7945,7 @@ pinkie-promise@^2.0.0:
   dependencies:
     pinkie "^2.0.0"
 
-pinkie@^2.0.0:
+pinkie@2.0.4, pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
   integrity sha1-clVrgM+g1IqXToDnckjoDtT3+HA=
@@ -9531,6 +9536,22 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
+rx-player@^3.9.2:
+  version "3.21.0"
+  resolved "https://registry.yarnpkg.com/rx-player/-/rx-player-3.21.0.tgz#054c1bc6036beab90bd974d9d5a98dc1c47efa22"
+  integrity sha512-z5W0tW2oi7b6G3xWc54QHjsbrs/1sE1aWjr6JHtgjuEQeLFLVPLL+BKwgOUW4nPsIUCoz6xzSmI1euWa6HJ+Hg==
+  dependencies:
+    next-tick "1.1.0"
+    pinkie "2.0.4"
+    rxjs "6.5.5"
+
+rxjs@6.5.5:
+  version "6.5.5"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.5.tgz#c5c884e3094c8cfee31bf27eb87e54ccfc87f9ec"
+  integrity sha512-WfQI+1gohdf0Dai/Bbmk5L5ItH5tYqm3ki2c5GdWhKjalzjg93N3avFjVStyZZz+A2Em+ZxKH5bNghw9UeylGQ==
+  dependencies:
+    tslib "^1.9.0"
+
 rxjs@^6.5.3, rxjs@^6.6.0:
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.0.tgz#af2901eedf02e3a83ffa7f886240ff9018bbec84"
@@ -9754,9 +9775,9 @@ sha.js@^2.4.0, sha.js@^2.4.8:
     safe-buffer "^5.0.1"
 
 shaka-player@^2.5.13:
-  version "2.5.13"
-  resolved "https://registry.yarnpkg.com/shaka-player/-/shaka-player-2.5.13.tgz#f8c493b825c735fc86d619cba8b2eb2f2a382233"
-  integrity sha512-rEh7juGlTvvF10oD7+EukS12EysZXI2fiGvNLqO7GsBQ5R/sFwcTGEB8A6lWlHQXeGVbT+MxZWKMZwFE805G6A==
+  version "2.5.14"
+  resolved "https://registry.yarnpkg.com/shaka-player/-/shaka-player-2.5.14.tgz#271e005006ff4f93e2f216cc95602415a2e04b67"
+  integrity sha512-GSY4Dj7D+YuO7rrqoNX1caCWO2QNnJ8bzzgIOgKCL8z0rJOLNcNzMeGL0xBYCMK7rzzwjOhcPeYMB13rWkPgVw==
   dependencies:
     eme-encryption-scheme-polyfill "^2.0.1"
 
@@ -10897,9 +10918,9 @@ verror@1.10.0:
     extsprintf "^1.2.0"
 
 vimond-replay@^1.12.1:
-  version "1.11.2"
-  resolved "https://registry.yarnpkg.com/vimond-replay/-/vimond-replay-1.11.2.tgz#5a7c175965d7758846e59ddd715eb5dc9089850a"
-  integrity sha512-jmXU6aRbIA5AaiP2RU7vnwYIe1LhlM08yfYpVWlc6BsMY76CQ6+xyJBlVyZ6Brh7Xw49L6VIjfYEjwhvzhVFfA==
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/vimond-replay/-/vimond-replay-1.12.1.tgz#44e19e7818ca6ac7ca47bd34d0e2ffb6b1a483de"
+  integrity sha512-G9geiCV6rCdRNouCNQ+GA3cnh2So0nNsFNdlSuFirdfv/LVW7mmFXfwoFqZ/pbt38ax0kvaObD57+Y04oZuPUg==
   dependencies:
     hls.js "^0.14.0"
     memoize-one "^5.1.1"

@@ -177,6 +177,7 @@ describe('Player Redux actions', () => {
               {
                 src: 'https://example.com/subs.vtt',
                 contentType: 'text/vtt',
+                label: 'Subtitles file from example.com',
               },
             ],
             startPosition: 123.456,

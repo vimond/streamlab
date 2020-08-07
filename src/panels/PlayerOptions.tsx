@@ -18,8 +18,6 @@ type Props = {
   handlePlayerConfigurationChange: (value: string) => void;
 };
 
-const isLogLevelEnabled = false;
-
 // TODO: Let clicks on log level label open the log level menu, parallel to the switch label.
 
 const PlayerOptions: React.FC<Props> = ({
@@ -41,28 +39,24 @@ const PlayerOptions: React.FC<Props> = ({
         &nbsp;
       </Switch>
       <FormLabel htmlFor="playback-monitor-switch">Display playback monitor overlay at startup</FormLabel>
-      {isLogLevelEnabled && (
-        <>
-          <Menu>
-            {/*
+      <Menu>
+        {/*
               // @ts-ignore */}
-            <MenuButton as={Button} rightIcon="chevron-down" style={{ justifySelf: 'end' }}>
-              {getLogLevelLabel(logLevel)}
-            </MenuButton>
-            <MenuList>
-              {Object.entries(PlayerLogLevel)
-                // @ts-ignore
-                .filter(([key]) => !isNaN(Number(PlayerLogLevel[key])))
-                .map(([key, value]) => (
-                  <MenuItem key={value} onClick={() => handleLogLevelClick(Number(value))}>
-                    {key}
-                  </MenuItem>
-                ))}
-            </MenuList>
-          </Menu>
-          <FormLabel>Player log level (for messages to the JS console)</FormLabel>
-        </>
-      )}
+        <MenuButton as={Button} rightIcon="chevron-down" style={{ justifySelf: 'end' }}>
+          {getLogLevelLabel(logLevel)}
+        </MenuButton>
+        <MenuList zIndex={5}>
+          {Object.entries(PlayerLogLevel)
+            // @ts-ignore
+            .filter(([key]) => !isNaN(Number(PlayerLogLevel[key])))
+            .map(([key, value]) => (
+              <MenuItem key={value} onClick={() => handleLogLevelClick(Number(value))}>
+                {key}
+              </MenuItem>
+            ))}
+        </MenuList>
+      </Menu>
+      <FormLabel>Player log level (for messages to the JS console)</FormLabel>
     </Grid>
     <Text mt={4} mb={1}>
       Player configuration overrides according to{' '}
@@ -76,13 +70,6 @@ const PlayerOptions: React.FC<Props> = ({
       :
     </Text>
     <JsonEditor value={customConfiguration} onChange={handlePlayerConfigurationChange} />
-    {/*<Textarea
-      height="8rem"
-      placeholder="A valid JSON structure with properties found in the Replay configuration documentation linked above."
-      value={customConfiguration}
-      onChange={handlePlayerConfigurationChange}
-      isInvalid={isInvalidJson(customConfiguration)}
-    />*/}
   </form>
 );
 

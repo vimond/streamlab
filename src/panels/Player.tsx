@@ -5,13 +5,12 @@ import { PlaybackActions, PlaybackSource, VideoStreamState } from 'vimond-replay
 import { PlayerConfiguration } from 'vimond-replay';
 import ReplayLogo from '../graphics/replay-logo.svg';
 
-// @ts-ignore
-import CompoundVideoStreamer from 'vimond-replay/video-streamer/compound';
 import { AppState } from '../store/reducers';
 import { Dispatch } from 'redux';
 import { Action } from '../store/actions';
 import { connect } from 'react-redux';
 import { handlePlayerError, stop } from '../store/actions/player';
+import VideoStreamerResolver from './VideoStreamerResolver';
 
 type Props = {
   source?: PlaybackSource;
@@ -75,7 +74,7 @@ const Player: React.FC<Props> = ({ source, options, onError, onExit }) => (
       onStreamStateChange={onStreamStateChange}
       onPlaybackActionsReady={onPlaybackActionsReady}
     >
-      <CompoundVideoStreamer />
+      <VideoStreamerResolver />
     </Replay>
     {!source && (
       <Flex position="absolute" left={0} right={0} top={0} direction="column" pt={12} alignItems="center" opacity={0.7}>
