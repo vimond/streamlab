@@ -52,8 +52,8 @@ type RowProps<T = any> = {
 
 const isProxyVisible = false;
 
-const filterDrmTechLabels = (drmTypes: AutoTechnology<DrmTechnology>[]) =>
-  drmTechLabels.filter(({ key }) => drmTypes.indexOf(key) >= 0);
+const filterDrmTechLabels = (drmTechnologies: AutoTechnology<DrmTechnology>[]) =>
+  drmTechLabels.filter(({ key }) => drmTechnologies.indexOf(key) >= 0);
 
 const StreamDetailRow: React.FC<RowProps> = ({
   id,
@@ -125,7 +125,7 @@ const StreamDetails: React.FC<Props> = ({
   subtitlesResource,
   startOffset,
   handleResourceFieldChange,
-  supportedDrmTypes = [DrmTechnology.WIDEVINE],
+  supportedDrmTechnologies = [DrmTechnology.WIDEVINE],
   isDrmCertificateApplicable,
 }) => (
   <form>
@@ -154,7 +154,7 @@ const StreamDetails: React.FC<Props> = ({
       <StreamDetailRow
         label="DRM license URL"
         id="license"
-        techOptions={filterDrmTechLabels(supportedDrmTypes)}
+        techOptions={filterDrmTechLabels(supportedDrmTechnologies)}
         isHeadersEnabled
         onChange={(drmLicenseResource: Partial<Resource<DrmTechnology>>) =>
           handleResourceFieldChange({ drmLicenseResource })

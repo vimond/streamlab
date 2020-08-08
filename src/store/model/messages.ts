@@ -1,11 +1,13 @@
 import { MessageLevel, MessageRule } from './messageResolver';
 import {
   BaseTech,
+  detectStreamTechnology,
   detectStreamType,
-  detectSubtitlesType,
+  detectSubtitlesFormat,
   drmTechLabels,
   DrmTechnology,
   getLabel,
+  Resource,
   StreamTechnology,
   SubtitlesFormat,
   subtitlesFormatLabels,
@@ -13,22 +15,19 @@ import {
 import { PLAYER_ERROR } from '../actions/player';
 import { APPLY_BROWSER_ENVIRONMENT } from '../actions/streamDetails';
 
-const streamTypeToLibMappings = {
-  dash: { label: 'the Shaka Player library', link: 'https://github.com/google/shaka-player' },
-  hls: { label: 'the HLS.js library', link: 'https://github.com/video-dev/hls.js' },
-  hlsSafari: { label: "Safari's native HLS support through HTML video element" },
-  smooth: { label: 'the RxPlayer library', link: 'https://github.com/canalplus/rx-player' },
-  progressive: { label: "the browser's HTML video element directly" },
+const streamTechnologyToLibMappings = {
+  [StreamTechnology.DASH]: { label: 'the Shaka Player library', link: 'https://github.com/google/shaka-player' },
+  [StreamTechnology.HLS]: {
+    label: 'the HLS.js library',
+    link: 'https://github.com/video-dev/hls.js',
+    safari: { label: "Safari's native HLS support through HTML video element" },
+  },
+  [StreamTechnology.MSS]: { label: 'the RxPlayer library', link: 'https://github.com/canalplus/rx-player' },
+  [StreamTechnology.PROGRESSIVE]: { label: "the browser's HTML video element directly" },
 };
 
-// TODO: Unify StreamTechnology and the mappings in detectStreamType.
-const streamTechToLibMappings = {
-  [StreamTechnology.DASH]: streamTypeToLibMappings.dash,
-  [StreamTechnology.HLS]: streamTypeToLibMappings.hls,
-  [StreamTechnology.MSS]: streamTypeToLibMappings.smooth,
-  [StreamTechnology.PROGRESSIVE]: streamTypeToLibMappings.progressive,
-  [BaseTech.AUTO]: 'Undetected stream technology',
-};
+const getStreamTechnology = ({ url, technology }: Resource<StreamTechnology>) =>
+  technology === BaseTech.AUTO ? detectStreamTechnology(url) : technology;
 
 export const messages: MessageRule[] = [
   {
@@ -65,7 +64,7 @@ export const messages: MessageRule[] = [
       level: MessageLevel.INFO,
       text:
         'Fill in an URL to the stream you want to test. Supplement with DRM information if required, ' +
-        'or subtitles file URLs if desired. Requests can have headers added for e.g. authorization.',
+        'or subtitles file URLs if desired. License requests can have headers added for e.g. authorization.',
     },
   },
   {
@@ -75,6 +74,17 @@ export const messages: MessageRule[] = [
     message: {
       level: MessageLevel.INFO,
       text: 'This pane can be resized by dragging the gutter to the left.',
+    },
+  },
+  {
+    id: 'basic-play',
+    displayCondition: ({ nextState }) =>
+      nextState.streamDetails.streamResource.technology !== BaseTech.AUTO &&
+      nextState.streamDetails.streamResource.url !== '' &&
+      !nextState.player.source,
+    message: {
+      level: MessageLevel.INFO,
+      text: 'Press Play to load the specified stream URL in the player.',
     },
   },
   {
@@ -103,30 +113,28 @@ export const messages: MessageRule[] = [
   {
     id: 'player-lib-support',
     displayCondition: ({ nextState }) =>
-      (!('error' in nextState.player) || !nextState.player.error) && nextState.streamDetails.streamResource.url !== '',
+      (!('error' in nextState.player) || !nextState.player.error) &&
+      nextState.streamDetails.streamResource.url !== '' &&
+      !!getStreamTechnology(nextState.streamDetails.streamResource),
     message: (nextState, action) => {
       const { technology } = nextState.streamDetails.streamResource;
-      const level = MessageLevel.INFO;
-      const isSafari = nextState.streamDetails.supportedDrmTypes[0] === DrmTechnology.FAIRPLAY; // Not exactly to the point...
-      if (technology === BaseTech.AUTO) {
-        const streamType = detectStreamType(nextState.streamDetails.streamResource.url);
-        const safariHls = isSafari && streamType.name === 'hls' ? 'hlsSafari' : undefined;
-        // @ts-ignore Add types for detectStreamType()
-        const lib = streamTypeToLibMappings[safariHls || streamType.name];
+      const isSafari = nextState.streamDetails.supportedDrmTechnologies[0] === DrmTechnology.FAIRPLAY; // Not exactly to the point...
+      const tech =
+        technology === BaseTech.AUTO ? detectStreamTechnology(nextState.streamDetails.streamResource.url) : technology;
+      if (tech) {
+        const safariHls = isSafari && tech === StreamTechnology.HLS;
+        const lib = safariHls
+          ? streamTechnologyToLibMappings[StreamTechnology.HLS].safari
+          : streamTechnologyToLibMappings[tech];
         return {
-          level,
-          text: `The player will use ${
-            lib.label
-          } for playing this stream.`,
+          level: MessageLevel.INFO,
+          text: `The player will use ${lib.label} for playing this stream.`,
           ...lib,
         };
       } else {
-        const safariHls = isSafari && technology === StreamTechnology.HLS;
-        const lib = safariHls ? streamTypeToLibMappings.hlsSafari : streamTechToLibMappings[technology];
         return {
-          level,
-          text: `The player will use ${lib.label} for playing this stream.`,
-          ...lib,
+          level: MessageLevel.ERROR,
+          text: 'Undecided stream technology. Unable to select a playback technology.',
         };
       }
     },
@@ -136,9 +144,7 @@ export const messages: MessageRule[] = [
     displayCondition: ({ nextState }) =>
       (!('error' in nextState.player) || !nextState.player.error) &&
       nextState.streamDetails.streamResource.url !== '' &&
-      (nextState.streamDetails.streamResource.technology === StreamTechnology.MSS ||
-        (nextState.streamDetails.streamResource.technology === BaseTech.AUTO &&
-          detectStreamType(nextState.streamDetails.streamResource.url).name === 'smooth')),
+      getStreamTechnology(nextState.streamDetails.streamResource) === StreamTechnology.MSS,
     message: {
       level: MessageLevel.WARNING,
       text:
@@ -151,7 +157,7 @@ export const messages: MessageRule[] = [
       nextState.streamDetails.subtitlesResource.technology === BaseTech.AUTO &&
       nextState.streamDetails.subtitlesResource.url !== '',
     message: (nextState, action) => {
-      const subtitlesType = detectSubtitlesType(nextState.streamDetails.subtitlesResource.url);
+      const subtitlesType = detectSubtitlesFormat(nextState.streamDetails.subtitlesResource.url);
       if (subtitlesType) {
         return {
           level: MessageLevel.INFO,
@@ -171,26 +177,11 @@ export const messages: MessageRule[] = [
       nextState.streamDetails.subtitlesResource.url !== '' &&
       (nextState.streamDetails.subtitlesResource.technology === SubtitlesFormat.TTML ||
         (nextState.streamDetails.subtitlesResource.technology === BaseTech.AUTO &&
-          detectSubtitlesType(nextState.streamDetails.subtitlesResource.url) === SubtitlesFormat.TTML)) &&
-      !(
-        (nextState.streamDetails.streamResource.technology === BaseTech.AUTO &&
-          detectStreamType(nextState.streamDetails.streamResource.url).name === 'dash') ||
-        nextState.streamDetails.streamResource.technology === StreamTechnology.DASH
-      ),
+          detectSubtitlesFormat(nextState.streamDetails.subtitlesResource.url) === SubtitlesFormat.TTML)) &&
+      getStreamTechnology(nextState.streamDetails.streamResource) !== StreamTechnology.DASH,
     message: {
       level: MessageLevel.WARNING,
       text: 'The subtitles format, TTML, is only supported for DASH streams through Shaka Player.',
-    },
-  },
-  {
-    id: 'basic-play',
-    displayCondition: ({ nextState }) =>
-      nextState.streamDetails.streamResource.technology !== BaseTech.AUTO &&
-      nextState.streamDetails.streamResource.url !== '' &&
-      !nextState.player.source,
-    message: {
-      level: MessageLevel.INFO,
-      text: 'Press Play to load the specified stream URL in the player.',
     },
   },
   {
@@ -220,7 +211,7 @@ export const messages: MessageRule[] = [
         'drmLicenseResource' in action.value.urlSetup.streamDetails &&
         action.value.urlSetup.streamDetails.drmLicenseResource.url !== '' &&
         action.value.urlSetup.streamDetails.drmLicenseResource.technology &&
-        nextState.streamDetails.supportedDrmTypes.indexOf(
+        nextState.streamDetails.supportedDrmTechnologies.indexOf(
           action.value.urlSetup.streamDetails.drmLicenseResource.technology
         ) < 0
       ),
@@ -236,7 +227,7 @@ export const messages: MessageRule[] = [
     displayCondition: ({ nextState }) => nextState.ui.advancedMode,
     message: (nextState, action) => ({
       level: MessageLevel.INFO,
-      text: `This browser supports ${(nextState.streamDetails.supportedDrmTypes || [])
+      text: `This browser supports ${(nextState.streamDetails.supportedDrmTechnologies || [])
         .map((t) => getLabel(t, drmTechLabels))
         .join(' and ')} for DRM playback.`,
     }),

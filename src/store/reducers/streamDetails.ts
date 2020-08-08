@@ -19,7 +19,7 @@ export interface StreamDetailsState {
   subtitlesResource: Resource<SubtitlesFormat>;
   startOffset: number | '';
   isDrmCertificateApplicable: boolean;
-  supportedDrmTypes: DrmTechnology[];
+  supportedDrmTechnologies: DrmTechnology[];
 }
 
 const initResource = () => ({ url: '', headers: [], useProxy: false, technology: BaseTech.AUTO });
@@ -29,7 +29,7 @@ const initState = (): StreamDetailsState => ({
   drmLicenseResource: initResource(),
   drmCertificateResource: initResource(),
   subtitlesResource: initResource(),
-  supportedDrmTypes: [],
+  supportedDrmTechnologies: [],
   isDrmCertificateApplicable: true,
   startOffset: '',
 });
@@ -46,8 +46,8 @@ const streamDetails = (
 ): StreamDetailsState => {
   switch (action.type) {
     case APPLY_BROWSER_ENVIRONMENT:
-      const { supportedDrmTypes, urlSetup } = action.value;
-      const technology = supportedDrmTypes[0];
+      const { supportedDrmTechnologies, urlSetup } = action.value;
+      const technology = supportedDrmTechnologies[0];
       const isDrmCertificateApplicable = drmSupportsCertificate(technology);
       if (urlSetup) {
         const initialState = initState();
@@ -59,12 +59,12 @@ const streamDetails = (
             ...initialState.streamResource,
             ...urlSetup.streamDetails.streamResource,
           },
-          supportedDrmTypes,
+          supportedDrmTechnologies,
         };
       } else {
         return {
           ...state,
-          supportedDrmTypes,
+          supportedDrmTechnologies,
           isDrmCertificateApplicable,
           drmLicenseResource: {
             ...state.drmLicenseResource,
@@ -140,7 +140,7 @@ const streamDetails = (
       };
     case RESTORE_HISTORY_ENTRY: {
       const initialState = initState();
-      const { supportedDrmTypes } = state;
+      const { supportedDrmTechnologies } = state;
       return {
         ...initialState,
         ...action.value.formData.streamDetails,
@@ -148,13 +148,13 @@ const streamDetails = (
           ...initialState.streamResource,
           ...action.value.formData.streamDetails.streamResource,
         },
-        supportedDrmTypes,
+        supportedDrmTechnologies,
       };
     }
     case CLEAR_FORMS:
       return {
         isDrmCertificateApplicable: state.isDrmCertificateApplicable,
-        supportedDrmTypes: state.supportedDrmTypes,
+        supportedDrmTechnologies: state.supportedDrmTechnologies,
         streamResource: initResource(),
         drmLicenseResource: {
           ...initResource(),

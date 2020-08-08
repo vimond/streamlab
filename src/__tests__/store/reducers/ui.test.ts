@@ -69,7 +69,7 @@ describe('UI reducer', () => {
         rightPaneActiveTabIndex: 1,
         isRightPaneExpanded: false,
       },
-      { type: APPLY_BROWSER_ENVIRONMENT, value: { supportedDrmTypes: [], urlSetup: advancedUrlSetup } }
+      { type: APPLY_BROWSER_ENVIRONMENT, value: { supportedDrmTechnologies: [], urlSetup: advancedUrlSetup } }
     );
     expect(newState1).toEqual({
       advancedMode: true,
@@ -86,7 +86,7 @@ describe('UI reducer', () => {
         rightPaneActiveTabIndex: 1,
         isRightPaneExpanded: false,
       },
-      { type: APPLY_BROWSER_ENVIRONMENT, value: { supportedDrmTypes: [], urlSetup: simpleUrlSetup } }
+      { type: APPLY_BROWSER_ENVIRONMENT, value: { supportedDrmTechnologies: [], urlSetup: simpleUrlSetup } }
     );
     expect(newState2).toEqual({
       advancedMode: false,
@@ -103,7 +103,7 @@ describe('UI reducer', () => {
         rightPaneActiveTabIndex: 1,
         isRightPaneExpanded: false,
       },
-      { type: APPLY_BROWSER_ENVIRONMENT, value: { supportedDrmTypes: [], urlSetup: undefined } }
+      { type: APPLY_BROWSER_ENVIRONMENT, value: { supportedDrmTechnologies: [], urlSetup: undefined } }
     );
     expect(newState3).toEqual({
       advancedMode: false,

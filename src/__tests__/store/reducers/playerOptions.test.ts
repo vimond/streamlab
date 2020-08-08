@@ -46,7 +46,7 @@ describe('Player options reducer', () => {
     const newState1 = playerOptionsReducer(initialState, {
       type: APPLY_BROWSER_ENVIRONMENT,
       value: {
-        supportedDrmTypes: [],
+        supportedDrmTechnologies: [],
         urlSetup: advancedUrlSetup,
       },
     });
@@ -59,7 +59,7 @@ describe('Player options reducer', () => {
     const newState2 = playerOptionsReducer(initialState, {
       type: APPLY_BROWSER_ENVIRONMENT,
       value: {
-        supportedDrmTypes: [],
+        supportedDrmTechnologies: [],
         urlSetup: simpleUrlSetup,
       },
     });
@@ -67,7 +67,7 @@ describe('Player options reducer', () => {
     const newState3 = playerOptionsReducer(initialState, {
       type: APPLY_BROWSER_ENVIRONMENT,
       value: {
-        supportedDrmTypes: [],
+        supportedDrmTechnologies: [],
         urlSetup: undefined,
       },
     });

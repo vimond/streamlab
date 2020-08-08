@@ -12,7 +12,7 @@ type Props = {
 
 const extractPersistibleFormData = (state: AppState): PersistibleFormData => {
   if (state.ui.advancedMode) {
-    const { supportedDrmTypes, ...streamDetails } = state.streamDetails;
+    const { supportedDrmTechnologies, ...streamDetails } = state.streamDetails;
     const { isModified, ...playerOptions } = state.playerOptions;
     return {
       streamDetails,

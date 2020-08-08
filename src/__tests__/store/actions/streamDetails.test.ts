@@ -93,7 +93,7 @@ describe('Stream details Redux actions', () => {
     ).toEqual({
       type: APPLY_BROWSER_ENVIRONMENT,
       value: {
-        supportedDrmTypes: [DrmTechnology.FAIRPLAY],
+        supportedDrmTechnologies: [DrmTechnology.FAIRPLAY],
         urlSetup: undefined,
       },
     });
@@ -107,7 +107,7 @@ describe('Stream details Redux actions', () => {
     ).toEqual({
       type: APPLY_BROWSER_ENVIRONMENT,
       value: {
-        supportedDrmTypes: [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE],
+        supportedDrmTechnologies: [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE],
         urlSetup: {
           streamDetails: {
             streamResource: {

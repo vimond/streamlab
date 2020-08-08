@@ -13,7 +13,7 @@ const renderMessage = ({ text, level, link }: Message, i: number) => (
           <Link href={link} isExternal>
             {text}
           </Link>
-          <Link alignSelf="center" href={link} isExternal>
+          <Link alignSelf="center" mx={2} href={link} isExternal>
             <Icon name="external-link"/>
           </Link>
         </>

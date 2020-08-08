@@ -71,7 +71,7 @@ const oldState: StreamDetailsState = {
   drmCertificateResource,
   subtitlesResource,
   isDrmCertificateApplicable: true,
-  supportedDrmTypes: [DrmTechnology.WIDEVINE],
+  supportedDrmTechnologies: [DrmTechnology.WIDEVINE],
   startOffset: 123,
 };
 
@@ -165,7 +165,7 @@ describe('Stream details reducer', () => {
         const action = {
           type: APPLY_BROWSER_ENVIRONMENT,
           value: {
-            supportedDrmTypes: [DrmTechnology.PLAYREADY],
+            supportedDrmTechnologies: [DrmTechnology.PLAYREADY],
           },
         };
         // @ts-ignore
@@ -174,12 +174,12 @@ describe('Stream details reducer', () => {
           drmLicenseResource,
           drmCertificateResource,
           isDrmCertificateApplicable,
-          supportedDrmTypes,
+          supportedDrmTechnologies,
           ...rest
         } = newState;
         expect(drmLicenseResource.technology).toBe(DrmTechnology.PLAYREADY);
         expect(drmCertificateResource.technology).toBe(DrmTechnology.PLAYREADY);
-        expect(supportedDrmTypes).toEqual([DrmTechnology.PLAYREADY]);
+        expect(supportedDrmTechnologies).toEqual([DrmTechnology.PLAYREADY]);
         expect(isDrmCertificateApplicable).toBe(false);
         expect(oldState).toMatchObject(rest);
       }
@@ -187,7 +187,7 @@ describe('Stream details reducer', () => {
         const action = {
           type: APPLY_BROWSER_ENVIRONMENT,
           value: {
-            supportedDrmTypes: [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE],
+            supportedDrmTechnologies: [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE],
           },
         };
         // @ts-ignore
@@ -196,12 +196,12 @@ describe('Stream details reducer', () => {
           drmLicenseResource,
           drmCertificateResource,
           isDrmCertificateApplicable,
-          supportedDrmTypes,
+          supportedDrmTechnologies,
           ...rest
         } = newState;
         expect(drmLicenseResource.technology).toBe(DrmTechnology.PLAYREADY);
         expect(drmCertificateResource.technology).toBe(DrmTechnology.PLAYREADY);
-        expect(supportedDrmTypes).toEqual([DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE]);
+        expect(supportedDrmTechnologies).toEqual([DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE]);
         expect(isDrmCertificateApplicable).toBe(false);
         expect(oldState).toMatchObject(rest);
       }
@@ -239,7 +239,7 @@ describe('Stream details reducer', () => {
         subtitlesResource: emptyResource,
         startOffset: '',
         isDrmCertificateApplicable: true,
-        supportedDrmTypes: [DrmTechnology.WIDEVINE],
+        supportedDrmTechnologies: [DrmTechnology.WIDEVINE],
       });
       const action2: HistoryEntryAction = {
         type: RESTORE_HISTORY_ENTRY,
@@ -292,7 +292,7 @@ describe('Stream details reducer', () => {
       const newState2 = streamDetailsReducer(oldState, action2);
       expect(newState2).toEqual({
         ...action2.value.formData.streamDetails,
-        supportedDrmTypes: [DrmTechnology.WIDEVINE],
+        supportedDrmTechnologies: [DrmTechnology.WIDEVINE],
       });
     }
   );
@@ -304,7 +304,7 @@ describe('Stream details reducer', () => {
       subtitlesResource,
       startOffset: '',
       isDrmCertificateApplicable: false,
-      supportedDrmTypes: [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE],
+      supportedDrmTechnologies: [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE],
     };
     const blankResource = {
       url: '',
@@ -327,7 +327,7 @@ describe('Stream details reducer', () => {
       subtitlesResource: blankResource,
       startOffset: '',
       isDrmCertificateApplicable: false,
-      supportedDrmTypes: [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE],
+      supportedDrmTechnologies: [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE],
     });
   });
 });

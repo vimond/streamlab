@@ -76,7 +76,7 @@ const advancedFormState = {
       technology: BaseTech.AUTO,
     },
     startOffset: 123.456,
-    supportedDrmTypes: [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE],
+    supportedDrmTechnologies: [DrmTechnology.PLAYREADY, DrmTechnology.WIDEVINE],
     isDrmCertificateApplicable: true,
   },
   playerOptions: {
@@ -151,7 +151,7 @@ describe('Player Redux actions', () => {
 
       playAdvanced(dispatch, getState);
 
-      const { supportedDrmTypes, ...streamDetails } = advancedFormState.streamDetails;
+      const { supportedDrmTechnologies, ...streamDetails } = advancedFormState.streamDetails;
 
       const historyStreamDetails = {
         ...streamDetails,

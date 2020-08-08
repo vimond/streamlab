@@ -78,7 +78,9 @@ export const contentTypes = {
   [StreamTechnology.MSS]: 'application/vnd.ms-sstr+xml',
 };
 
-const drmTypes = {
+const reverseContentTypes: { [key: string]: StreamTechnology } = Object.fromEntries(Object.entries(contentTypes).map(kv => kv.reverse()));
+
+const drmSchemes = {
   [DrmTechnology.WIDEVINE]: 'com.widevine.alpha',
   [DrmTechnology.PLAYREADY]: 'com.microsoft.playready',
   [DrmTechnology.FAIRPLAY]: 'com.apple.fps.1_0',
@@ -153,7 +155,13 @@ const getContentType = (streamType?: { contentTypes: string[] }) => {
   }
 };
 
-export const detectStreamType = (streamUrl: string) =>
+interface DetectedStreamType {
+  name: string,
+  label: string,
+  contentTypes: string[]
+}
+
+export const detectStreamType = (streamUrl: string): DetectedStreamType | undefined =>
   // @ts-ignore
   streamTypes.find((type) => {
     const { urlMatch, urlNotMatch } = type;
@@ -164,7 +172,14 @@ export const detectStreamType = (streamUrl: string) =>
     }
   });
 
-export const detectSupportedDrmTypes = (userAgent: string) => {
+export const detectStreamTechnology = (streamUrl: string): StreamTechnology | undefined => {
+  const streamType = detectStreamType(streamUrl);
+  if (streamType) {
+    return reverseContentTypes[streamType.contentTypes[0]];
+  }
+};
+
+export const detectSupportedDrmTechnologies = (userAgent: string) => {
   if (isLegacyMicrosoft(userAgent)) {
     return [DrmTechnology.PLAYREADY];
   } else if (isChromiumEdgeOnWindows(userAgent)) {
@@ -177,7 +192,7 @@ export const detectSupportedDrmTypes = (userAgent: string) => {
   }
 };
 
-export const detectSubtitlesType = (subtitlesUrl: string) => {
+export const detectSubtitlesFormat = (subtitlesUrl: string) => {
   if (/\.vtt/.test(subtitlesUrl)) {
     return SubtitlesFormat.WEBVTT;
   } else if (/(\.ttml|\.dxfp|\.xml)/.test(subtitlesUrl)) {
@@ -216,7 +231,7 @@ export const createPlayerSource = ({
         if (licenseUrl) {
           source.licenseUrl = licenseUrl;
           source.drmType =
-            drmLicenseResource.technology !== BaseTech.AUTO ? drmTypes[drmLicenseResource.technology] : undefined;
+            drmLicenseResource.technology !== BaseTech.AUTO ? drmSchemes[drmLicenseResource.technology] : undefined;
           source.licenseAcquisitionDetails = {};
 
           if (drmLicenseResource && drmLicenseResource.headers.length) {
@@ -240,7 +255,7 @@ export const createPlayerSource = ({
         const src = subtitlesResource.url;
         if (src) {
           const subtitlesFormat =
-            subtitlesResource.technology === BaseTech.AUTO ? detectSubtitlesType(src) : subtitlesResource.technology;
+            subtitlesResource.technology === BaseTech.AUTO ? detectSubtitlesFormat(src) : subtitlesResource.technology;
           if (subtitlesFormat) {
             const contentType = subtitlesContentTypes[subtitlesFormat];
             const match = src.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i);

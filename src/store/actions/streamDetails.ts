@@ -1,5 +1,5 @@
 import {
-  detectSupportedDrmTypes,
+  detectSupportedDrmTechnologies,
   DrmTechnology,
   Resource,
   StreamTechnology,
@@ -18,7 +18,7 @@ export const APPLY_BROWSER_ENVIRONMENT = 'APPLY_BROWSER_ENVIRONMENT';
 export type ApplyBrowserEnvironmentAction = {
   type: typeof APPLY_BROWSER_ENVIRONMENT;
   value: {
-    supportedDrmTypes: DrmTechnology[];
+    supportedDrmTechnologies: DrmTechnology[];
     urlSetup: PersistibleFormData | undefined;
   };
 };
@@ -89,11 +89,11 @@ export const updateStreamDetailsField = (resourceUpdate: ResourceUpdate): Stream
       };
 
 export const applyBrowserEnvironment = (userAgent: string, queryString: string): ApplyBrowserEnvironmentAction => {
-  const supportedDrmTypes = detectSupportedDrmTypes(userAgent);
+  const supportedDrmTechnologies = detectSupportedDrmTechnologies(userAgent);
   return {
     type: APPLY_BROWSER_ENVIRONMENT,
     value: {
-      supportedDrmTypes,
+      supportedDrmTechnologies,
       urlSetup: parseSetupFromQueryString(queryString),
     },
   };

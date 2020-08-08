@@ -20,7 +20,7 @@ export type SimplePersistableFormData = {
 };
 
 export type AdvancedPersistableFormData = {
-  streamDetails: Omit<StreamDetailsState, 'supportedDrmTypes'>;
+  streamDetails: Omit<StreamDetailsState, 'supportedDrmTechnologies'>;
   playerOptions?: Omit<PlayerOptionsState, 'isModified'>;
 };
 
