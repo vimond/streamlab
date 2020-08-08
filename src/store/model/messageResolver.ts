@@ -11,6 +11,7 @@ export enum MessageLevel {
 export type Message = {
   level: MessageLevel;
   text: string;
+  link?: string;
 };
 
 export type MessageRule = {

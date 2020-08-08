@@ -14,11 +14,11 @@ import { PLAYER_ERROR } from '../actions/player';
 import { APPLY_BROWSER_ENVIRONMENT } from '../actions/streamDetails';
 
 const streamTypeToLibMappings = {
-  dash: 'the Shaka Player library',
-  hls: 'the HLS.js library',
-  hlsSafari: "Safari's native HLS support through HTML video element",
-  smooth: 'the RxPlayer library',
-  progressive: "the browser's HTML video element directly",
+  dash: { label: 'the Shaka Player library', link: 'https://github.com/google/shaka-player' },
+  hls: { label: 'the HLS.js library', link: 'https://github.com/video-dev/hls.js' },
+  hlsSafari: { label: "Safari's native HLS support through HTML video element" },
+  smooth: { label: 'the RxPlayer library', link: 'https://github.com/canalplus/rx-player' },
+  progressive: { label: "the browser's HTML video element directly" },
 };
 
 // TODO: Unify StreamTechnology and the mappings in detectStreamType.
@@ -103,9 +103,7 @@ export const messages: MessageRule[] = [
   {
     id: 'player-lib-support',
     displayCondition: ({ nextState }) =>
-      (!('error' in nextState.player) || !nextState.player.error) &&
-      !nextState.player.source &&
-      nextState.streamDetails.streamResource.url !== '',
+      (!('error' in nextState.player) || !nextState.player.error) && nextState.streamDetails.streamResource.url !== '',
     message: (nextState, action) => {
       const { technology } = nextState.streamDetails.streamResource;
       const level = MessageLevel.INFO;
@@ -113,19 +111,22 @@ export const messages: MessageRule[] = [
       if (technology === BaseTech.AUTO) {
         const streamType = detectStreamType(nextState.streamDetails.streamResource.url);
         const safariHls = isSafari && streamType.name === 'hls' ? 'hlsSafari' : undefined;
+        // @ts-ignore Add types for detectStreamType()
+        const lib = streamTypeToLibMappings[safariHls || streamType.name];
         return {
           level,
           text: `The player will use ${
-            // @ts-ignore Add types for detectStreamType()
-            streamTypeToLibMappings[safariHls || streamType.name]
+            lib.label
           } for playing this stream.`,
+          ...lib,
         };
       } else {
         const safariHls = isSafari && technology === StreamTechnology.HLS;
         const lib = safariHls ? streamTypeToLibMappings.hlsSafari : streamTechToLibMappings[technology];
         return {
           level,
-          text: `The player will use ${lib} for playing this stream.`,
+          text: `The player will use ${lib.label} for playing this stream.`,
+          ...lib,
         };
       }
     },

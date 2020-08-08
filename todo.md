@@ -66,7 +66,7 @@ API plugin:
 * [x] JSON editor for modern React. `3.0.0`
 * [ ] Rename repos etc.
 * [ ] Complete support for both Widevine and PlayReady in Chromium Edge, Windows `3.0.0`
-* [ ] Messages with links explaining which player lib being used.
+* [x] Messages with links explaining which player lib being used.
 * [ ] Better naming of unlabeled history entries - detected type, e.g. "DASH on example.com"
 * [x] Expose Replay and playback methods `3.1.0`
 
@@ -80,6 +80,7 @@ API plugin:
 * [x] Smooth stream support with RxPlayer? Goes along with override. `3.3.0`
 * [x] Log level.
 * [ ] Clear unlabeled entries from history. Rename unlabeled entries, make them a bit more gray.
+* [ ] Make updated timestamps in license URLs not generate "duplicate" history entries.
 
 ### v3.2.0
 
