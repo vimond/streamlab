@@ -31,6 +31,7 @@ import {
 } from '../store/actions/history';
 import {
   BaseTech,
+  detectStreamTechnology,
   drmTechLabels,
   DrmTechnology,
   getLabel,
@@ -65,6 +66,10 @@ type Header = { id: number; name: string; value: string };
 
 const formatDate = (isoDate: string) => isoDate.replace(/T/, ' ').substr(0, 16);
 
+const getStreamTechLabel = ({ url, technology }: Resource<StreamTechnology> | SimpleStreamResource) => {
+  return getLabel(technology === BaseTech.AUTO ? detectStreamTechnology(url) : technology, streamTechLabels);
+};
+
 const formatLabel = (entry: HistoryEntry) => {
   if (entry.name) {
     return entry.name;
@@ -72,9 +77,9 @@ const formatLabel = (entry: HistoryEntry) => {
     const { streamResource } = entry.formData.streamDetails;
     const match = streamResource.url.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i);
     const hostname = match && match[2];
-    const techLabel =
-      streamResource.technology === BaseTech.AUTO ? ' S' : `${getLabel(streamResource.technology, streamTechLabels)} s`;
-    return `${techLabel}tream on ${hostname || '[unknown host]'}`;
+    const techLabel = getStreamTechLabel(streamResource);
+    const stream = techLabel.indexOf('stream') < 0 ? ' stream' : '';
+    return `${techLabel}${stream} on ${hostname || '[unknown host]'}`;
   }
 };
 
@@ -90,10 +95,10 @@ const HistoryListItem: React.FC<{ entry: HistoryEntry; isSelected: boolean; hand
     backgroundColor={isSelected ? 'gray.200' : undefined}
     _hover={{ backgroundColor: 'gray.100' }}
     style={{ width: '100%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+    color={ entry.name ? undefined : 'gray.500'}
     onClick={handleClick}
-    title={formatLabel(entry)}
+    title={formatDate(entry.timestamp) + ' ' + formatLabel(entry)}
   >
-    {formatDate(entry.timestamp)}{' '}
     {entry.error && (
       <Badge
         variantColor="red"

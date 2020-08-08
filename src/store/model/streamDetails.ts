@@ -175,7 +175,7 @@ export const detectStreamType = (streamUrl: string): DetectedStreamType | undefi
 export const detectStreamTechnology = (streamUrl: string): StreamTechnology | undefined => {
   const streamType = detectStreamType(streamUrl);
   if (streamType) {
-    return reverseContentTypes[streamType.contentTypes[0]];
+    return Number(reverseContentTypes[streamType.contentTypes[0]]);
   }
 };
 
