@@ -76,7 +76,7 @@ const Basic: React.FC<Props> = ({
           ))}
         </MenuList>
       </Menu>
-      <Button variantColor="green" mx={4} onClick={handlePlay}>
+      <Button variantColor="green" mx={4} onClick={handlePlay} isDisabled={!streamResource.url}>
         Play
       </Button>
     </Flex>

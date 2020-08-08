@@ -46,6 +46,7 @@ const Advanced: React.FC<{
   expandedIndices: number[];
   isPlayerOptionsModified: boolean;
   isPlaying: boolean;
+  isPlayable: boolean;
   handlePlay: (evt: React.MouseEvent<HTMLButtonElement>) => void;
   handleStop: (evt: React.MouseEvent<HTMLButtonElement>) => void;
   handleClear: () => void;
@@ -54,6 +55,7 @@ const Advanced: React.FC<{
   expandedIndices,
   isPlayerOptionsModified,
   isPlaying,
+  isPlayable,
   handlePlay,
   handleStop,
   handleClear,
@@ -85,7 +87,7 @@ const Advanced: React.FC<{
         </AccordionItem>
       </Accordion>
       <Flex justify="center" py={4}>
-        <Button variantColor="green" onClick={handlePlay} mx={4}>
+        <Button variantColor="green" onClick={handlePlay} mx={4} isDisabled={!isPlayable}>
           Play
         </Button>
         <Button variantColor="red" onClick={handleStop} isDisabled={!isPlaying}>
@@ -123,6 +125,7 @@ const Advanced: React.FC<{
 const mapStateToProps = (state: AppState) => ({
   expandedIndices: state.ui.expandedAdvancedAccordionIndices,
   isPlaying: !!state.player.source,
+  isPlayable: !!state.streamDetails.streamResource.url,
   isPlayerOptionsModified: state.playerOptions.isModified,
 });
 
