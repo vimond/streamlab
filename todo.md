@@ -64,11 +64,11 @@ API plugin:
 * [x] Clear history `3.0.0`
 * [x] Sharing `3.1.0`
 * [x] JSON editor for modern React. `3.0.0`
+* [x] Messages with links explaining which player lib being used.
+* [x] Better naming of unlabeled history entries - detected type, e.g. "DASH on example.com"
+* [x] Expose Replay and playback methods `3.1.0`
 * [ ] Rename repos etc.
 * [ ] Complete support for both Widevine and PlayReady in Chromium Edge, Windows `3.0.0`
-* [x] Messages with links explaining which player lib being used.
-* [ ] Better naming of unlabeled history entries - detected type, e.g. "DASH on example.com"
-* [x] Expose Replay and playback methods `3.1.0`
 
 ### v3.1.0
 

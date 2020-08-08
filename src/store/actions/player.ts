@@ -43,7 +43,9 @@ const createBasicHistoryEntry = (streamDetails: StreamDetailsState): BasicHistor
   },
 });
 
-const omitSupportedDrmTechnologies = (streamDetails: StreamDetailsState): Omit<StreamDetailsState, 'supportedDrmTechnologies'> => {
+const omitSupportedDrmTechnologies = (
+  streamDetails: StreamDetailsState
+): Omit<StreamDetailsState, 'supportedDrmTechnologies'> => {
   const { supportedDrmTechnologies, ...rest } = streamDetails;
   return rest;
 };

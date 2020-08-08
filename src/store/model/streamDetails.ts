@@ -78,7 +78,12 @@ export const contentTypes = {
   [StreamTechnology.MSS]: 'application/vnd.ms-sstr+xml',
 };
 
-const reverseContentTypes: { [key: string]: StreamTechnology } = Object.fromEntries(Object.entries(contentTypes).map(kv => kv.reverse()));
+const reverseContentTypes: { [key: string]: StreamTechnology } = Object.entries(contentTypes)
+  .map((kv) => kv.reverse())
+  .reduce((obj, [key, val]) => {
+    obj[key] = Number(val) as StreamTechnology;
+    return obj;
+  }, {} as { [key: string]: StreamTechnology });
 
 const drmSchemes = {
   [DrmTechnology.WIDEVINE]: 'com.widevine.alpha',
@@ -156,9 +161,9 @@ const getContentType = (streamType?: { contentTypes: string[] }) => {
 };
 
 interface DetectedStreamType {
-  name: string,
-  label: string,
-  contentTypes: string[]
+  name: string;
+  label: string;
+  contentTypes: string[];
 }
 
 export const detectStreamType = (streamUrl: string): DetectedStreamType | undefined =>
@@ -175,7 +180,7 @@ export const detectStreamType = (streamUrl: string): DetectedStreamType | undefi
 export const detectStreamTechnology = (streamUrl: string): StreamTechnology | undefined => {
   const streamType = detectStreamType(streamUrl);
   if (streamType) {
-    return Number(reverseContentTypes[streamType.contentTypes[0]]);
+    return reverseContentTypes[streamType.contentTypes[0]];
   }
 };
 

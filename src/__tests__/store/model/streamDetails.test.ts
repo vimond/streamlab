@@ -26,7 +26,9 @@ describe('Stream details model', () => {
       )
     ).toEqual([DrmTechnology.PLAYREADY]);
     expect(
-      detectSupportedDrmTechnologies('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:71.0) Gecko/20100101 Firefox/71.0')
+      detectSupportedDrmTechnologies(
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:71.0) Gecko/20100101 Firefox/71.0'
+      )
     ).toEqual([DrmTechnology.WIDEVINE]);
     expect(
       detectSupportedDrmTechnologies(

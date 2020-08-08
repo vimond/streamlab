@@ -95,7 +95,7 @@ const HistoryListItem: React.FC<{ entry: HistoryEntry; isSelected: boolean; hand
     backgroundColor={isSelected ? 'gray.200' : undefined}
     _hover={{ backgroundColor: 'gray.100' }}
     style={{ width: '100%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
-    color={ entry.name ? undefined : 'gray.500'}
+    color={entry.name ? undefined : 'gray.500'}
     onClick={handleClick}
     title={formatDate(entry.timestamp) + ' ' + formatLabel(entry)}
   >
@@ -118,12 +118,10 @@ const userSelectProp: UserSelectProperty = 'text';
 
 const inputStyle = {
   userSelect: userSelectProp,
-  borderRadius: 0,
-  backgroundColor: 'white',
-  padding: '0.1rem',
+  backgroundColor: '#F7FAFC',
+  padding: '0.2rem',
   border: 'none',
   height: 'auto',
-  lineHeight: 'normal',
   marginBottom: '0.2rem',
 };
 
@@ -234,7 +232,7 @@ const FormHistory: React.FC<Props> = ({
             The details below can be reapplied to the form fields by pressing Restore. Note that fields not included in
             the stored data will be cleared.
           </Text>
-          <Grid mt={2} templateColumns="auto 1fr" rowGap={1} columnGap={2} alignItems="center">
+          <Grid mt={2} templateColumns="auto 1fr" rowGap={1} columnGap={0} alignItems="center">
             <StreamResourceFields
               label="Stream"
               resource={selectedEntry.formData.streamDetails.streamResource}
