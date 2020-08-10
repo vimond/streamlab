@@ -31,13 +31,13 @@ import {
 } from '../store/actions/history';
 import {
   BaseTech,
+  DEFAULT_PLAYER_LOG_LEVEL,
   detectStreamTechnology,
   drmTechLabels,
   DrmTechnology,
   getLabel,
   getLogLevelLabel,
   LabeledTechOption,
-  PlayerLogLevel,
   Resource,
   streamTechLabels,
   StreamTechnology,
@@ -272,7 +272,7 @@ const FormHistory: React.FC<Props> = ({
               )}
             {'playerOptions' in selectedEntry.formData &&
               selectedEntry.formData.playerOptions &&
-              selectedEntry.formData.playerOptions.logLevel !== PlayerLogLevel.ERROR && (
+              selectedEntry.formData.playerOptions.logLevel !== DEFAULT_PLAYER_LOG_LEVEL && (
                 <>
                   <FormLabel justifySelf="right">Player log level</FormLabel>
                   <Input

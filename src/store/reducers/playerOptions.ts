@@ -4,7 +4,7 @@ import {
   SET_PLAYER_CONFIGURATION,
   TOGGLE_PLAYBACK_MONITOR,
 } from '../actions/playerOptions';
-import { PlayerLogLevel } from '../model/streamDetails';
+import { DEFAULT_PLAYER_LOG_LEVEL, PlayerLogLevel } from '../model/streamDetails';
 import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../actions/history';
 import { CLEAR_FORMS, ClearFormsAction } from '../actions/ui';
 import { IsModifiedBaseState } from './index';
@@ -17,7 +17,7 @@ export interface PlayerOptionsState extends IsModifiedBaseState {
 }
 
 const initialState = {
-  logLevel: PlayerLogLevel.WARNING,
+  logLevel: DEFAULT_PLAYER_LOG_LEVEL,
   showPlaybackMonitor: false,
   customConfiguration: '',
   isModified: false,

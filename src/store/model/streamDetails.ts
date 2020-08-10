@@ -65,6 +65,8 @@ export enum PlayerLogLevel {
   VERBOSE,
 }
 
+export const DEFAULT_PLAYER_LOG_LEVEL = PlayerLogLevel.WARNING;
+
 type PlayerOptions = {
   logLevel: PlayerLogLevel;
   showPlaybackMonitor: boolean;

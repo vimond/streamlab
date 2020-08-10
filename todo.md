@@ -67,20 +67,21 @@ API plugin:
 * [x] Messages with links explaining which player lib being used.
 * [x] Better naming of unlabeled history entries - detected type, e.g. "DASH on example.com"
 * [x] Expose Replay and playback methods `3.1.0`
+* [x] Special Shaka video streamer with debug/verbose logging. `'shaka-player/dist/shaka-player.compiled.debug'`
+* [x] Smooth stream support with RxPlayer? Goes along with override. `3.3.0`
+* [x] Log level.
 * [ ] Rename repos etc.
 * [ ] Complete support for both Widevine and PlayReady in Chromium Edge, Windows `3.0.0`
 
 ### v3.1.0
 
 * [ ] Override HLS.js/Shaka selection. With DRM support. `3.3.0`
-* [x] Special Shaka video streamer with debug/verbose logging. `'shaka-player/dist/shaka-player.compiled.debug'`
 * [ ] Try to make Shaka Player (and HLS.js) debuggable as source.
 * [ ] Nudge and seek controls, configurable intervals. Extra panels/controls for different use, toggleable? `3.2.0`
 * [ ] Responsive/mobile mode. Replace with drawer? Might get full rerender when e.g. rotating. Perhaps keep both, and move the sidebar insertion accordingly.
-* [x] Smooth stream support with RxPlayer? Goes along with override. `3.3.0`
-* [x] Log level.
 * [ ] Clear unlabeled entries from history. Rename unlabeled entries, make them a bit more gray.
 * [ ] Make updated timestamps in license URLs not generate "duplicate" history entries.
+* [ ] Link to Shaka Player error/HLS.js codes (and PlayReady etc.)
 
 ### v3.2.0
 
@@ -91,7 +92,7 @@ API plugin:
 
 ### v3.3.0
 
-* [ ] postMessage solution for filling forms with Vimond API lookups. Reverse message for license details renewal?
+* [ ] postMessage solution for filling forms with Vimond API lookups. Reverse message for license details renewal? Need to open Streamlab tab from lookup.
 * [ ] Practical example with either (VCC API, content discovery, REST API)
 * [ ] Resizable player `3.3.0`
 * [ ] Parsers for TTML, VTT, SRT? `3.3.0`
@@ -99,9 +100,9 @@ API plugin:
 
 ### v3.4.0
 
-* [ ] Link to Shaka Player error/HLS.js codes (and PlayReady etc.)
-* [ ] History transfer `3.3.0`
+* [ ] History transfer `3.3.0`. import/export commands in console. Maps to `IMPORT_HISTORY` action.
 * [ ] Stream processor with regex, HLS, MPD tools.
+* [ ] Stream performance analytics/monitoring.
 
 #### Whenever
 
@@ -109,6 +110,7 @@ API plugin:
 * [ ] Cypress tests? Need example streams.
 * [ ] Undo clear button after clear `3.1.0`
 * [ ] Save only specific forms `3.3.0`
+* [ ] Vimond theme?
 
 Better TS + thunks?
 https://levelup.gitconnected.com/set-up-a-typescript-react-redux-project-35d65f14b869
