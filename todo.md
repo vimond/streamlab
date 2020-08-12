@@ -70,16 +70,16 @@ API plugin:
 * [x] Special Shaka video streamer with debug/verbose logging. `'shaka-player/dist/shaka-player.compiled.debug'`
 * [x] Smooth stream support with RxPlayer? Goes along with override. `3.3.0`
 * [x] Log level.
-* [ ] Rename repos etc.
+* [x] Rename repos etc.
 * [ ] Complete support for both Widevine and PlayReady in Chromium Edge, Windows `3.0.0`
 
 ### v3.1.0
 
 * [ ] Override HLS.js/Shaka selection. With DRM support. `3.3.0`
-* [ ] Try to make Shaka Player (and HLS.js) debuggable as source.
+* [ ] Try to make Shaka Player (and HLS.js) debuggable as source maps.
 * [ ] Nudge and seek controls, configurable intervals. Extra panels/controls for different use, toggleable? `3.2.0`
 * [ ] Responsive/mobile mode. Replace with drawer? Might get full rerender when e.g. rotating. Perhaps keep both, and move the sidebar insertion accordingly.
-* [ ] Clear unlabeled entries from history. Rename unlabeled entries, make them a bit more gray.
+* [ ] Clear unlabeled entries from history.
 * [ ] Make updated timestamps in license URLs not generate "duplicate" history entries.
 * [ ] Link to Shaka Player error/HLS.js codes (and PlayReady etc.)
 
@@ -114,9 +114,3 @@ API plugin:
 
 Better TS + thunks?
 https://levelup.gitconnected.com/set-up-a-typescript-react-redux-project-35d65f14b869
-
-
-
-
-
-

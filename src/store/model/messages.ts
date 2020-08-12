@@ -73,7 +73,8 @@ export const messages: MessageRule[] = [
       nextState.streamDetails.streamResource.url === '' && !nextState.ui.rightPaneWidth,
     message: {
       level: MessageLevel.INFO,
-      text: 'This pane can be resized by dragging the gutter to the left.',
+      text:
+        'This pane can be resized by dragging the gutter to the left. Also note the expand/collapse button next to the Advanced toggle.',
     },
   },
   {
