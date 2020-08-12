@@ -71,7 +71,10 @@ API plugin:
 * [x] Smooth stream support with RxPlayer? Goes along with override. `3.3.0`
 * [x] Log level.
 * [x] Rename repos etc.
+* [x] Update all text mentioning HLS & DASH to include to smooth.
 * [ ] Complete support for both Widevine and PlayReady in Chromium Edge, Windows `3.0.0`
+* [ ] Prevent history from being deleted when Redux state shape changes.
+* [ ] Demo stream if no real history entries.
 
 ### v3.1.0
 

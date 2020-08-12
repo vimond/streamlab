@@ -4,7 +4,7 @@
 
 Experiment with, verify, or troubleshoot MPEG-DASH, HLS, CMAF, and smooth streams, or progressive video files. 
 
-Streamlab provides a consistent and convenient user interface for playing adaptive streams through [Shaka Player](https://github.com/google/shaka-player) and [HLS.js](https://github.com/video-dev/hls.js), or directly through the browser's internal stream support in the HTML `<video>` element.
+Streamlab provides a consistent and convenient user interface for playing adaptive streams through [Shaka Player](https://github.com/google/shaka-player), [RxPlayer](https://github.com/canalplus/rx-player), and [HLS.js](https://github.com/video-dev/hls.js), or directly through the browser's internal stream support in the HTML `<video>` element.
 
 It is built upon [Replay](https://github.com/vimond/replay), a full-featured React video player component facilitating adaptive stream playback, wrapping the mentioned adaptive streaming players.
 
@@ -18,7 +18,7 @@ It displays context-aware messages providing information and guidance on technic
 
 Streamlab supports live/DVR streams, DRM, subtitles, multiple audio tracks, according to the features of the adaptive player libraries' mentioned above. All modern browsers are supported.
 
-[Try it out here](https://vimond.github.io/streamlab/)
+[Try it out here](https://vimond.github.io/streamlab/).
 
 ## Roadmap
 
@@ -33,7 +33,7 @@ Version 3.0 is the first public release of Streamlab, rebuilt based on two earli
 
 #### 3.1
 
-* [ ] Override the selection of player library to be used for a stream type. E.g. use Shaka Player also for HLS streams
+* [ ] Override the selection of player library to be used for a stream type. E.g. use Shaka Player for HLS streams, or RxPlayer for DASH.
 * [ ] Responsive layout for narrow screens
 
 #### 3.2

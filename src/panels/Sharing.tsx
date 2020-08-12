@@ -49,7 +49,6 @@ const extractPersistibleFormData = (state: AppState): PersistibleFormData | unde
 };
 
 const Sharing: React.FC<Props> = ({ shareState }) => {
-  console.log(JSON.stringify(shareState, null, 2));
   const link = shareState ? buildUrlFromState(shareState, document.location) : '';
   const { onCopy, hasCopied } = useClipboard(link);
   if (shareState) {

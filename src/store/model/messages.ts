@@ -45,7 +45,7 @@ export const messages: MessageRule[] = [
     message: {
       level: MessageLevel.SUCCESS,
       text:
-        'The shared stream setup found in the URL is now applied to the form to the left. Press play to try it out.',
+        'The shared stream setup found in the URL is now applied to the form to the left. Press Play to try it out.',
     },
   },
   {
