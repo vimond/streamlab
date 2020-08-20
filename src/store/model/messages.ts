@@ -119,7 +119,9 @@ export const messages: MessageRule[] = [
       !!getStreamTechnology(nextState.streamDetails.streamResource),
     message: (nextState, action) => {
       const { technology } = nextState.streamDetails.streamResource;
-      const isSafari = nextState.streamDetails.supportedDrmTechnologies[0] === DrmTechnology.FAIRPLAY; // Not exactly to the point...
+      const isSafari =
+        nextState.streamDetails.supportedDrmTechnologies &&
+        nextState.streamDetails.supportedDrmTechnologies[0] === DrmTechnology.FAIRPLAY; // Not exactly to the point...
       const tech =
         technology === BaseTech.AUTO ? detectStreamTechnology(nextState.streamDetails.streamResource.url) : technology;
       if (tech) {
