@@ -1,11 +1,12 @@
 import React from 'react';
 import Header, { Level } from '../components/Header';
-import { Flex, FormControl, FormLabel, Switch, Image, Button } from '@chakra-ui/core';
+import { Flex, FormControl, FormLabel, Switch, Image, Button, Link } from '@chakra-ui/core';
 import { AppState } from '../store/reducers';
 import { Dispatch } from 'redux';
 import { Action } from '../store/actions';
 import { toggleAdvancedMode, toggleRightPane } from '../store/actions/ui';
 import { connect } from 'react-redux';
+import VimondLogo from '../graphics/vimond-logo.svg';
 import StreamlabLogo from '../graphics/streamlab-logo.svg';
 import { updateAddressBar } from '../store/model/sharing';
 
@@ -18,10 +19,15 @@ type Props = {
 
 const HeaderBar: React.FC<Props> = ({ advancedMode, isRightPaneExpanded, toggleAdvancedMode, toggleRightPane }) => (
   <Flex direction="row" align="center" backgroundColor="gray.200" flex="0 0 auto">
-    <Header level={Level.H1} flex="1 1 auto">
-      <Image src={StreamlabLogo} alt="Streamlab" width="11rem" opacity={0.7} />
+    <Header level={Level.H1} flex="1 1 auto" display="flex" flexDirection="row" alignItems="center">
+      <Link href="https://vimond.com" isExternal>
+        <Image src={VimondLogo} alt="Vimond" width="6rem" mr={4} />
+      </Link>
+      <Link href="https://github.com/vimond/streamlab" isExternal>
+        <Image src={StreamlabLogo} alt="Streamlab" width="6.5rem" opacity={0.8} />
+      </Link>
     </Header>
-    <FormControl flex="0" p={2} mt={2} display="flex" flexDirection="row" justifyContent="center" alignItems="center">
+    <FormControl flex="0" p={2} mt={1} display="flex" flexDirection="row" justifyContent="center" alignItems="center">
       <Switch id="advanced-switch" isChecked={advancedMode} onChange={toggleAdvancedMode}>
         &nbsp;
       </Switch>
@@ -33,7 +39,6 @@ const HeaderBar: React.FC<Props> = ({ advancedMode, isRightPaneExpanded, toggleA
       size="xs"
       flex="0"
       ml={4}
-      mt={1}
       title={`${isRightPaneExpanded ? 'Collapse' : 'Expand'} sidebar`}
       onClick={toggleRightPane}
     >

@@ -37,6 +37,7 @@ export const messages: MessageRule[] = [
     message: {
       level: MessageLevel.INFO,
       text: 'Welcome to Streamlab, created by Vimond developers.',
+      link: 'https://github.com/vimond/streamlab',
     },
   },
   {
@@ -105,7 +106,7 @@ export const messages: MessageRule[] = [
         };
       } else {
         return {
-          level: MessageLevel.WARNING,
+          level: MessageLevel.ERROR,
           text: `Unable to detect stream type based on URL content. Please select the technology from the dropdown.`,
         };
       }

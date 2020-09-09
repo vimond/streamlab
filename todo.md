@@ -85,6 +85,7 @@ API plugin:
 * [ ] Clear unlabeled entries from history.
 * [ ] Make updated timestamps in license URLs not generate "duplicate" history entries.
 * [ ] Link to Shaka Player error/HLS.js codes (and PlayReady etc.)
+* [ ] Sustainable link serialiser/deserialiser with more compact format
 
 ### v3.2.0
 
