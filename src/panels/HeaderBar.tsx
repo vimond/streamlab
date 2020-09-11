@@ -21,7 +21,7 @@ const HeaderBar: React.FC<Props> = ({ advancedMode, isRightPaneExpanded, toggleA
   <Flex direction="row" align="center" backgroundColor="gray.200" flex="0 0 auto">
     <Header level={Level.H1} flex="1 1 auto" display="flex" flexDirection="row" alignItems="center">
       <Link href="https://vimond.com" isExternal>
-        <Image src={VimondLogo} alt="Vimond" width="6rem" mr={4} />
+        <Image src={VimondLogo} alt="Vimond" width="6rem" mr={4} my={3} />
       </Link>
       <Link href="https://github.com/vimond/streamlab" isExternal>
         <Image src={StreamlabLogo} alt="Streamlab" width="6.5rem" opacity={0.8} />
@@ -31,7 +31,7 @@ const HeaderBar: React.FC<Props> = ({ advancedMode, isRightPaneExpanded, toggleA
       <Switch id="advanced-switch" isChecked={advancedMode} onChange={toggleAdvancedMode}>
         &nbsp;
       </Switch>
-      <FormLabel ml={2} htmlFor="advanced-switch">
+      <FormLabel ml={2} fontSize="sm" htmlFor="advanced-switch">
         Advanced
       </FormLabel>
     </FormControl>
