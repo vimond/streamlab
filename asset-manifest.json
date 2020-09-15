@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/streamlab/static/css/main.5044e8b4.chunk.css",
+    "main.js": "/streamlab/static/js/main.68108c21.chunk.js",
+    "main.js.map": "/streamlab/static/js/main.68108c21.chunk.js.map",
+    "runtime-main.js": "/streamlab/static/js/runtime-main.a25b7833.js",
+    "runtime-main.js.map": "/streamlab/static/js/runtime-main.a25b7833.js.map",
+    "static/css/2.10cf8771.chunk.css": "/streamlab/static/css/2.10cf8771.chunk.css",
+    "static/js/2.8759793c.chunk.js": "/streamlab/static/js/2.8759793c.chunk.js",
+    "static/js/2.8759793c.chunk.js.map": "/streamlab/static/js/2.8759793c.chunk.js.map",
+    "index.html": "/streamlab/index.html",
+    "precache-manifest.b68082c0f14403c9c441b4512a0ce161.js": "/streamlab/precache-manifest.b68082c0f14403c9c441b4512a0ce161.js",
+    "service-worker.js": "/streamlab/service-worker.js",
+    "static/css/2.10cf8771.chunk.css.map": "/streamlab/static/css/2.10cf8771.chunk.css.map",
+    "static/css/main.5044e8b4.chunk.css.map": "/streamlab/static/css/main.5044e8b4.chunk.css.map",
+    "static/js/2.8759793c.chunk.js.LICENSE.txt": "/streamlab/static/js/2.8759793c.chunk.js.LICENSE.txt",
+    "static/media/replay-logo.svg": "/streamlab/static/media/replay-logo.db4d89bd.svg",
+    "static/media/streamlab-logo.svg": "/streamlab/static/media/streamlab-logo.6081168a.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a25b7833.js",
+    "static/css/2.10cf8771.chunk.css",
+    "static/js/2.8759793c.chunk.js",
+    "static/css/main.5044e8b4.chunk.css",
+    "static/js/main.68108c21.chunk.js"
+  ]
+}
