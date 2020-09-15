@@ -185,7 +185,7 @@ const FormHistory: React.FC<Props> = ({
   return (
     <Box mx={4}>
       <Box>
-        <Header level={Level.H3}>Form history</Header>
+        <Header level={Level.H4}>Form history</Header>
         <Text>
           The form data from each playback attempt is registered in the entries below. Duplicates are listed once with
           their last playback time. Select for inspection and restoration back into the forms:

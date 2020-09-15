@@ -54,7 +54,7 @@ const Sharing: React.FC<Props> = ({ shareState }) => {
   if (shareState) {
     return (
       <Box mx={4}>
-        <Header level={Level.H3}>Share your stream setup</Header>
+        <Header level={Level.H4}>Share your stream setup</Header>
         <Text userSelect="none" mb={2}>
           This Streamlab page, with the{' '}
           {'playerOptions' in shareState ? 'stream details and player options' : 'stream specified'} to the left
@@ -78,7 +78,7 @@ const Sharing: React.FC<Props> = ({ shareState }) => {
   } else {
     return (
       <Box mx={4}>
-        <Header level={Level.H3}>Share your stream setup</Header>
+        <Header level={Level.H4}>Share your stream setup</Header>
         <Text userSelect="none" mb={2}>
           When you have filled in stream details and/or set some player options, you can share this page with the full
           setup in a link appearing here.
