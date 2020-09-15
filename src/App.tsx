@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Box, ColorModeProvider, CSSReset, Flex, ThemeProvider } from '@chakra-ui/core';
 import Advanced from './panels/Advanced';
 import Sidebar from './panels/Sidebar';
@@ -26,43 +26,46 @@ type Props = {
 
 const gutterStyle = () => ({ backgroundColor: '#E2E8F0', width: '4px' });
 
-class App extends Component<Props> {
-  componentDidMount(): void {
-    this.props.initializeFeatureState(navigator.userAgent, document.location.search);
-  }
+const App: React.FC<Props> = ({
+  initializeFeatureState,
+  advancedMode,
+  handlePaneResize,
+  isRightPaneExpanded,
+  rightPaneWidth = 33,
+}) => {
+  useEffect(() => {
+    initializeFeatureState(navigator.userAgent, document.location.search);
+  }, [initializeFeatureState]);
 
-  render() {
-    const { advancedMode, handlePaneResize, isRightPaneExpanded, rightPaneWidth = 33 } = this.props;
-    return (
-      <ThemeProvider>
-        <ColorModeProvider value="light">
-          <CSSReset />
-          <Split
-            onDragEnd={handlePaneResize}
-            sizes={[100 - rightPaneWidth, rightPaneWidth]}
-            direction="horizontal"
-            cursor="col-resize"
-            gutterAlign="end"
-            gutterSize={4}
-            gutterStyle={gutterStyle}
-            collapsed={isRightPaneExpanded ? undefined : 1}
-            minSize={isRightPaneExpanded ? 300 : 0}
-            style={{ display: 'flex' }}
-          >
-            <Flex height="100vh" direction="column">
-              <HeaderBar />
-              <Box flex="1 1 auto" overflowY="auto">
-                {advancedMode ? <Advanced /> : <Basic />}
-                <Player />
-              </Box>
-            </Flex>
-            <Sidebar />
-          </Split>
-        </ColorModeProvider>
-      </ThemeProvider>
-    );
-  }
-}
+  return (
+    <ThemeProvider>
+      <ColorModeProvider value="light">
+        <CSSReset />
+        <Split
+          onDragEnd={handlePaneResize}
+          sizes={[100 - rightPaneWidth, rightPaneWidth]}
+          direction="horizontal"
+          cursor="col-resize"
+          gutterAlign="end"
+          gutterSize={4}
+          gutterStyle={gutterStyle}
+          collapsed={isRightPaneExpanded ? undefined : 1}
+          minSize={isRightPaneExpanded ? 300 : 0}
+          style={{ display: 'flex' }}
+        >
+          <Flex height="100vh" direction="column">
+            <HeaderBar />
+            <Box flex="1 1 auto" overflowY="auto">
+              {advancedMode ? <Advanced /> : <Basic />}
+              <Player />
+            </Box>
+          </Flex>
+          <Sidebar />
+        </Split>
+      </ColorModeProvider>
+    </ThemeProvider>
+  );
+};
 
 const mapStateToProps = (state: AppState) => ({
   advancedMode: state.ui.advancedMode,

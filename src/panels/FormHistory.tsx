@@ -13,7 +13,6 @@ import {
   Flex,
   FormLabel,
   Grid,
-  Icon,
   Input,
   List,
   PseudoBox,
@@ -108,7 +107,7 @@ const HistoryListItem: React.FC<{ entry: HistoryEntry; isSelected: boolean; hand
         Err
       </Badge>
     )}{' '}
-    {formatLabel(entry)}
+    {formatLabel(entry) + ', ' + formatDate(entry.timestamp)}
   </PseudoBox>
 );
 
@@ -191,22 +190,33 @@ const FormHistory: React.FC<Props> = ({
           The form data from each playback attempt is registered in the entries below. Duplicates are listed once with
           their last playback time. Select for inspection and restoration back into the forms:
         </Text>
-        <List overflowY="scroll" backgroundColor="white" maxHeight={64} my={2}>
-          {history
-            .slice(0)
-            .reverse()
-            .map((entry) => (
-              <HistoryListItem
-                key={entry.timestamp}
-                entry={entry}
-                handleClick={() => handleEntryClick(entry)}
-                isSelected={!!(selectedEntry && entry.timestamp === selectedEntry.timestamp)}
-              />
-            ))}
-        </List>
+        {!!history.length && (
+          <List
+            overflowY="scroll"
+            backgroundColor="white"
+            minHeight={32}
+            maxHeight={64}
+            my={2}
+            borderWidth="1px"
+            rounded="md"
+            borderColor="gray.400"
+          >
+            {history
+              .slice(0)
+              .reverse()
+              .map((entry) => (
+                <HistoryListItem
+                  key={entry.timestamp}
+                  entry={entry}
+                  handleClick={() => handleEntryClick(entry)}
+                  isSelected={!!(selectedEntry && entry.timestamp === selectedEntry.timestamp)}
+                />
+              ))}
+          </List>
+        )}
       </Box>
       {selectedEntry && (
-        <Box mt={4} p={2} backgroundColor="gray.200">
+        <Box mt={4} p={2} backgroundColor="gray.200" rounded="md">
           <Grid
             templateColumns={selectedEntry.error ? 'auto auto 1fr' : 'auto 1fr'}
             gap={4}
@@ -219,7 +229,15 @@ const FormHistory: React.FC<Props> = ({
                 : undefined
             }
           >
-            {selectedEntry.error && <Icon name="warning" />}
+            {selectedEntry.error && (
+              <Badge
+                variantColor="red"
+                mt="-0.2em"
+                title={`This playback attempt failed with an error: ${selectedEntry.error.message}`}
+              >
+                Err
+              </Badge>
+            )}
             <Header level={Level.H4}>{formatDate(selectedEntry.timestamp)}</Header>
             <Input
               type="text"
@@ -308,32 +326,34 @@ const FormHistory: React.FC<Props> = ({
           </Flex>
         </Box>
       )}
-      <Flex justify="center" py={1}>
-        <Button m={2} variantColor="red" variant="outline" onClick={() => setIsOpen(true)}>
-          Clear history
-        </Button>
-        {/*
+      {!!history.length && (
+        <Flex justify="center" py={1}>
+          <Button m={2} variantColor="red" variant="outline" onClick={() => setIsOpen(true)}>
+            Clear history
+          </Button>
+          {/*
               // @ts-ignore Chakra type inconsistency. */}
-        <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={handleCloseClick}>
-          <AlertDialogOverlay />
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Clear forms
-            </AlertDialogHeader>
-            <AlertDialogBody>
-              Are you sure you want to clear all history entries? You cannot undo this action afterwards.
-            </AlertDialogBody>
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={handleCloseClick}>
-                Cancel
-              </Button>
-              <Button variantColor="red" onClick={handleDeleteHistoryClick} ml={3}>
-                Clear history
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </Flex>
+          <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={handleCloseClick}>
+            <AlertDialogOverlay />
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                Clear forms
+              </AlertDialogHeader>
+              <AlertDialogBody>
+                Are you sure you want to clear all history entries? You cannot undo this action afterwards.
+              </AlertDialogBody>
+              <AlertDialogFooter>
+                <Button ref={cancelRef} onClick={handleCloseClick}>
+                  Cancel
+                </Button>
+                <Button variantColor="red" onClick={handleDeleteHistoryClick} ml={3}>
+                  Clear history
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </Flex>
+      )}
     </Box>
   );
 };

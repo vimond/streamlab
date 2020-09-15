@@ -61,5 +61,5 @@ If applicable, add screenshots to help explain your problem.
 
 **Additional context**
 
- - Video/stream URL, characteristics (e.g. DVR, subtitles) and stream technologies (DASH, HLS) related to the problem.
+ - Video/stream type, characteristics (e.g. DVR, subtitles) and stream technologies (DASH, HLS) related to the problem.
  - Add any other context about the problem here.

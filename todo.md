@@ -72,12 +72,20 @@ API plugin:
 * [x] Log level.
 * [x] Rename repos etc.
 * [x] Update all text mentioning HLS & DASH to include to smooth.
-* [ ] Complete support for both Widevine and PlayReady in Chromium Edge, Windows `3.0.0`
-* [ ] Prevent history from being deleted when Redux state shape changes.
-* [ ] Demo stream if no real history entries.
+
+Before public/release
+
+* [x] Review all dependency versions.
+* [ ] L, P checkins.
+* [ ] Fork privately. Add as origin.
+* [ ] Clean history and branches.
 
 ### v3.1.0
 
+* [ ] Complete support for both Widevine and PlayReady in Chromium Edge, Windows `3.0.0`
+* [ ] Change Redux + class component into hooks.
+* [ ] Prevent history from being deleted when Redux state shape changes.
+* [ ] Demo stream if no real history entries.
 * [ ] Override HLS.js/Shaka selection. With DRM support. `3.3.0`
 * [ ] Try to make Shaka Player (and HLS.js) debuggable as source maps.
 * [ ] Nudge and seek controls, configurable intervals. Extra panels/controls for different use, toggleable? `3.2.0`
@@ -86,6 +94,7 @@ API plugin:
 * [ ] Make updated timestamps in license URLs not generate "duplicate" history entries.
 * [ ] Link to Shaka Player error/HLS.js codes (and PlayReady etc.)
 * [ ] Sustainable link serialiser/deserialiser with more compact format
+* [ ] Dark mode
 
 ### v3.2.0
 
@@ -97,6 +106,7 @@ API plugin:
 ### v3.3.0
 
 * [ ] postMessage solution for filling forms with Vimond API lookups. Reverse message for license details renewal? Need to open Streamlab tab from lookup.
+* [ ] Or just sharing link? We should differ between "sharing" and "lookup" mode.
 * [ ] Practical example with either (VCC API, content discovery, REST API)
 * [ ] Resizable player `3.3.0`
 * [ ] Parsers for TTML, VTT, SRT? `3.3.0`
