@@ -1,0 +1,61 @@
+declare module 'react-split' {
+  import React, { ReactNode, ReactElement } from 'react';
+  export interface SplitProps extends React.HTMLProps<HTMLDivElement> {
+    // Initial sizes of each element in percents or CSS values.
+    sizes?: number[];
+
+    // Minimum size of each element.
+    minSize?: number | number[];
+
+    expandToMin?: boolean;
+
+    // Gutter size in pixels.
+    gutterSize?: number;
+
+    gutterAlign?: string;
+
+    // Snap to minimum size offset in pixels.
+    snapOffset?: number;
+
+    dragInterval?: number;
+
+    // Direction to split: horizontal or vertical.
+    direction?: 'horizontal' | 'vertical';
+
+    // Cursor to display while dragging.
+    cursor?: string;
+
+    // Callback on drag.
+    onDrag?(): void;
+
+    // Callback on drag start.
+    onDragStart?(): void;
+
+    // Callback on drag end.
+    onDragEnd?(sizes: number[]): void;
+
+    // Called to create each gutter element
+    gutter?(index: number, direction: 'horizontal' | 'vertical'): HTMLElement;
+
+    style?: CSSStyleDeclarationPartial;
+
+    collapsed?: number | undefined;
+
+    // Called to set the style of each element.
+    elementStyle?(
+      dimension: 'width' | 'height',
+      elementSize: number,
+      gutterSize: number,
+      index: number
+    ): CSSStyleDeclarationPartial;
+
+    // Called to set the style of the gutter.
+    gutterStyle?(dimension: 'width' | 'height', gutterSize: number, index: number): CSSStyleDeclarationPartial;
+
+    children: ReactNode;
+  }
+
+  const Split: (props: SplitProps) => ReactElement;
+
+  export default Split;
+}

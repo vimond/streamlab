@@ -1,0 +1,15 @@
+.replay img, .replay svg, .replay video, canvas, audio, iframe, embed, object {
+  display: inline;
+  vertical-align: baseline;
+}
+
+.react-codemirror2 .CodeMirror {
+  height: 8em;
+  border-radius: 0.25rem;
+  border: 1px solid #E2E8F0;
+}
+
+
+.gutter {
+  cursor: col-resize;
+}
