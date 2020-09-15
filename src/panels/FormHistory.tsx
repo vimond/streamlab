@@ -107,7 +107,7 @@ const HistoryListItem: React.FC<{ entry: HistoryEntry; isSelected: boolean; hand
         Err
       </Badge>
     )}{' '}
-    {formatLabel(entry) + ', ' + formatDate(entry.timestamp)}
+    {formatLabel(entry) + (entry.name ? '' : ', ' + formatDate(entry.timestamp))}
   </PseudoBox>
 );
 
