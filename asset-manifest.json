@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/streamlab/static/css/main.5044e8b4.chunk.css",
-    "main.js": "/streamlab/static/js/main.68108c21.chunk.js",
-    "main.js.map": "/streamlab/static/js/main.68108c21.chunk.js.map",
+    "main.js": "/streamlab/static/js/main.f44f462b.chunk.js",
+    "main.js.map": "/streamlab/static/js/main.f44f462b.chunk.js.map",
     "runtime-main.js": "/streamlab/static/js/runtime-main.a25b7833.js",
     "runtime-main.js.map": "/streamlab/static/js/runtime-main.a25b7833.js.map",
     "static/css/2.10cf8771.chunk.css": "/streamlab/static/css/2.10cf8771.chunk.css",
     "static/js/2.8759793c.chunk.js": "/streamlab/static/js/2.8759793c.chunk.js",
     "static/js/2.8759793c.chunk.js.map": "/streamlab/static/js/2.8759793c.chunk.js.map",
     "index.html": "/streamlab/index.html",
-    "precache-manifest.b68082c0f14403c9c441b4512a0ce161.js": "/streamlab/precache-manifest.b68082c0f14403c9c441b4512a0ce161.js",
+    "precache-manifest.c4bf83109dda593d79e9078f4528caf8.js": "/streamlab/precache-manifest.c4bf83109dda593d79e9078f4528caf8.js",
     "service-worker.js": "/streamlab/service-worker.js",
     "static/css/2.10cf8771.chunk.css.map": "/streamlab/static/css/2.10cf8771.chunk.css.map",
     "static/css/main.5044e8b4.chunk.css.map": "/streamlab/static/css/main.5044e8b4.chunk.css.map",
@@ -22,6 +22,6 @@
     "static/css/2.10cf8771.chunk.css",
     "static/js/2.8759793c.chunk.js",
     "static/css/main.5044e8b4.chunk.css",
-    "static/js/main.68108c21.chunk.js"
+    "static/js/main.f44f462b.chunk.js"
   ]
 }
