@@ -71,7 +71,7 @@ export const messages: MessageRule[] = [
   {
     id: 'pane-resize',
     displayCondition: ({ nextState }) =>
-      nextState.streamDetails.streamResource.url === '' && !nextState.ui.rightPaneWidth,
+      nextState.history.history.length > 0 && nextState.history.history.length < 3 && !nextState.ui.rightPaneWidth,
     message: {
       level: MessageLevel.INFO,
       text:

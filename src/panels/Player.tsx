@@ -58,7 +58,7 @@ const onPlaybackActionsReady = (actions: PlaybackActions) => {
   // @ts-ignore
   console.dir(window.player);
   console.info(
-    'Start playing a stream. then type e.g. %cplayer.setPosition(123), %cto seek to 1:03, or %cplayer.state.position %cto get the current playback position.',
+    'Start playing a stream. then type e.g. %cplayer.setPosition(123), %cto seek to 02:03, or %cplayer.state.position %cto get the current playback position.',
     highlightConsoleStyle,
     normalConsoleStyle,
     highlightConsoleStyle,
