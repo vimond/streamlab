@@ -50,6 +50,7 @@ const onPlaybackActionsReady = (actions: PlaybackActions) => {
   window.player = actions;
   // @ts-ignore
   window.player.state = {};
+  console.log(`Streamlab v${process.env.REACT_APP_VERSION}`);
   console.info(
     'Playback methods and playback state is exposed to a global %cplayer %cobject. Expand for details:',
     highlightConsoleStyle,

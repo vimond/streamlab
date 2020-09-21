@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, AlertIcon, List, ListItem, Box, Badge, Link, Icon } from '@chakra-ui/core';
+import { Alert, AlertIcon, List, ListItem, Box, Link, Icon } from '@chakra-ui/core';
 import { AppState } from '../store/reducers';
 import { connect } from 'react-redux';
 import { Message } from '../store/model/messageResolver';
@@ -30,11 +30,6 @@ const Information: React.FC<{ messages: Message[]; isRightPaneExpanded: boolean 
 }) => (
   <Box height="100%">
     <List styleType="none">{messages.map(renderMessage)}</List>
-    {isRightPaneExpanded && (
-      <Badge position="absolute" bottom={2} right={2}>
-        {process.env.REACT_APP_VERSION}
-      </Badge>
-    )}
   </Box>
 );
 
