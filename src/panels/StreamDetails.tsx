@@ -26,17 +26,10 @@ import {
   getLabel,
 } from '../store/model/streamDetails';
 import { AppState } from '../store/reducers';
-import { Dispatch } from 'redux';
-import { Action } from '../store/actions';
 import { ResourceUpdate, updateStreamDetailsField } from '../store/actions/streamDetails';
-import { StreamDetailsState } from '../store/reducers/streamDetails';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import HeaderRows from '../components/HeaderRows';
 import { updateAddressBar } from '../store/model/sharing';
-
-type Props = StreamDetailsState & {
-  handleResourceFieldChange: (resource: ResourceUpdate) => void;
-};
 
 type RowProps<T = any> = {
   id: string;
@@ -118,102 +111,100 @@ const StreamDetailRow: React.FC<RowProps> = ({
   </>
 );
 
-const StreamDetails: React.FC<Props> = ({
-  streamResource,
-  drmLicenseResource,
-  drmCertificateResource,
-  subtitlesResource,
-  startOffset,
-  handleResourceFieldChange,
-  supportedDrmTechnologies = [DrmTechnology.WIDEVINE],
-  isDrmCertificateApplicable,
-}) => (
-  <form>
-    <Box
-      display="grid"
-      gridTemplateColumns={isProxyVisible ? `1fr auto auto auto` : `1fr auto auto`}
-      gridAutoRows="auto"
-      gridGap={2}
-      alignItems="center"
-    >
-      <Header level={Level.H6} justifySelf="left" gridColumn="1/span 2">
-        URLs
-      </Header>
-      <Header level={Level.H6}>Technology</Header>
-      {isProxyVisible && <Header level={Level.H6}>Proxy</Header>}
-      <StreamDetailRow
-        id="stream"
-        label="Stream URL"
-        techOptions={streamTechLabels}
-        isHeadersEnabled={false}
-        onChange={(streamResource: Partial<Resource<StreamTechnology>>) =>
-          handleResourceFieldChange({ streamResource })
-        }
-        {...streamResource}
-      />
-      <StreamDetailRow
-        label="DRM license URL"
-        id="license"
-        techOptions={filterDrmTechLabels(supportedDrmTechnologies)}
-        isHeadersEnabled
-        onChange={(drmLicenseResource: Partial<Resource<DrmTechnology>>) =>
-          handleResourceFieldChange({ drmLicenseResource })
-        }
-        {...drmLicenseResource}
-      />
-      {isDrmCertificateApplicable && (
-        <StreamDetailRow
-          id="certificate"
-          label="DRM certificate URL"
-          techOptions={filterDrmTechLabels([drmLicenseResource.technology])}
-          isHeadersEnabled={false}
-          onChange={(drmCertificateResource: Partial<Resource<DrmTechnology>>) =>
-            handleResourceFieldChange({ drmCertificateResource })
-          }
-          {...drmCertificateResource}
-        />
-      )}
-      <StreamDetailRow
-        id="subtitles"
-        label="Subtitles URL"
-        techOptions={subtitlesFormatLabels}
-        isHeadersEnabled={false}
-        onChange={(subtitlesResource: Partial<Resource<SubtitlesFormat>>) =>
-          handleResourceFieldChange({ subtitlesResource })
-        }
-        {...subtitlesResource}
-      />
-    </Box>
-    <FormControl display="flex" alignItems="center" mt={2}>
-      <FormLabel htmlFor="startOffsetField">Start offset:</FormLabel>
-      <Input
-        id="startOffsetField"
-        type="number"
-        step={0.001}
-        value={startOffset}
-        width={24}
-        textAlign="right"
-        min={0}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          handleResourceFieldChange({ startOffset: e.target.value === '' ? '' : Number(e.target.value) })
-        }
-      />
-      <FormHelperText mx={2} mb={3}>
-        seconds
-      </FormHelperText>
-    </FormControl>
-  </form>
-);
+const StreamDetails: React.FC = () => {
+  const {
+    streamResource,
+    drmLicenseResource,
+    drmCertificateResource,
+    subtitlesResource,
+    startOffset,
+    supportedDrmTechnologies = [DrmTechnology.WIDEVINE],
+    isDrmCertificateApplicable,
+  } = useSelector((state: AppState) => ({ ...state.streamDetails }));
 
-const mapStateToProps = (state: AppState) => ({
-  ...state.streamDetails,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  handleResourceFieldChange: (resource: ResourceUpdate) => {
+  const dispatch = useDispatch();
+  const handleResourceFieldChange = (resource: ResourceUpdate) => {
     updateAddressBar();
     return dispatch(updateStreamDetailsField(resource));
-  },
-});
+  };
 
-export default connect(mapStateToProps, mapDispatchToProps)(StreamDetails);
+  return (
+    <form>
+      <Box
+        display="grid"
+        gridTemplateColumns={isProxyVisible ? `1fr auto auto auto` : `1fr auto auto`}
+        gridAutoRows="auto"
+        gridGap={2}
+        alignItems="center"
+      >
+        <Header level={Level.H6} justifySelf="left" gridColumn="1/span 2">
+          URLs
+        </Header>
+        <Header level={Level.H6}>Technology</Header>
+        {isProxyVisible && <Header level={Level.H6}>Proxy</Header>}
+        <StreamDetailRow
+          id="stream"
+          label="Stream URL"
+          techOptions={streamTechLabels}
+          isHeadersEnabled={false}
+          onChange={(streamResource: Partial<Resource<StreamTechnology>>) =>
+            handleResourceFieldChange({ streamResource })
+          }
+          {...streamResource}
+        />
+        <StreamDetailRow
+          label="DRM license URL"
+          id="license"
+          techOptions={filterDrmTechLabels(supportedDrmTechnologies)}
+          isHeadersEnabled
+          onChange={(drmLicenseResource: Partial<Resource<DrmTechnology>>) =>
+            handleResourceFieldChange({ drmLicenseResource })
+          }
+          {...drmLicenseResource}
+        />
+        {isDrmCertificateApplicable && (
+          <StreamDetailRow
+            id="certificate"
+            label="DRM certificate URL"
+            techOptions={filterDrmTechLabels([drmLicenseResource.technology])}
+            isHeadersEnabled={false}
+            onChange={(drmCertificateResource: Partial<Resource<DrmTechnology>>) =>
+              handleResourceFieldChange({ drmCertificateResource })
+            }
+            {...drmCertificateResource}
+          />
+        )}
+        <StreamDetailRow
+          id="subtitles"
+          label="Subtitles URL"
+          techOptions={subtitlesFormatLabels}
+          isHeadersEnabled={false}
+          onChange={(subtitlesResource: Partial<Resource<SubtitlesFormat>>) =>
+            handleResourceFieldChange({ subtitlesResource })
+          }
+          {...subtitlesResource}
+        />
+      </Box>
+      <FormControl display="flex" alignItems="center" mt={2}>
+        <FormLabel htmlFor="startOffsetField">Start offset:</FormLabel>
+        <Input
+          id="startOffsetField"
+          type="number"
+          step={0.001}
+          value={startOffset}
+          width={24}
+          textAlign="right"
+          min={0}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleResourceFieldChange({ startOffset: e.target.value === '' ? '' : Number(e.target.value) })
+          }
+        />
+        <FormHelperText mx={2} mb={3}>
+          seconds
+        </FormHelperText>
+      </FormControl>
+    </form>
+  );
+};
+
+export default StreamDetails;

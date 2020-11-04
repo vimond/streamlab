@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box, Collapse, Flex, IconButton, Input } from '@chakra-ui/core';
 import { BoxProps } from '@chakra-ui/core/dist/Box';
 
@@ -9,92 +9,83 @@ type Props = BoxProps & {
   onHeadersChange: (headers: Header[]) => void;
 };
 
-type State = {
-  isOpen: boolean[];
+const renderRow = (
+  isOpen: boolean[],
+  onChange: (header: Header, index: number) => void,
+  onAnimationEnd: (index: number) => void,
+  onDelete: (index: number) => void
+) => ({ name, value, id }: Header, index: number, arr: Header[]) => {
+  return (
+    <Collapse key={id} isOpen={isOpen[index]} onAnimationEnd={() => onAnimationEnd(index)}>
+      <Flex direction="row" py={2}>
+        <Input
+          flex="1 2 auto"
+          placeholder="Header name"
+          mr={2}
+          value={name}
+          onChange={(evt: React.ChangeEvent<HTMLInputElement>) =>
+            onChange({ name: evt.target.value, value, id }, index)
+          }
+        />
+        <Input
+          flex="2 1 auto"
+          placeholder="Header value"
+          mr={2}
+          value={value}
+          onChange={(evt: React.ChangeEvent<HTMLInputElement>) =>
+            onChange({ name, value: evt.target.value, id }, index)
+          }
+        />
+        <IconButton flex="0" aria-label="Remove" icon="delete" onClick={() => onDelete(index)} />
+      </Flex>
+    </Collapse>
+  );
 };
 
-class HeaderRows extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isOpen: [],
-    };
-  }
+const HeaderRows: React.FC<Props> = (props) => {
+  const { headers = [], onHeadersChange, ...boxProps } = props;
 
-  componentDidMount(): void {
-    this.setState({ isOpen: new Array(this.props.headers.length).fill(true) });
-  }
+  const [isOpen, setIsOpen] = useState<boolean[]>([]);
+  const headersRef = useRef<Header[]>();
 
-  componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any): void {
-    if (prevProps.headers.length < this.props.headers.length) {
-      this.setState({
-        isOpen: [...this.state.isOpen, true],
-      });
-    } else if (prevProps.headers.length > this.props.headers.length) {
-      this.setState({
-        isOpen: new Array(this.props.headers.length).fill(true),
-      });
+  useEffect(() => {
+    const prev = headersRef.current;
+    if (prev) {
+      if (prev.length < headers.length) {
+        setIsOpen([...isOpen, true]);
+      } else if (prev.length > headers.length) {
+        setIsOpen(new Array(headers.length).fill(true));
+      }
+    } else {
+      setIsOpen(new Array(headers.length).fill(true));
     }
-  }
+    headersRef.current = headers;
+  }, [headers, isOpen]);
 
-  onDelete = (index: number) => {
-    const isOpen = this.state.isOpen;
+  const handleChange = (header: Header, index: number) => {
+    const headersCopy = headers.slice(0);
+    headersCopy[index] = header;
+    onHeadersChange(headersCopy);
+  };
+
+  const handleDelete = (index: number) => {
     isOpen[index] = false;
-    this.setState({
-      isOpen,
-    });
+    setIsOpen([...isOpen]);
   };
 
-  onChange = (header: Header, index: number) => {
-    const headers = this.props.headers.slice(0);
-    headers[index] = header;
-    this.props.onHeadersChange(headers);
-  };
-
-  onAnimationEnd = (index: number) => {
-    if (!this.state.isOpen[index]) {
-      const headers = this.props.headers.slice(0);
-      headers.splice(index, 1);
-      this.props.onHeadersChange(headers);
+  const handleAnimationEnd = (index: number) => {
+    if (!isOpen[index]) {
+      const headersCopy = headers.slice(0);
+      headersCopy.splice(index, 1);
+      onHeadersChange(headersCopy);
     }
   };
 
-  renderRow = ({ name, value, id }: Header, index: number, arr: Header[]) => {
-    return (
-      <Collapse key={id} isOpen={this.state.isOpen[index]} onAnimationEnd={() => this.onAnimationEnd(index)}>
-        <Flex direction="row" py={2}>
-          <Input
-            flex="1 2 auto"
-            placeholder="Header name"
-            mr={2}
-            value={name}
-            onChange={(evt: React.ChangeEvent<HTMLInputElement>) =>
-              this.onChange({ name: evt.target.value, value, id }, index)
-            }
-          />
-          <Input
-            flex="2 1 auto"
-            placeholder="Header value"
-            mr={2}
-            value={value}
-            onChange={(evt: React.ChangeEvent<HTMLInputElement>) =>
-              this.onChange({ name, value: evt.target.value, id }, index)
-            }
-          />
-          <IconButton flex="0" aria-label="Remove" icon="delete" onClick={() => this.onDelete(index)} />
-        </Flex>
-      </Collapse>
-    );
-  };
-
-  render() {
-    const { headers = [], onHeadersChange, ...boxProps } = this.props;
-    return (
-      <Box mb={headers.length ? 4 : 0} {...boxProps}>
-        {headers.map && headers.map(this.renderRow)}
-      </Box>
-    );
-  }
-}
+  return (
+    <Box mb={headers.length ? 4 : 0} {...boxProps}>
+      {headers.map && headers.map(renderRow(isOpen, handleChange, handleAnimationEnd, handleDelete))}
+    </Box>
+  );
+};
 
 export default HeaderRows;

@@ -1,23 +1,13 @@
 import { Replay } from 'vimond-replay';
 import React from 'react';
 import { Box, Text, Flex, Link, Image } from '@chakra-ui/core';
-import { PlaybackActions, PlaybackSource, VideoStreamState } from 'vimond-replay/default-player/Replay';
-import { PlayerConfiguration } from 'vimond-replay';
+import { PlaybackActions, VideoStreamState } from 'vimond-replay/default-player/Replay';
 import ReplayLogo from '../graphics/replay-logo.svg';
 
 import { AppState } from '../store/reducers';
-import { Dispatch } from 'redux';
-import { Action } from '../store/actions';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { handlePlayerError, stop } from '../store/actions/player';
 import VideoStreamerResolver from './VideoStreamerResolver';
-
-type Props = {
-  source?: PlaybackSource;
-  options?: PlayerConfiguration;
-  onExit: () => void;
-  onError: (err: any) => void;
-};
 
 const stickyPlayerControls = {
   interactionDetector: {
@@ -67,50 +57,55 @@ const onPlaybackActionsReady = (actions: PlaybackActions) => {
   );
 };
 
-const Player: React.FC<Props> = ({ source, options, onError, onExit }) => (
-  <Box my={1} p={4} position="relative">
-    <Replay
-      source={source}
-      options={source ? options : { ...options, ...stickyPlayerControls }}
-      onError={onError}
-      onExit={source ? onExit : undefined}
-      onStreamStateChange={onStreamStateChange}
-      onPlaybackActionsReady={onPlaybackActionsReady}
-    >
-      <VideoStreamerResolver />
-    </Replay>
-    {!source && (
-      <Flex position="absolute" left={0} right={0} top={0} direction="column" pt={12} alignItems="center" opacity={0.7}>
-        <Text width="20%" mt={6}>
-          <Link href="https://vimond.github.io/replay/" isExternal>
-            <Image src={ReplayLogo} alt="Replay" width="8rem" margin="0 auto" />
-          </Link>
-        </Text>
-        <Text color="white" mt={6}>
-          The{' '}
-          <Link href="https://vimond.github.io/replay/" isExternal style={{ textDecoration: 'underline' }}>
-            open source
-          </Link>{' '}
-          React video player from{' '}
-          <Link href="https://vimond.com" isExternal style={{ textDecoration: 'underline' }}>
-            Vimond
-          </Link>
-          .
-        </Text>
-      </Flex>
-    )}
-  </Box>
-);
+const Player: React.FC = () => {
+  const { source, options } = useSelector((state: AppState) => ({ ...state.player }));
+  const dispatch = useDispatch();
+  const onExit = () => dispatch(stop);
+  const onError = (err: any) => dispatch(handlePlayerError(err));
 
-const mapStateToProps = (state: AppState) => ({
-  ...state.player,
-});
+  return (
+    <Box my={1} p={4} position="relative">
+      <Replay
+        source={source}
+        options={source ? options : { ...options, ...stickyPlayerControls }}
+        onError={onError}
+        onExit={source ? onExit : undefined}
+        onStreamStateChange={onStreamStateChange}
+        onPlaybackActionsReady={onPlaybackActionsReady}
+      >
+        <VideoStreamerResolver />
+      </Replay>
+      {!source && (
+        <Flex
+          position="absolute"
+          left={0}
+          right={0}
+          top={0}
+          direction="column"
+          pt={12}
+          alignItems="center"
+          opacity={0.7}
+        >
+          <Text width="20%" mt={6}>
+            <Link href="https://vimond.github.io/replay/" isExternal>
+              <Image src={ReplayLogo} alt="Replay" width="8rem" margin="0 auto" />
+            </Link>
+          </Text>
+          <Text color="white" mt={6}>
+            The{' '}
+            <Link href="https://vimond.github.io/replay/" isExternal style={{ textDecoration: 'underline' }}>
+              open source
+            </Link>{' '}
+            React video player from{' '}
+            <Link href="https://vimond.com" isExternal style={{ textDecoration: 'underline' }}>
+              Vimond
+            </Link>
+            .
+          </Text>
+        </Flex>
+      )}
+    </Box>
+  );
+};
 
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  // @ts-ignore No proper typing for thunks.
-  onError: (err: any) => dispatch(handlePlayerError(err)),
-  // @ts-ignore
-  onExit: () => dispatch(stop),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Player);
+export default Player;

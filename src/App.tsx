@@ -5,37 +5,27 @@ import Sidebar from './panels/Sidebar';
 import Basic from './panels/Basic';
 import Split from 'react-split';
 import { AppState } from './store/reducers';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Player from './panels/Player';
 import HeaderBar from './panels/HeaderBar';
-import { Action } from './store/actions';
-import { Dispatch } from 'redux';
 import { updatePaneSize } from './store/actions/ui';
 import { applyBrowserEnvironment } from './store/actions/streamDetails';
 
 import 'vimond-replay/index.css';
 import './App.css';
 
-type Props = {
-  advancedMode: boolean;
-  rightPaneWidth?: number;
-  isRightPaneExpanded: boolean;
-  handlePaneResize: (sizes: number[]) => void;
-  initializeFeatureState: (userAgent: string, queryString: string) => void;
-};
-
 const gutterStyle = () => ({ backgroundColor: '#E2E8F0', width: '4px' });
 
-const App: React.FC<Props> = ({
-  initializeFeatureState,
-  advancedMode,
-  handlePaneResize,
-  isRightPaneExpanded,
-  rightPaneWidth = 33,
-}) => {
+const App: React.FC = () => {
+  const advancedMode = useSelector((state: AppState) => state.ui.advancedMode);
+  const rightPaneWidth = useSelector((state: AppState) => state.ui.rightPaneWidth || 33);
+  const isRightPaneExpanded = useSelector((state: AppState) => state.ui.isRightPaneExpanded);
+  const dispatch = useDispatch();
+  const handlePaneResize = (sizes: number[]) => dispatch(updatePaneSize(sizes[1]));
+
   useEffect(() => {
-    initializeFeatureState(navigator.userAgent, document.location.search);
-  }, [initializeFeatureState]);
+    dispatch(applyBrowserEnvironment(navigator.userAgent, document.location.search));
+  }, [dispatch]);
 
   return (
     <ThemeProvider>
@@ -67,20 +57,4 @@ const App: React.FC<Props> = ({
   );
 };
 
-const mapStateToProps = (state: AppState) => ({
-  advancedMode: state.ui.advancedMode,
-  rightPaneWidth: state.ui.rightPaneWidth,
-  isRightPaneExpanded: state.ui.isRightPaneExpanded,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  handlePaneResize: (sizes: number[]) => {
-    dispatch(updatePaneSize(sizes[1]));
-    return null;
-  },
-  initializeFeatureState: (userAgent: string, queryString: string) => {
-    dispatch(applyBrowserEnvironment(userAgent, queryString));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

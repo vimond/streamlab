@@ -4,11 +4,7 @@ import Header, { Level } from '../components/Header';
 import { AppState } from '../store/reducers';
 import { PersistibleFormData } from '../store/model/history';
 import { buildUrlFromState } from '../store/model/sharing';
-import { connect } from 'react-redux';
-
-type Props = {
-  shareState: PersistibleFormData | undefined;
-};
+import { useSelector } from 'react-redux';
 
 // TODO: Make this a flag being part of the Redux state, comparing with initialState.
 // Also separate the form data from this other props in state slices, in order to avoid excluding props to be serialised.
@@ -48,7 +44,8 @@ const extractPersistibleFormData = (state: AppState): PersistibleFormData | unde
   }
 };
 
-const Sharing: React.FC<Props> = ({ shareState }) => {
+const Sharing: React.FC = () => {
+  const shareState = useSelector((state: AppState) => extractPersistibleFormData(state));
   const link = shareState ? buildUrlFromState(shareState, document.location) : '';
   const { onCopy, hasCopied } = useClipboard(link);
   if (shareState) {
@@ -88,8 +85,4 @@ const Sharing: React.FC<Props> = ({ shareState }) => {
   }
 };
 
-const mapStateToProps = (state: AppState) => ({
-  shareState: extractPersistibleFormData(state),
-});
-
-export default connect(mapStateToProps)(Sharing);
+export default Sharing;

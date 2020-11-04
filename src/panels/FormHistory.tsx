@@ -23,7 +23,6 @@ import { HistoryEntry, SimpleStreamResource } from '../store/model/history';
 import {
   deleteHistory,
   deleteHistoryEntry,
-  HistoryEntryFilter,
   restoreHistoryEntry,
   selectHistoryEntry,
   updateSelectedHistoryEntryName,
@@ -44,22 +43,9 @@ import {
   subtitlesFormatLabels,
 } from '../store/model/streamDetails';
 import { AppState } from '../store/reducers';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { Action } from '../store/actions';
+import { useDispatch, useSelector } from 'react-redux';
 import { UserSelectProperty } from 'csstype';
 import { updateAddressBar } from '../store/model/sharing';
-
-type Props = {
-  selectedEntry?: HistoryEntry;
-  history: HistoryEntry[];
-  historyListFilter: HistoryEntryFilter;
-  handleEntryClick: (entry: HistoryEntry) => void;
-  handleRestoreEntryClick: (entry: HistoryEntry) => void;
-  handleDeleteEntryClick: (entry: HistoryEntry) => void;
-  handleEntryLabelChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
-  handleDeleteHistory: () => void;
-};
 
 type Header = { id: number; name: string; value: string };
 
@@ -166,21 +152,28 @@ const StreamResourceFields: React.FC<{
   </>
 );
 
-const FormHistory: React.FC<Props> = ({
-  selectedEntry,
-  history,
-  handleEntryClick,
-  handleRestoreEntryClick,
-  handleDeleteEntryClick,
-  handleEntryLabelChange,
-  handleDeleteHistory,
-}) => {
+const FormHistory: React.FC = () => {
+  const history = useSelector((state: AppState) => state.history.history);
+  const selectedEntry = useSelector((state: AppState) => state.history.selectedEntry);
+
   const [isOpen, setIsOpen] = React.useState<boolean>();
   const handleCloseClick = () => setIsOpen(false);
   const handleDeleteHistoryClick = () => {
     handleDeleteHistory();
     handleCloseClick();
   };
+
+  const dispatch = useDispatch();
+  const handleEntryClick = (entry: HistoryEntry) => dispatch(selectHistoryEntry(entry));
+  const handleEntryLabelChange = (evt: React.ChangeEvent<HTMLInputElement>) =>
+    dispatch(updateSelectedHistoryEntryName(evt.target.value));
+  const handleRestoreEntryClick = (entry: HistoryEntry) => {
+    updateAddressBar();
+    return dispatch(restoreHistoryEntry(entry));
+  };
+  const handleDeleteEntryClick = (entry: HistoryEntry) => dispatch(deleteHistoryEntry(entry));
+  const handleDeleteHistory = () => dispatch(deleteHistory());
+
   const cancelRef = React.useRef();
   return (
     <Box mx={4}>
@@ -358,18 +351,4 @@ const FormHistory: React.FC<Props> = ({
   );
 };
 
-const mapStateToProps = ({ history }: AppState) => history;
-
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  handleEntryClick: (entry: HistoryEntry) => dispatch(selectHistoryEntry(entry)),
-  handleEntryLabelChange: (evt: React.ChangeEvent<HTMLInputElement>) =>
-    dispatch(updateSelectedHistoryEntryName(evt.target.value)),
-  handleRestoreEntryClick: (entry: HistoryEntry) => {
-    updateAddressBar();
-    return dispatch(restoreHistoryEntry(entry));
-  },
-  handleDeleteEntryClick: (entry: HistoryEntry) => dispatch(deleteHistoryEntry(entry)),
-  handleDeleteHistory: () => dispatch(deleteHistory()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(FormHistory);
+export default FormHistory;

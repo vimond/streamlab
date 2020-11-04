@@ -19,10 +19,8 @@ import {
 import StreamDetails from './StreamDetails';
 import PlayerOptions from './PlayerOptions';
 import Header, { Level } from '../components/Header';
-import { Dispatch } from 'redux';
-import { Action } from '../store/actions';
 import { playAdvanced, stop } from '../store/actions/player';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clearForms, updateAdvancedAccordionExpansions } from '../store/actions/ui';
 import { AppState } from '../store/reducers';
 import { updateAddressBar } from '../store/model/sharing';
@@ -42,31 +40,28 @@ const SectionHeader: React.FC<{ header: string; isRequired?: boolean }> = ({ hea
   </AccordionHeader>
 );
 
-const Advanced: React.FC<{
-  expandedIndices: number[];
-  isPlayerOptionsModified: boolean;
-  isPlaying: boolean;
-  isPlayable: boolean;
-  handlePlay: (evt: React.MouseEvent<HTMLButtonElement>) => void;
-  handleStop: (evt: React.MouseEvent<HTMLButtonElement>) => void;
-  handleClear: () => void;
-  handleAccordionChange: (indices: number[]) => void;
-}> = ({
-  expandedIndices,
-  isPlayerOptionsModified,
-  isPlaying,
-  isPlayable,
-  handlePlay,
-  handleStop,
-  handleClear,
-  handleAccordionChange,
-}) => {
+const Advanced: React.FC = () => {
+  const expandedIndices = useSelector((state: AppState) => state.ui.expandedAdvancedAccordionIndices);
+  const isPlaying = useSelector((state: AppState) => !!state.player.source);
+  const isPlayable = useSelector((state: AppState) => !!state.streamDetails.streamResource.url);
+  const isPlayerOptionsModified = useSelector((state: AppState) => !!state.playerOptions.isModified);
+
   const [isOpen, setIsOpen] = React.useState<boolean>();
+
+  const dispatch = useDispatch();
   const handleCloseClick = () => setIsOpen(false);
   const handleClearClick = () => {
-    handleClear();
-    handleCloseClick();
+    setIsOpen(false);
+    updateAddressBar();
+    dispatch(clearForms());
   };
+  const handlePlay = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    evt.currentTarget.blur(); // Otherwise Replay's Ctrl+Alt+M short cut will be captured as a click on this button.
+    dispatch(playAdvanced);
+  };
+  const handleStop = () => dispatch(stop);
+  const handleAccordionChange = (indices: number[]) => dispatch(updateAdvancedAccordionExpansions(indices));
+
   const cancelRef = React.useRef();
   return (
     <Stack>
@@ -122,27 +117,4 @@ const Advanced: React.FC<{
   );
 };
 
-const mapStateToProps = (state: AppState) => ({
-  expandedIndices: state.ui.expandedAdvancedAccordionIndices,
-  isPlaying: !!state.player.source,
-  isPlayable: !!state.streamDetails.streamResource.url,
-  isPlayerOptionsModified: state.playerOptions.isModified,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  handlePlay: (evt: React.MouseEvent<HTMLButtonElement>) => {
-    evt.currentTarget.blur(); // Otherwise Replay's Ctrl+Alt+M short cut will be captured as a click on this button.
-    // @ts-ignore Typing not supported for thunk actions.
-    return dispatch(playAdvanced);
-  },
-  handleAccordionChange: (indices: number[]) => dispatch(updateAdvancedAccordionExpansions(indices)),
-  handleClear: () => {
-    updateAddressBar();
-    // @ts-ignore
-    return dispatch(clearForms());
-  },
-  // @ts-ignore
-  handleStop: () => dispatch(stop),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Advanced);
+export default Advanced;
