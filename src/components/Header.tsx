@@ -1,6 +1,5 @@
 import React from 'react';
-import { Heading } from '@chakra-ui/core';
-import { HeadingProps } from '@chakra-ui/core/dist/Heading';
+import { Heading, HeadingProps } from '@chakra-ui/react';
 
 export enum Level {
   H1 = 'h1',

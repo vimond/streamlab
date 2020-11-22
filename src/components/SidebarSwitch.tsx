@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControl, FormLabel, Switch } from '@chakra-ui/core';
+import { FormControl, FormLabel, Switch } from '@chakra-ui/react';
 
 type FullSwitchProps = {
   label: string;

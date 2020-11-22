@@ -1,10 +1,11 @@
 import React from 'react';
-import { Box, Text, Button, useClipboard } from '@chakra-ui/core';
+import { Box, Text, Button, useClipboard } from '@chakra-ui/react';
 import Header, { Level } from '../components/Header';
 import { AppState } from '../store/reducers';
 import { PersistibleFormData } from '../store/model/history';
 import { buildUrlFromState } from '../store/model/sharing';
 import { useSelector } from 'react-redux';
+import { CheckIcon, CopyIcon } from '@chakra-ui/icons';
 
 // TODO: Make this a flag being part of the Redux state, comparing with initialState.
 // Also separate the form data from this other props in state slices, in order to avoid excluding props to be serialised.
@@ -61,11 +62,11 @@ const Sharing: React.FC = () => {
           {link}
         </Text>
         <Button
-          variantColor="blue"
+          colorScheme="blue"
           my={4}
           mx="auto"
           display="block"
-          leftIcon={hasCopied ? 'check' : 'copy'}
+          leftIcon={hasCopied ? <CheckIcon /> : <CopyIcon />}
           onClick={onCopy}
         >
           Copy to clipboard

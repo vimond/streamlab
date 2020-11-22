@@ -11,7 +11,8 @@ import {
   MenuList,
   Switch,
   FormHelperText,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import Header, { Level } from '../components/Header';
 import {
   AutoTechnology,
@@ -75,9 +76,7 @@ const StreamDetailRow: React.FC<RowProps> = ({
     )}
     {techOptions.length > 1 ? (
       <Menu>
-        {/*
-            // @ts-ignore */}
-        <MenuButton as={Button} rightIcon="chevron-down">
+        <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
           {getLabel(technology, techOptions)}
         </MenuButton>
         <MenuList>

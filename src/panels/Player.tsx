@@ -1,6 +1,6 @@
 import { Replay } from 'vimond-replay';
 import React from 'react';
-import { Box, Text, Flex, Link, Image } from '@chakra-ui/core';
+import { Box, Text, Flex, Link, Image } from '@chakra-ui/react';
 import { PlaybackActions, VideoStreamState } from 'vimond-replay/default-player/Replay';
 import ReplayLogo from '../graphics/replay-logo.svg';
 

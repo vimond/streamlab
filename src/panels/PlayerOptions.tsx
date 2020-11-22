@@ -1,11 +1,12 @@
 import React from 'react';
-import { Button, Grid, Link, Switch, FormLabel, Menu, MenuButton, MenuList, MenuItem, Text } from '@chakra-ui/core';
+import { Button, Grid, Link, Switch, FormLabel, Menu, MenuButton, MenuList, MenuItem, Text } from '@chakra-ui/react';
 import { AppState } from '../store/reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLogLevel, togglePlaybackMonitor, setPlayerConfiguration } from '../store/actions/playerOptions';
 import { getLogLevelLabel, PlayerLogLevel } from '../store/model/streamDetails';
 import { JsonEditor } from '../components/JsonEditor';
 import { updateAddressBar } from '../store/model/sharing';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 
 // TODO: Let clicks on log level label open the log level menu, parallel to the switch label.
 
@@ -41,12 +42,10 @@ const PlayerOptions: React.FC = () => {
         </Switch>
         <FormLabel htmlFor="playback-monitor-switch">Display playback monitor overlay at startup</FormLabel>
         <Menu>
-          {/*
-                // @ts-ignore */}
-          <MenuButton as={Button} rightIcon="chevron-down" style={{ justifySelf: 'end' }}>
+          <MenuButton as={Button} rightIcon={<ChevronDownIcon />} style={{ justifySelf: 'end' }}>
             {getLogLevelLabel(logLevel)}
           </MenuButton>
-          <MenuList zIndex={5}>
+          <MenuList>
             {Object.entries(PlayerLogLevel)
               // @ts-ignore
               .filter(([key]) => !isNaN(Number(PlayerLogLevel[key])))

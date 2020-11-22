@@ -1,6 +1,6 @@
 import React from 'react';
 import Header, { Level } from '../components/Header';
-import { Flex, FormControl, FormLabel, Switch, Image, Button, Link } from '@chakra-ui/core';
+import { Flex, FormControl, FormLabel, Switch, Image, Button, Link } from '@chakra-ui/react';
 import { AppState } from '../store/reducers';
 import { toggleAdvancedMode, toggleRightPane } from '../store/actions/ui';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,18 +26,21 @@ const HeaderBar: React.FC = () => {
           <Image src={StreamlabLogo} alt="Streamlab" width="10rem" opacity={0.8} />
         </Link>
       </Header>
-      <FormControl flex="0" p={2} mt={1} display="flex" flexDirection="row" justifyContent="center" alignItems="center">
+      <FormControl flex="0" p={1} mt={1} display="flex" flexDirection="row" justifyContent="center" alignItems="center">
         <Switch id="advanced-switch" isChecked={advancedMode} onChange={handleAdvancedModeChange}>
           &nbsp;
         </Switch>
-        <FormLabel ml={2} fontSize="sm" htmlFor="advanced-switch">
+        <FormLabel ml={2} mt={1} fontSize="sm" htmlFor="advanced-switch">
           Advanced
         </FormLabel>
       </FormControl>
       <Button
-        size="xs"
+        width="auto"
+        minWidth="auto"
+        height="auto"
         flex="0"
         ml={4}
+        p={1}
         title={`${isRightPaneExpanded ? 'Collapse' : 'Expand'} sidebar`}
         onClick={handleRightPaneClick}
       >

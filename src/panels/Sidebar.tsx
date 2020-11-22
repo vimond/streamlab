@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/core';
+import { Badge, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import Information from './Information';
 import FormHistory from './FormHistory';
 import Sharing from './Sharing';
@@ -32,7 +32,7 @@ const Sidebar: React.FC = () => {
         <Tab>
           Info{' '}
           {activeTabIndex > 0 && errorMessageCount > 0 && (
-            <Badge ml={2} variantColor="red" variant="solid">
+            <Badge ml={2} colorScheme="red" variant="solid">
               {errorMessageCount}
             </Badge>
           )}
@@ -41,13 +41,13 @@ const Sidebar: React.FC = () => {
         <Tab>Sharing</Tab>
       </TabList>
       <TabPanels flex="1 1 auto" overflowY="auto" outline="none">
-        <TabPanel>
+        <TabPanel p={0}>
           <Information />
         </TabPanel>
-        <TabPanel>
+        <TabPanel p={0}>
           <FormHistory />
         </TabPanel>
-        <TabPanel>
+        <TabPanel p={0}>
           <Sharing />
         </TabPanel>
       </TabPanels>

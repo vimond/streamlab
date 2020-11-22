@@ -1,20 +1,21 @@
 import React from 'react';
-import { Alert, AlertIcon, List, ListItem, Box, Link, Icon } from '@chakra-ui/core';
+import { Alert, AlertIcon, List, ListItem, Box, Link } from '@chakra-ui/react';
 import { AppState } from '../store/reducers';
 import { useSelector } from 'react-redux';
 import { Message } from '../store/model/messageResolver';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
 
 const renderMessage = ({ text, level, link }: Message, i: number) => (
-  <ListItem key={i}>
+  <ListItem key={i} overflowWrap="break-word" wordBreak="break-all">
     <Alert status={level} alignItems="flex-start" style={{ overflowX: 'auto' }}>
-      <AlertIcon />
+      <AlertIcon flex="0 0 1rem" />
       {link ? (
         <>
           <Link href={link} isExternal>
             {text}
           </Link>
           <Link alignSelf="center" mx={2} href={link} isExternal>
-            <Icon name="external-link" />
+            <ExternalLinkIcon />
           </Link>
         </>
       ) : (

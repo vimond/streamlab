@@ -15,9 +15,8 @@ import {
   Grid,
   Input,
   List,
-  PseudoBox,
   Text,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import Header, { Level } from '../components/Header';
 import { HistoryEntry, SimpleStreamResource } from '../store/model/history';
 import {
@@ -44,7 +43,7 @@ import {
 } from '../store/model/streamDetails';
 import { AppState } from '../store/reducers';
 import { useDispatch, useSelector } from 'react-redux';
-import { UserSelectProperty } from 'csstype';
+import { Property } from 'csstype';
 import { updateAddressBar } from '../store/model/sharing';
 
 type Header = { id: number; name: string; value: string };
@@ -73,7 +72,7 @@ const HistoryListItem: React.FC<{ entry: HistoryEntry; isSelected: boolean; hand
   isSelected,
   handleClick,
 }) => (
-  <PseudoBox
+  <Box
     as="li"
     p={2}
     cursor="pointer"
@@ -85,21 +84,17 @@ const HistoryListItem: React.FC<{ entry: HistoryEntry; isSelected: boolean; hand
     title={formatDate(entry.timestamp) + ' ' + formatLabel(entry)}
   >
     {entry.error && (
-      <Badge
-        variantColor="red"
-        mt="-0.2em"
-        title={`This playback attempt failed with an error: ${entry.error.message}`}
-      >
+      <Badge colorScheme="red" mt="-0.2em" title={`This playback attempt failed with an error: ${entry.error.message}`}>
         Err
       </Badge>
     )}{' '}
     {formatLabel(entry) + (entry.name ? '' : ', ' + formatDate(entry.timestamp))}
-  </PseudoBox>
+  </Box>
 );
 
 const isResourcePopulated = (resource: Resource<unknown>) => !!(resource.url || resource.headers.length);
 
-const userSelectProp: UserSelectProperty = 'text';
+const userSelectProp: Property.UserSelect = 'text';
 
 const inputStyle = {
   userSelect: userSelectProp,
@@ -156,7 +151,7 @@ const FormHistory: React.FC = () => {
   const history = useSelector((state: AppState) => state.history.history);
   const selectedEntry = useSelector((state: AppState) => state.history.selectedEntry);
 
-  const [isOpen, setIsOpen] = React.useState<boolean>();
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const handleCloseClick = () => setIsOpen(false);
   const handleDeleteHistoryClick = () => {
     handleDeleteHistory();
@@ -174,7 +169,7 @@ const FormHistory: React.FC = () => {
   const handleDeleteEntryClick = (entry: HistoryEntry) => dispatch(deleteHistoryEntry(entry));
   const handleDeleteHistory = () => dispatch(deleteHistory());
 
-  const cancelRef = React.useRef();
+  const cancelRef = React.useRef<HTMLButtonElement>(null);
   return (
     <Box mx={4}>
       <Box>
@@ -224,7 +219,7 @@ const FormHistory: React.FC = () => {
           >
             {selectedEntry.error && (
               <Badge
-                variantColor="red"
+                colorScheme="red"
                 mt="-0.2em"
                 title={`This playback attempt failed with an error: ${selectedEntry.error.message}`}
               >
@@ -237,6 +232,7 @@ const FormHistory: React.FC = () => {
               placeholder="Enter a name for this entry"
               value={selectedEntry.name}
               onChange={handleEntryLabelChange}
+              backgroundColor="White"
             />
           </Grid>
           <Text>
@@ -310,10 +306,10 @@ const FormHistory: React.FC = () => {
               )}
           </Grid>
           <Flex justify="center" pt={4}>
-            <Button m={2} variantColor="blue" onClick={() => handleRestoreEntryClick(selectedEntry)}>
+            <Button m={2} colorScheme="blue" onClick={() => handleRestoreEntryClick(selectedEntry)}>
               Restore into forms
             </Button>
-            <Button m={2} variantColor="red" onClick={() => handleDeleteEntryClick(selectedEntry)}>
+            <Button m={2} colorScheme="red" onClick={() => handleDeleteEntryClick(selectedEntry)}>
               Delete from history
             </Button>
           </Flex>
@@ -321,11 +317,9 @@ const FormHistory: React.FC = () => {
       )}
       {!!history.length && (
         <Flex justify="center" py={1}>
-          <Button m={2} variantColor="red" variant="outline" onClick={() => setIsOpen(true)}>
+          <Button m={2} colorScheme="red" variant="outline" onClick={() => setIsOpen(true)}>
             Clear history
           </Button>
-          {/*
-              // @ts-ignore Chakra type inconsistency. */}
           <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={handleCloseClick}>
             <AlertDialogOverlay />
             <AlertDialogContent>
@@ -339,7 +333,7 @@ const FormHistory: React.FC = () => {
                 <Button ref={cancelRef} onClick={handleCloseClick}>
                   Cancel
                 </Button>
-                <Button variantColor="red" onClick={handleDeleteHistoryClick} ml={3}>
+                <Button colorScheme="red" onClick={handleDeleteHistoryClick} ml={3}>
                   Clear history
                 </Button>
               </AlertDialogFooter>

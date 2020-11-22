@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Flex, FormControl, Input, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/core';
+import { Box, Button, Flex, FormControl, Input, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import Header, { Level } from '../components/Header';
 import { AppState } from '../store/reducers';
 import { updateStreamDetailsField } from '../store/actions/streamDetails';
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AutoTechnology, BaseTech, StreamTechnology } from '../store/model/streamDetails';
 import { playBasic } from '../store/actions/player';
 import { updateAddressBar } from '../store/model/sharing';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 
 type StreamTech = AutoTechnology<StreamTechnology>;
 
@@ -65,7 +66,7 @@ const Basic: React.FC = () => {
       <Header level={Level.H3} fontSize="md" textAlign="center">
         Test progressive, HLS, MPEG-DASH, or smooth streams:
       </Header>
-      <FormControl isRequired m={4}>
+      <FormControl isRequired m={4} width="auto">
         <Input
           placeholder="Stream URL"
           type="url"
@@ -78,7 +79,7 @@ const Basic: React.FC = () => {
         <Menu>
           {/*
               // @ts-ignore */}
-          <MenuButton as={Button} rightIcon="chevron-down" flex="0 0 none" ml={2}>
+          <MenuButton as={Button} rightIcon={<ChevronDownIcon />} flex="0 0 none" ml={2}>
             {getLabel(streamResource.technology)}
           </MenuButton>
           <MenuList>
@@ -89,7 +90,7 @@ const Basic: React.FC = () => {
             ))}
           </MenuList>
         </Menu>
-        <Button variantColor="green" mx={4} onClick={handlePlay} isDisabled={!streamResource.url}>
+        <Button colorScheme="green" mx={4} onClick={handlePlay} isDisabled={!streamResource.url}>
           Play
         </Button>
       </Flex>

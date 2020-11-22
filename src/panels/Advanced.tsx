@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Accordion,
-  AccordionHeader,
+  AccordionButton,
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
@@ -15,7 +15,7 @@ import {
   Flex,
   Stack,
   Text,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import StreamDetails from './StreamDetails';
 import PlayerOptions from './PlayerOptions';
 import Header, { Level } from '../components/Header';
@@ -26,8 +26,8 @@ import { AppState } from '../store/reducers';
 import { updateAddressBar } from '../store/model/sharing';
 
 const SectionHeader: React.FC<{ header: string; isRequired?: boolean }> = ({ header, isRequired }) => (
-  <AccordionHeader backgroundColor="gray.100">
-    <Header level={Level.H2} flex="1">
+  <AccordionButton backgroundColor="gray.100">
+    <Header level={Level.H2} flex="1" lineHeight={1}>
       {header}
       {!isRequired && (
         <Text as="em" fontStyle="normal" color="gray.500" fontWeight="normal" ml="4">
@@ -37,7 +37,7 @@ const SectionHeader: React.FC<{ header: string; isRequired?: boolean }> = ({ hea
       )}
     </Header>
     <AccordionIcon />
-  </AccordionHeader>
+  </AccordionButton>
 );
 
 const Advanced: React.FC = () => {
@@ -46,7 +46,7 @@ const Advanced: React.FC = () => {
   const isPlayable = useSelector((state: AppState) => !!state.streamDetails.streamResource.url);
   const isPlayerOptionsModified = useSelector((state: AppState) => !!state.playerOptions.isModified);
 
-  const [isOpen, setIsOpen] = React.useState<boolean>();
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   const dispatch = useDispatch();
   const handleCloseClick = () => setIsOpen(false);
@@ -62,7 +62,7 @@ const Advanced: React.FC = () => {
   const handleStop = () => dispatch(stop);
   const handleAccordionChange = (indices: number[]) => dispatch(updateAdvancedAccordionExpansions(indices));
 
-  const cancelRef = React.useRef();
+  const cancelRef = React.useRef<HTMLButtonElement>(null);
   return (
     <Stack>
       {/*
@@ -70,30 +70,28 @@ const Advanced: React.FC = () => {
       <Accordion defaultIndex={expandedIndices} allowMultiple onChange={handleAccordionChange}>
         <AccordionItem>
           <SectionHeader header="Stream details" isRequired />
-          <AccordionPanel ml={2} backgroundColor="White">
+          <AccordionPanel ml={2} mt={1} backgroundColor="White">
             <StreamDetails />
           </AccordionPanel>
         </AccordionItem>
         <AccordionItem>
           <SectionHeader header={`Player options${isPlayerOptionsModified ? ' *' : ''}`} />
-          <AccordionPanel ml={2} backgroundColor="White">
+          <AccordionPanel ml={2} mt={1} backgroundColor="White">
             <PlayerOptions />
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
       <Flex justify="center" py={4}>
-        <Button variantColor="green" onClick={handlePlay} mx={4} isDisabled={!isPlayable}>
+        <Button colorScheme="green" onClick={handlePlay} mx={4} isDisabled={!isPlayable}>
           Play
         </Button>
-        <Button variantColor="red" onClick={handleStop} isDisabled={!isPlaying}>
+        <Button colorScheme="red" onClick={handleStop} isDisabled={!isPlaying}>
           Stop
         </Button>
-        <Button variantColor="red" variant="outline" onClick={() => setIsOpen(true)} mx={4}>
+        <Button colorScheme="red" variant="outline" onClick={() => setIsOpen(true)} mx={4}>
           Clear all forms
         </Button>
-        {/*
-              // @ts-ignore Chakra type inconsistency. */}
-        <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={handleCloseClick}>
+        <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={handleCloseClick}>
           <AlertDialogOverlay />
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
@@ -106,7 +104,7 @@ const Advanced: React.FC = () => {
               <Button ref={cancelRef} onClick={handleCloseClick}>
                 Cancel
               </Button>
-              <Button variantColor="red" onClick={handleClearClick} ml={3}>
+              <Button colorScheme="red" onClick={handleClearClick} ml={3}>
                 Clear forms
               </Button>
             </AlertDialogFooter>

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Collapse, Flex, IconButton, Input } from '@chakra-ui/core';
-import { BoxProps } from '@chakra-ui/core/dist/Box';
+import { Box, Collapse, Flex, IconButton, Input, BoxProps } from '@chakra-ui/react';
+import { DeleteIcon } from '@chakra-ui/icons';
 
 type Header = { name: string; value: string; id: number };
 
@@ -16,7 +16,7 @@ const renderRow = (
   onDelete: (index: number) => void
 ) => ({ name, value, id }: Header, index: number, arr: Header[]) => {
   return (
-    <Collapse key={id} isOpen={isOpen[index]} onAnimationEnd={() => onAnimationEnd(index)}>
+    <Collapse key={id} in={isOpen[index]} onAnimationComplete={() => onAnimationEnd(index)}>
       <Flex direction="row" py={2}>
         <Input
           flex="1 2 auto"
@@ -36,7 +36,7 @@ const renderRow = (
             onChange({ name, value: evt.target.value, id }, index)
           }
         />
-        <IconButton flex="0" aria-label="Remove" icon="delete" onClick={() => onDelete(index)} />
+        <IconButton flex="0" aria-label="Remove" icon={<DeleteIcon />} onClick={() => onDelete(index)} mr={2} />
       </Flex>
     </Collapse>
   );
