@@ -32,7 +32,7 @@
     "redux-thunk": "^2.3.0",
     "rx-player": "^3.9.2",
     "typescript": "3.9.6",
-    "vimond-replay": "^1.12.1"
+    "vimond-replay": "^2.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

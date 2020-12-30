@@ -3427,9 +3427,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001035, caniuse-lite@^1.0.30001093, caniuse-lite@^1.0.30001097:
-  version "1.0.30001100"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001100.tgz#2a58615e0c01cf716ab349b20ca4d86ef944aa4e"
-  integrity sha512-0eYdp1+wFCnMlCj2oudciuQn2B9xAFq3WpgpcBIZTxk/1HNA/O2YA7rpeYhnOqsqAJq1AHUgx6i1jtafg7m2zA==
+  version "1.0.30001171"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001171.tgz"
+  integrity sha512-5Alrh8TTYPG9IH4UkRqEBZoEToWRLvPbSQokvzSz0lii8/FOWKG4keO1HoYfPWs8IF/NH/dyNPg1cmJGvV3Zlg==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -5782,10 +5782,10 @@ hey-listen@^1.0.5, hey-listen@^1.0.8:
   resolved "https://registry.yarnpkg.com/hey-listen/-/hey-listen-1.0.8.tgz#8e59561ff724908de1aa924ed6ecc84a56a9aa68"
   integrity sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==
 
-hls.js@^0.14.0:
-  version "0.14.7"
-  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-0.14.7.tgz#47fbd2662b13121ab17c07aea06b1c07828240cf"
-  integrity sha512-9JY0D9nwMrfQPRWc8/kEJTKK0TYfDTzIs6Xq+gdCvasRxdvQKQ2T76rdueTkS0AsFV6sQlJN0wxbnI44aRvvUA==
+hls.js@^0.14.17:
+  version "0.14.17"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-0.14.17.tgz#0127cff2ec2f994a54eb955fe669ef6153a8e317"
+  integrity sha512-25A7+m6qqp6UVkuzUQ//VVh2EEOPYlOBg32ypr34bcPO7liBMOkKFvbjbCBfiPAOTA/7BSx1Dujft3Th57WyFg==
   dependencies:
     eventemitter3 "^4.0.3"
     url-toolkit "^2.1.6"
@@ -10247,10 +10247,10 @@ sha.js@^2.4.0, sha.js@^2.4.8:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-shaka-player@^2.5.13:
-  version "2.5.14"
-  resolved "https://registry.yarnpkg.com/shaka-player/-/shaka-player-2.5.14.tgz#271e005006ff4f93e2f216cc95602415a2e04b67"
-  integrity sha512-GSY4Dj7D+YuO7rrqoNX1caCWO2QNnJ8bzzgIOgKCL8z0rJOLNcNzMeGL0xBYCMK7rzzwjOhcPeYMB13rWkPgVw==
+shaka-player@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/shaka-player/-/shaka-player-3.0.6.tgz#38bc62d61eb73241ab517253912c9284d9955490"
+  integrity sha512-feW/4kTMEiFq2GdMXS1UcOIsNMSvGG/0+GZHcLcJ2+LQ8dFy4SiY4VmaaR/I1fLmHtvd8URvcWNUqWGLAAoH8g==
   dependencies:
     eme-encryption-scheme-polyfill "^2.0.1"
 
@@ -11370,16 +11370,16 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-vimond-replay@^1.12.1:
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/vimond-replay/-/vimond-replay-1.12.1.tgz#44e19e7818ca6ac7ca47bd34d0e2ffb6b1a483de"
-  integrity sha512-G9geiCV6rCdRNouCNQ+GA3cnh2So0nNsFNdlSuFirdfv/LVW7mmFXfwoFqZ/pbt38ax0kvaObD57+Y04oZuPUg==
+vimond-replay@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/vimond-replay/-/vimond-replay-2.0.1.tgz#8b9fdf5107a17b984614950f9b61104dfba8b9e3"
+  integrity sha512-Y5ESAcTyJ9AF16dTeYh4EC7QNAkoaQmDNgixOyfrRASpCqpi9Nfi65OFfXI0gxSLTALmreIlqI613sBelwezWg==
   dependencies:
-    hls.js "^0.14.0"
+    hls.js "^0.14.17"
     memoize-one "^5.1.1"
     react-feather "^2.0.8"
     resize-observer-polyfill "^1.5.1"
-    shaka-player "^2.5.13"
+    shaka-player "^3.0.6"
 
 vm-browserify@^1.0.1:
   version "1.1.2"
