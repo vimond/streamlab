@@ -35,6 +35,7 @@ import {
   getLabel,
   getLogLevelLabel,
   LabeledTechOption,
+  playerLibraries,
   Resource,
   streamTechLabels,
   StreamTechnology,
@@ -275,6 +276,19 @@ const FormHistory: React.FC = () => {
                 <>
                   <FormLabel justifySelf="right">Show playback monitor</FormLabel>
                   <Checkbox isChecked isReadOnly />
+                </>
+              )}
+            {'playerOptions' in selectedEntry.formData &&
+              selectedEntry.formData.playerOptions &&
+              selectedEntry.formData.playerOptions.playerLibrary !== 'AUTO' && (
+                <>
+                  <FormLabel justifySelf="right">Player library</FormLabel>
+                  <Input
+                    type="text"
+                    value={playerLibraries[selectedEntry.formData.playerOptions.playerLibrary]}
+                    isReadOnly
+                    style={inputStyle}
+                  />
                 </>
               )}
             {'playerOptions' in selectedEntry.formData &&

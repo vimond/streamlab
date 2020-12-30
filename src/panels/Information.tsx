@@ -6,7 +6,7 @@ import { Message } from '../store/model/messageResolver';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 
 const renderMessage = ({ text, level, link }: Message, i: number) => (
-  <ListItem key={i} overflowWrap="break-word" wordBreak="break-all">
+  <ListItem key={i}>
     <Alert status={level} alignItems="flex-start" style={{ overflowX: 'auto' }}>
       <AlertIcon flex="0 0 1rem" />
       {link ? (

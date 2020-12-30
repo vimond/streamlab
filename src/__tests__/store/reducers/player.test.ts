@@ -23,6 +23,7 @@ describe('Player reducer', () => {
         value: {
           source,
           options,
+          playerLibraryOverride: 'RX_PLAYER',
           historyEntry: {
             timestamp: '2020-01-12T19:11:02.837Z',
             name: '',
@@ -48,6 +49,7 @@ describe('Player reducer', () => {
           playsInline: true,
         },
       },
+      playerLibraryOverride: 'RX_PLAYER',
     });
   });
   test(

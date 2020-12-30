@@ -45,6 +45,7 @@ const historyEntry1: HistoryEntry = {
     playerOptions: {
       logLevel: PlayerLogLevel.WARNING,
       customConfiguration: '',
+      playerLibrary: 'AUTO',
       showPlaybackMonitor: true,
     },
   },
@@ -143,6 +144,7 @@ describe('Form history reducer', () => {
           playerOptions: {
             logLevel: PlayerLogLevel.WARNING,
             customConfiguration: '',
+            playerLibrary: 'AUTO',
             showPlaybackMonitor: true,
           },
         },

@@ -19,6 +19,7 @@
     "codemirror": "^5.55.0",
     "framer-motion": "^2.9.4",
     "jsonlint-mod": "^1.7.5",
+    "mux.js": "^5.7.0",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-codemirror2": "^7.2.1",

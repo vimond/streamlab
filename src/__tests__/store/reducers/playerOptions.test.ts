@@ -1,6 +1,11 @@
 import playerOptionsReducer from '../../../store/reducers/playerOptions';
-import { SET_LOG_LEVEL, SET_PLAYER_CONFIGURATION, TOGGLE_PLAYBACK_MONITOR } from '../../../store/actions/playerOptions';
-import { BaseTech, PlayerLogLevel, StreamTechnology } from '../../../store/model/streamDetails';
+import {
+  SET_LOG_LEVEL,
+  SET_PLAYER_CONFIGURATION,
+  SET_PLAYER_LIBRARY,
+  TOGGLE_PLAYBACK_MONITOR,
+} from '../../../store/actions/playerOptions';
+import { BaseTech, PlayerLibrary, PlayerLogLevel, StreamTechnology } from '../../../store/model/streamDetails';
 import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../../../store/actions/history';
 import { AdvancedHistoryEntry } from '../../../store/model/history';
 import { CLEAR_FORMS } from '../../../store/actions/ui';
@@ -10,6 +15,7 @@ const initialState = {
   customConfiguration: '',
   showPlaybackMonitor: false,
   logLevel: PlayerLogLevel.WARNING,
+  playerLibrary: 'AUTO' as PlayerLibrary,
   isModified: false,
 };
 
@@ -38,6 +44,7 @@ const advancedUrlSetup = {
     logLevel: PlayerLogLevel.DEBUG,
     customConfiguration: '{"hello":"world"}',
     showPlaybackMonitor: true,
+    playerLibrary: 'HTML',
   },
 };
 
@@ -54,6 +61,7 @@ describe('Player options reducer', () => {
       customConfiguration: '{"hello":"world"}',
       showPlaybackMonitor: true,
       logLevel: PlayerLogLevel.DEBUG,
+      playerLibrary: 'HTML',
       isModified: true,
     });
     const newState2 = playerOptionsReducer(initialState, {
@@ -79,6 +87,17 @@ describe('Player options reducer', () => {
       customConfiguration: '',
       showPlaybackMonitor: false,
       logLevel: PlayerLogLevel.INFO,
+      playerLibrary: 'AUTO',
+      isModified: true,
+    });
+  });
+  test('Updating the player library when selected', () => {
+    const newState = playerOptionsReducer(initialState, { type: SET_PLAYER_LIBRARY, value: 'SHAKA_PLAYER' });
+    expect(newState).toEqual({
+      customConfiguration: '',
+      showPlaybackMonitor: false,
+      logLevel: PlayerLogLevel.WARNING,
+      playerLibrary: 'SHAKA_PLAYER',
       isModified: true,
     });
   });
@@ -88,6 +107,7 @@ describe('Player options reducer', () => {
       customConfiguration: '',
       showPlaybackMonitor: true,
       logLevel: PlayerLogLevel.WARNING,
+      playerLibrary: 'AUTO',
       isModified: true,
     });
     const newState2 = playerOptionsReducer(newState1, { type: TOGGLE_PLAYBACK_MONITOR, value: false });
@@ -95,6 +115,7 @@ describe('Player options reducer', () => {
       customConfiguration: '',
       showPlaybackMonitor: false,
       logLevel: PlayerLogLevel.WARNING,
+      playerLibrary: 'AUTO',
       isModified: false,
     });
   });
@@ -104,6 +125,7 @@ describe('Player options reducer', () => {
       customConfiguration: '{"key":"value"}',
       showPlaybackMonitor: false,
       logLevel: PlayerLogLevel.WARNING,
+      playerLibrary: 'AUTO',
       isModified: true,
     });
     const newState2 = playerOptionsReducer(newState1, { type: SET_PLAYER_CONFIGURATION, value: '' });
@@ -111,6 +133,7 @@ describe('Player options reducer', () => {
       customConfiguration: '',
       showPlaybackMonitor: false,
       logLevel: PlayerLogLevel.WARNING,
+      playerLibrary: 'AUTO',
       isModified: false,
     });
   });
@@ -142,6 +165,7 @@ describe('Player options reducer', () => {
           customConfiguration: '{"key":"value"}',
           logLevel: PlayerLogLevel.WARNING,
           showPlaybackMonitor: false,
+          playerLibrary: 'SHAKA_PLAYER',
         },
       },
     };
@@ -153,6 +177,7 @@ describe('Player options reducer', () => {
       customConfiguration: '',
       showPlaybackMonitor: true,
       logLevel: PlayerLogLevel.ERROR,
+      playerLibrary: 'AUTO' as PlayerLibrary,
       isModified: true,
     };
     const newState = playerOptionsReducer(oldState, action);
@@ -163,6 +188,7 @@ describe('Player options reducer', () => {
       customConfiguration: '{"key":"value"}',
       showPlaybackMonitor: true,
       logLevel: PlayerLogLevel.INFO,
+      playerLibrary: 'AUTO' as PlayerLibrary,
       isModified: true,
     };
     const newState = playerOptionsReducer(oldState, { type: CLEAR_FORMS });
@@ -170,6 +196,7 @@ describe('Player options reducer', () => {
       logLevel: PlayerLogLevel.WARNING,
       showPlaybackMonitor: false,
       customConfiguration: '',
+      playerLibrary: 'AUTO',
       isModified: false,
     });
   });

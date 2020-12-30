@@ -7,27 +7,122 @@ import {
   drmTechLabels,
   DrmTechnology,
   getLabel,
+  playerLibraries,
+  PlayerLibrary,
   Resource,
+  streamTechLabels,
   StreamTechnology,
   SubtitlesFormat,
   subtitlesFormatLabels,
 } from './streamDetails';
 import { PLAYER_ERROR } from '../actions/player';
 import { APPLY_BROWSER_ENVIRONMENT } from '../actions/streamDetails';
+import { BaseAppState } from '../reducers';
+
+const playerLibraryDescriptions = {
+  AUTO: { label: '', link: undefined },
+  SHAKA_PLAYER: { label: 'the Shaka Player library', link: 'https://github.com/google/shaka-player' },
+  HLS_JS: { label: 'the HLS.js library', link: 'https://github.com/video-dev/hls.js' },
+  RX_PLAYER: { label: 'the RxPlayer library', link: 'https://github.com/canalplus/rx-player' },
+  HTML: {
+    label: "the browser's native support through the HTML <video> element",
+    link: 'https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video',
+  },
+  HLS_SAFARI: {
+    label: "Safari's native HLS support through HTML video element",
+    link: 'https://developer.apple.com/documentation/webkit/delivering_video_content_for_safari',
+  },
+};
 
 const streamTechnologyToLibMappings = {
-  [StreamTechnology.DASH]: { label: 'the Shaka Player library', link: 'https://github.com/google/shaka-player' },
-  [StreamTechnology.HLS]: {
-    label: 'the HLS.js library',
-    link: 'https://github.com/video-dev/hls.js',
-    safari: { label: "Safari's native HLS support through HTML video element" },
-  },
-  [StreamTechnology.MSS]: { label: 'the RxPlayer library', link: 'https://github.com/canalplus/rx-player' },
-  [StreamTechnology.PROGRESSIVE]: { label: "the browser's HTML video element directly" },
+  [BaseTech.AUTO]: 'AUTO',
+  [StreamTechnology.DASH]: 'SHAKA_PLAYER',
+  [StreamTechnology.HLS]: 'HLS_JS',
+  [StreamTechnology.MSS]: 'RX_PLAYER',
+  [StreamTechnology.PROGRESSIVE]: 'HTML',
+};
+
+const compatibleStreamTechnologies = {
+  SHAKA_PLAYER: [StreamTechnology.DASH, StreamTechnology.HLS],
+  HLS_JS: [StreamTechnology.HLS],
+  RX_PLAYER: [StreamTechnology.DASH, StreamTechnology.MSS],
+  HTML: [StreamTechnology.PROGRESSIVE],
+  SAFARI: [StreamTechnology.HLS, StreamTechnology.PROGRESSIVE],
 };
 
 const getStreamTechnology = ({ url, technology }: Resource<StreamTechnology>) =>
   technology === BaseTech.AUTO ? detectStreamTechnology(url) : technology;
+
+const getTechProperties = (state: BaseAppState) => {
+  const tech = state.streamDetails.streamResource.technology;
+  const playerLibrary = state.ui.advancedMode ? state.playerOptions.playerLibrary : 'AUTO';
+  const isSafari =
+    state.streamDetails.supportedDrmTechnologies &&
+    state.streamDetails.supportedDrmTechnologies[0] === DrmTechnology.FAIRPLAY; // Not exactly to the point...
+  const technology = tech === BaseTech.AUTO ? detectStreamTechnology(state.streamDetails.streamResource.url) : tech;
+  return {
+    technology,
+    playerLibrary,
+    isSafari,
+  };
+};
+
+const getPlayerLibraryMessage = (
+  tech: StreamTechnology | undefined,
+  isSafari: boolean,
+  playerLibraryOverride: PlayerLibrary
+) => {
+  const isPlayerLibraryOverridden = playerLibraryOverride && playerLibraryOverride !== 'AUTO';
+  if (tech) {
+    if (isPlayerLibraryOverridden) {
+      const { label, link } = playerLibraryDescriptions[playerLibraryOverride];
+      return {
+        level: MessageLevel.INFO,
+        text: `In Player options, ${label} is selected for playing this stream.`,
+        link,
+      };
+    } else {
+      const safariHls = isSafari && tech === StreamTechnology.HLS;
+      const { label, link } = safariHls
+        ? playerLibraryDescriptions['HLS_SAFARI']
+        : // @ts-ignore
+          playerLibraryDescriptions[streamTechnologyToLibMappings[tech]];
+      return {
+        level: MessageLevel.INFO,
+        text: `The player will use ${label} for playing this stream.`,
+        link,
+      };
+    }
+  } else {
+    return {
+      level: MessageLevel.ERROR,
+      text: isPlayerLibraryOverridden
+        ? `Undetected stream technology. However ${playerLibraryDescriptions[playerLibraryOverride].label} is selected for playing this stream.`
+        : 'Undecided stream technology. Unable to select a playback technology.',
+    };
+  }
+};
+
+const getLibrary = (state: BaseAppState) => {
+  const { technology, playerLibrary } = getTechProperties(state);
+  if (playerLibrary && playerLibrary !== 'AUTO') {
+    return playerLibrary;
+  } else if (technology) {
+    return streamTechnologyToLibMappings[technology];
+  }
+};
+
+const isIncompatibleStream = (state: BaseAppState) => {
+  const { playerLibrary, technology, isSafari } = getTechProperties(state);
+  if (playerLibrary && playerLibrary !== 'AUTO' && technology) {
+    if (isSafari && playerLibrary === 'HTML') {
+      return !compatibleStreamTechnologies['SAFARI'].includes(technology);
+    } else {
+      return !compatibleStreamTechnologies[playerLibrary].includes(technology);
+    }
+  }
+  return false;
+};
 
 export const messages: MessageRule[] = [
   {
@@ -119,40 +214,36 @@ export const messages: MessageRule[] = [
       nextState.streamDetails.streamResource.url !== '' &&
       !!getStreamTechnology(nextState.streamDetails.streamResource),
     message: (nextState, action) => {
-      const { technology } = nextState.streamDetails.streamResource;
-      const isSafari =
-        nextState.streamDetails.supportedDrmTechnologies &&
-        nextState.streamDetails.supportedDrmTechnologies[0] === DrmTechnology.FAIRPLAY; // Not exactly to the point...
-      const tech =
-        technology === BaseTech.AUTO ? detectStreamTechnology(nextState.streamDetails.streamResource.url) : technology;
-      if (tech) {
-        const safariHls = isSafari && tech === StreamTechnology.HLS;
-        const lib = safariHls
-          ? streamTechnologyToLibMappings[StreamTechnology.HLS].safari
-          : streamTechnologyToLibMappings[tech];
-        return {
-          level: MessageLevel.INFO,
-          text: `The player will use ${lib.label} for playing this stream.`,
-          ...lib,
-        };
-      } else {
-        return {
-          level: MessageLevel.ERROR,
-          text: 'Undecided stream technology. Unable to select a playback technology.',
-        };
-      }
+      const { technology, playerLibrary, isSafari } = getTechProperties(nextState);
+      return getPlayerLibraryMessage(technology, isSafari, playerLibrary);
     },
   },
   {
-    id: 'limited-smooth-support',
+    id: 'player-lib-unsupported',
+    displayCondition: ({ nextState }) => isIncompatibleStream(nextState),
+    message: (nextState) => {
+      const { technology, playerLibrary } = getTechProperties(nextState);
+      const streamLabel =
+        technology === StreamTechnology.MSS
+          ? 'smooth'
+          : (streamTechLabels.find((l) => l.key === technology) || { key: BaseTech.AUTO, label: 'unknown' }).label;
+      const libLabel = playerLibrary === 'HTML' ? 'this browser' : playerLibraries[playerLibrary];
+      return {
+        level: MessageLevel.WARNING,
+        text: `However, ${libLabel} is not known to be capable of playing ${streamLabel} streams.`,
+      };
+    },
+  },
+  {
+    id: 'limited-rx-player-support',
     displayCondition: ({ nextState }) =>
       (!('error' in nextState.player) || !nextState.player.error) &&
       nextState.streamDetails.streamResource.url !== '' &&
-      getStreamTechnology(nextState.streamDetails.streamResource) === StreamTechnology.MSS,
+      getLibrary(nextState) === 'RX_PLAYER',
     message: {
       level: MessageLevel.WARNING,
       text:
-        'Note that the integration with this library is not complete, and lacks support for subtitles and controls for bitrate + multiple audio tracks.',
+        'Note that the integration with the RxPlayer library is not complete, and lacks support for subtitles and controls for bitrate + multiple audio tracks.',
     },
   },
   {

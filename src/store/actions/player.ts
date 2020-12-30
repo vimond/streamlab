@@ -2,7 +2,7 @@ import { PlaybackSource } from 'vimond-replay/default-player/Replay';
 import { PlayerConfiguration } from 'vimond-replay';
 import { AppState } from '../reducers';
 import { Dispatch } from 'redux';
-import { createPlayerOptions, createPlayerSource } from '../model/streamDetails';
+import { createPlayerOptions, createPlayerSource, PlayerLibrary } from '../model/streamDetails';
 import { Action } from './index';
 import { AdvancedHistoryEntry, BasicHistoryEntry, HistoryEntry } from '../model/history';
 import { StreamDetailsState } from '../reducers/streamDetails';
@@ -18,6 +18,7 @@ export type PlayerAction =
       value: {
         source: PlaybackSource;
         options?: PlayerConfiguration;
+        playerLibraryOverride?: PlayerLibrary;
         historyEntry: HistoryEntry;
       };
     }
@@ -81,12 +82,14 @@ export const playAdvanced = (dispatch: Dispatch<Action>, getState: () => AppStat
   const { streamDetails, playerOptions } = getState();
   const source = createPlayerSource(streamDetails);
   const options = createPlayerOptions(playerOptions);
+  const playerLibraryOverride = playerOptions.playerLibrary;
   if (source) {
     dispatch({
       type: PLAY,
       value: {
         source,
         options,
+        playerLibraryOverride,
         historyEntry: createAdvancedHistoryEntry({ ...streamDetails, startOffset: '' }, playerOptions),
       },
     });

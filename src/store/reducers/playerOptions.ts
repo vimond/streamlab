@@ -2,9 +2,10 @@ import {
   PlayerOptionsAction,
   SET_LOG_LEVEL,
   SET_PLAYER_CONFIGURATION,
+  SET_PLAYER_LIBRARY,
   TOGGLE_PLAYBACK_MONITOR,
 } from '../actions/playerOptions';
-import { DEFAULT_PLAYER_LOG_LEVEL, PlayerLogLevel } from '../model/streamDetails';
+import { DEFAULT_PLAYER_LOG_LEVEL, PlayerLibrary, PlayerLogLevel } from '../model/streamDetails';
 import { HistoryEntryAction, RESTORE_HISTORY_ENTRY } from '../actions/history';
 import { CLEAR_FORMS, ClearFormsAction } from '../actions/ui';
 import { IsModifiedBaseState } from './index';
@@ -14,19 +15,22 @@ export interface PlayerOptionsState extends IsModifiedBaseState {
   logLevel: PlayerLogLevel;
   showPlaybackMonitor: boolean;
   customConfiguration: string;
+  playerLibrary: PlayerLibrary;
 }
 
 const initialState = {
   logLevel: DEFAULT_PLAYER_LOG_LEVEL,
   showPlaybackMonitor: false,
   customConfiguration: '',
+  playerLibrary: 'AUTO' as PlayerLibrary,
   isModified: false,
 };
 
-const isInitialState = ({ logLevel, showPlaybackMonitor, customConfiguration }: PlayerOptionsState) =>
+const isInitialState = ({ logLevel, showPlaybackMonitor, customConfiguration, playerLibrary }: PlayerOptionsState) =>
   logLevel === initialState.logLevel &&
   showPlaybackMonitor === initialState.showPlaybackMonitor &&
-  customConfiguration === initialState.customConfiguration;
+  customConfiguration === initialState.customConfiguration &&
+  playerLibrary === initialState.playerLibrary;
 
 const playerOptions = (
   state: PlayerOptionsState = initialState,
@@ -56,6 +60,12 @@ const playerOptions = (
         ...state,
         logLevel: action.value,
         isModified: !isInitialState({ ...state, logLevel: action.value }),
+      };
+    case SET_PLAYER_LIBRARY:
+      return {
+        ...state,
+        playerLibrary: action.value,
+        isModified: !isInitialState({ ...state, playerLibrary: action.value }),
       };
     case TOGGLE_PLAYBACK_MONITOR:
       return {

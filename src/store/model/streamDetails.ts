@@ -65,6 +65,17 @@ export enum PlayerLogLevel {
   VERBOSE,
 }
 
+export const playerLibraries = {
+  AUTO: 'Automatic selection',
+  SHAKA_PLAYER: 'Shaka Player',
+  HLS_JS: 'HLS.js',
+  RX_PLAYER: 'RxPlayer',
+  HTML: 'Native browser playback through HTML <video> element',
+};
+
+// Union instead of enum. Perhaps refactor similar types above for consistency.
+export type PlayerLibrary = keyof typeof playerLibraries;
+
 export const DEFAULT_PLAYER_LOG_LEVEL = PlayerLogLevel.WARNING;
 
 type PlayerOptions = {

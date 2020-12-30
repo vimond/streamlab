@@ -58,7 +58,7 @@ const onPlaybackActionsReady = (actions: PlaybackActions) => {
 };
 
 const Player: React.FC = () => {
-  const { source, options } = useSelector((state: AppState) => ({ ...state.player }));
+  const { source, options, playerLibraryOverride } = useSelector((state: AppState) => ({ ...state.player }));
   const dispatch = useDispatch();
   const onExit = () => dispatch(stop);
   const onError = (err: any) => dispatch(handlePlayerError(err));
@@ -73,7 +73,7 @@ const Player: React.FC = () => {
         onStreamStateChange={onStreamStateChange}
         onPlaybackActionsReady={onPlaybackActionsReady}
       >
-        <VideoStreamerResolver />
+        <VideoStreamerResolver playerLibraryOverride={playerLibraryOverride} />
       </Replay>
       {!source && (
         <Flex

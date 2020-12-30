@@ -32,6 +32,7 @@ const historyEntry: HistoryEntry = {
       logLevel: PlayerLogLevel.WARNING,
       customConfiguration: '',
       showPlaybackMonitor: true,
+      playerLibrary: 'HLS_JS',
     },
   },
 };
@@ -56,6 +57,7 @@ const advancedUrlSetup = {
     logLevel: PlayerLogLevel.WARNING,
     customConfiguration: '{"hello":"world"}',
     showPlaybackMonitor: true,
+    playerLibrary: 'HTML',
   },
 };
 

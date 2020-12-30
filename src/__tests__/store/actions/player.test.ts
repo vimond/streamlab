@@ -24,6 +24,7 @@ const basicFormState = {
     logLevel: PlayerLogLevel.DEBUG,
     showPlaybackMonitor: false,
     customConfiguration: '',
+    playerLibrary: 'AUTO',
   },
 };
 
@@ -42,6 +43,7 @@ const basicFormStateWithoutStreamUrl = {
     logLevel: PlayerLogLevel.DEBUG,
     showPlaybackMonitor: false,
     customConfiguration: '',
+    playerLibrary: 'AUTO',
   },
 };
 
@@ -83,6 +85,7 @@ const advancedFormState = {
     logLevel: PlayerLogLevel.WARNING,
     showPlaybackMonitor: true,
     customConfiguration: '{"some":"value"}',
+    playerLibrary: 'HLS_JS',
   },
 };
 
@@ -191,6 +194,7 @@ describe('Player Redux actions', () => {
               visibleAtStart: true,
             },
           },
+          playerLibraryOverride: 'HLS_JS',
           historyEntry: {
             timestamp: isoTimestamp,
             name: '',
