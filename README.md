@@ -18,7 +18,7 @@ It displays context-aware messages providing information and guidance on technic
 
 Streamlab supports live/DVR streams, DRM, subtitles, multiple audio tracks, according to the features of the adaptive player libraries' mentioned above. All modern browsers are supported.
 
-Streamlab provides auto-detection of stream technologies (formats), but this can be overridden with manual selection of the player libraries mentioned above.
+Streamlab provides auto-detection of stream technologies (formats), and selects a preferred player library for playing it back. This can be overridden with manual selection of the player libraries mentioned above.
 
 [Try it out here](https://vimond.github.io/streamlab/).
 
