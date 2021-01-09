@@ -1,3 +1,7 @@
+import hlsjs from 'hls.js';
+// @ts-ignore
+import shaka from 'shaka-player/dist/shaka-player.compiled';
+import RxPlayer from 'rx-player';
 import { MessageLevel, MessageRule } from './messageResolver';
 import {
   BaseTech,
@@ -21,9 +25,12 @@ import { BaseAppState } from '../reducers';
 
 const playerLibraryDescriptions = {
   AUTO: { label: '', link: undefined },
-  SHAKA_PLAYER: { label: 'the Shaka Player library', link: 'https://github.com/google/shaka-player' },
-  HLS_JS: { label: 'the HLS.js library', link: 'https://github.com/video-dev/hls.js' },
-  RX_PLAYER: { label: 'the RxPlayer library', link: 'https://github.com/canalplus/rx-player' },
+  SHAKA_PLAYER: {
+    label: `the Shaka Player ${shaka.Player.version} library`,
+    link: 'https://github.com/google/shaka-player',
+  },
+  HLS_JS: { label: `the HLS.js v${hlsjs.version} library`, link: 'https://github.com/video-dev/hls.js' },
+  RX_PLAYER: { label: `the RxPlayer v${RxPlayer.version} library`, link: 'https://github.com/canalplus/rx-player' },
   HTML: {
     label: "the browser's native support through the HTML <video> element",
     link: 'https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video',

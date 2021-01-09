@@ -2143,6 +2143,11 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
+"@types/hls.js@^0.13.3":
+  version "0.13.3"
+  resolved "https://registry.yarnpkg.com/@types/hls.js/-/hls.js-0.13.3.tgz#eb982a866125745eadee468c989fc9e189f24019"
+  integrity sha512-Po8ZPCsAcPPuf5OODPEkb6cdWJ/w4BdX1veP7IIOc2WG0x1SW4GEQ1+FHKN1AMG2AePJfNUceJbh5PKtP92yRQ==
+
 "@types/hoist-non-react-statics@^3.3.0":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
