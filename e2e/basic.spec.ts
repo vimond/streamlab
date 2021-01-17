@@ -8,7 +8,9 @@ const resizeWindow = async (t: TestController) => isWindows() && (await t.resize
 
 const streamUrl = 'https://vimond.github.io/replay/public/example-media/adaptive.m3u8';
 
-fixture`Basic playback`.page(process.env.TEST_PAGE || '').beforeEach(async (t) => await resizeWindow(t));
+fixture`Basic playback`
+  .page(process.env.TEST_PAGE || '0.0.0.0:3030/streamlab/')
+  .beforeEach(async (t) => await resizeWindow(t));
 
 test('Inputting stream URL.', async (t) => {
   const firstMessage = 'Auto detected stream type is Apple HLS. Press Play to load it into the player.';

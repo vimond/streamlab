@@ -46,7 +46,7 @@
     "prettier": "prettier --write \"./**/*.ts*\"",
     "test": "react-scripts test",
     "lint": "eslint . --ext ts --ext tsx --ext js --ext jsx",
-    "test:e2e:live": "TEST_PAGE=0.0.0.0:3030/streamlab/ testcafe chrome e2e/basic.spec.ts -L",
+    "test:e2e:live": "testcafe chrome e2e/basic.spec.ts -L",
     "build:e2e": "PUBLIC_URL=/ react-scripts build",
     "serve": "serve -s build",
     "test:e2e": "TEST_PAGE=0.0.0.0:5000/ node e2e/runner.js",
