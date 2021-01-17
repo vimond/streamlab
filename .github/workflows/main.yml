@@ -34,7 +34,7 @@ jobs:
           restore-keys: e2e-yarn-
       - run: yarn
   e2etests:
-    needs: [setup]
+    needs: [e2esetup]
     runs-on: windows-latest
     strategy:
       matrix:
