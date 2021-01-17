@@ -3,7 +3,7 @@ import { Selector } from 'testcafe';
 const tabs = Selector('*').withAttribute('role', 'tab');
 
 interface VideoElementSelector extends Selector {
-  currentTime: Promise<number>;
+  duration: Promise<number>;
 }
 
 export const page = {
@@ -30,7 +30,7 @@ export const page = {
     },
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     videoElement: <VideoElementSelector>Selector('video').addCustomDOMProperties({
-      currentTime: (video) => (video as HTMLVideoElement).currentTime,
+      duration: (video) => (video as HTMLVideoElement).duration,
     }),
   },
   info: {
