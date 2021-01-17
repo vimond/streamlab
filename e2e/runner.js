@@ -10,7 +10,7 @@ const spawn = (command) => {
 };
 
 const build = () => {
-  const result = child_process.execSync(`yarn build:e2e`);
+  const result = child_process.execSync(`yarn build:e2e`, { env: { ...process.env, PUBLIC_URL: '/' } });
   console.info('' + result);
 };
 
