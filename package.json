@@ -6,6 +6,7 @@
   "author": "Tor Erik Alræk",
   "license": "Apache-2.0",
   "description": "Advanced stream test tool",
+  "type": "module",
   "dependencies": {
     "@chakra-ui/icons": "^1.0.0",
     "@chakra-ui/react": "^1.0.0",
@@ -18,6 +19,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.4",
     "codemirror": "^5.55.0",
+    "cross-spawn": "^7.0.3",
     "framer-motion": "^2.9.4",
     "jsonlint-mod": "^1.7.5",
     "mux.js": "^5.7.0",
@@ -33,16 +35,22 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "rx-player": "^3.9.2",
+    "serve": "^11.3.2",
+    "testcafe": "^1.10.1",
     "typescript": "3.9.6",
     "vimond-replay": "^2.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "prettier": "prettier --write \"./**/*.ts*\"",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "prettier": "prettier --write \"src/**/*.ts*\"",
-    "lint": "eslint . --ext ts --ext tsx --ext js --ext jsx"
+    "lint": "eslint . --ext ts --ext tsx --ext js --ext jsx",
+    "test:e2e:live": "TEST_PAGE=0.0.0.0:3030/streamlab/ testcafe chrome e2e/basic.spec.ts -L",
+    "build:e2e": "react-scripts build",
+    "serve": "serve -s build",
+    "test:e2e": "node e2e/runner.js",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
