@@ -9,7 +9,7 @@ const resizeWindow = async (t: TestController) => isWindows() && (await t.resize
 const streamUrl = 'https://vimond.github.io/replay/public/example-media/adaptive.m3u8';
 
 fixture`Basic playback`
-  .page(process.env.TEST_PAGE || '0.0.0.0:3030/streamlab/')
+  .page(process.env.TEST_PAGE || '0.0.0.0:5000/')
   .beforeEach(async (t) => await resizeWindow(t));
 
 test('Inputting stream URL.', async (t) => {
