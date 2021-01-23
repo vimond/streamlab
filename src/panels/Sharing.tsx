@@ -71,6 +71,10 @@ const Sharing: React.FC = () => {
         >
           Copy to clipboard
         </Button>
+        <Text userSelect="none" mt={2}>
+          NOTE: URLs are often tracked/collected by sharing tools and search bots. Be cautious of using this share URL
+          if it contains form details (keys, resource URLs) not meant to be disclosed to other parties.
+        </Text>
       </Box>
     );
   } else {
