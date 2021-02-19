@@ -44,7 +44,7 @@ const Advanced: React.FC = () => {
   const expandedIndices = useSelector((state: AppState) => state.ui.expandedAdvancedAccordionIndices);
   const isPlaying = useSelector((state: AppState) => !!state.player.source);
   const isPlayable = useSelector((state: AppState) => !!state.streamDetails.streamResource.url);
-  const isPlayerOptionsModified = useSelector((state: AppState) => !!state.playerOptions.isModified);
+  const isPlayerOptionsModified = useSelector((state: AppState) => state.playerOptions.isModified);
 
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
@@ -64,7 +64,7 @@ const Advanced: React.FC = () => {
 
   const cancelRef = React.useRef<HTMLButtonElement>(null);
   return (
-    <Stack>
+    <Stack aria-label="Advanced forms">
       {/*
               // @ts-ignore Inconsistently defined change handler type. */}
       <Accordion defaultIndex={expandedIndices} allowMultiple onChange={handleAccordionChange}>

@@ -27,9 +27,7 @@ const HeaderBar: React.FC = () => {
         </Link>
       </Header>
       <FormControl flex="0" p={1} mt={1} display="flex" flexDirection="row" justifyContent="center" alignItems="center">
-        <Switch id="advanced-switch" isChecked={advancedMode} onChange={handleAdvancedModeChange}>
-          &nbsp;
-        </Switch>
+        <Switch id="advanced-switch" isChecked={advancedMode} onChange={handleAdvancedModeChange} />
         <FormLabel ml={2} mt={1} fontSize="sm" htmlFor="advanced-switch">
           Advanced
         </FormLabel>

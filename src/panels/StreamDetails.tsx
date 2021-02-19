@@ -52,7 +52,7 @@ const filterDrmTechLabels = (drmTechnologies: AutoTechnology<DrmTechnology>[]) =
 const StreamDetailRow: React.FC<RowProps> = ({
   id,
   url,
-  label,
+  label, // TODO: Need
   useProxy,
   headers,
   technology,
@@ -64,7 +64,7 @@ const StreamDetailRow: React.FC<RowProps> = ({
     <FormControl gridColumn={isHeadersEnabled ? 1 : '1/span 2'}>
       <Input
         onChange={(evt: React.ChangeEvent<HTMLInputElement>) => onChange({ url: evt.target.value })}
-        placeholder={label}
+        placeholder={label + ' URL'}
         type="url"
         value={url}
       />
@@ -75,7 +75,7 @@ const StreamDetailRow: React.FC<RowProps> = ({
       </Button>
     )}
     {techOptions.length > 1 ? (
-      <Menu>
+      <Menu aria-label={label + ' technology menu'}>
         <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
           {getLabel(technology, techOptions)}
         </MenuButton>
@@ -128,7 +128,7 @@ const StreamDetails: React.FC = () => {
   };
 
   return (
-    <form>
+    <form aria-label="Stream details form">
       <Box
         display="grid"
         gridTemplateColumns={isProxyVisible ? `1fr auto auto auto` : `1fr auto auto`}
@@ -143,7 +143,7 @@ const StreamDetails: React.FC = () => {
         {isProxyVisible && <Header level={Level.H6}>Proxy</Header>}
         <StreamDetailRow
           id="stream"
-          label="Stream URL"
+          label="Stream"
           techOptions={streamTechLabels}
           isHeadersEnabled={false}
           onChange={(streamResource: Partial<Resource<StreamTechnology>>) =>
@@ -152,7 +152,7 @@ const StreamDetails: React.FC = () => {
           {...streamResource}
         />
         <StreamDetailRow
-          label="DRM license URL"
+          label="DRM license"
           id="license"
           techOptions={filterDrmTechLabels(supportedDrmTechnologies)}
           isHeadersEnabled
@@ -164,7 +164,7 @@ const StreamDetails: React.FC = () => {
         {isDrmCertificateApplicable && (
           <StreamDetailRow
             id="certificate"
-            label="DRM certificate URL"
+            label="DRM certificate"
             techOptions={filterDrmTechLabels([drmLicenseResource.technology])}
             isHeadersEnabled={false}
             onChange={(drmCertificateResource: Partial<Resource<DrmTechnology>>) =>
@@ -175,7 +175,7 @@ const StreamDetails: React.FC = () => {
         )}
         <StreamDetailRow
           id="subtitles"
-          label="Subtitles URL"
+          label="Subtitles"
           techOptions={subtitlesFormatLabels}
           isHeadersEnabled={false}
           onChange={(subtitlesResource: Partial<Resource<SubtitlesFormat>>) =>

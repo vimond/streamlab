@@ -62,7 +62,7 @@ const Basic: React.FC = () => {
   };
 
   return (
-    <Box as="form" my={8} onSubmit={handleFormSubmit}>
+    <Box as="form" my={8} onSubmit={handleFormSubmit} aria-label="Basic form">
       <Header level={Level.H3} fontSize="md" textAlign="center">
         Test progressive, HLS, MPEG-DASH, or smooth streams:
       </Header>
@@ -76,7 +76,7 @@ const Basic: React.FC = () => {
         />
       </FormControl>
       <Flex justify="center" mx={4}>
-        <Menu>
+        <Menu aria-label="Stream technology menu">
           {/*
               // @ts-ignore */}
           <MenuButton as={Button} rightIcon={<ChevronDownIcon />} flex="0 0 none" ml={2}>

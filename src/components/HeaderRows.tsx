@@ -36,7 +36,7 @@ const renderRow = (
             onChange({ name, value: evt.target.value, id }, index)
           }
         />
-        <IconButton flex="0" aria-label="Remove" icon={<DeleteIcon />} onClick={() => onDelete(index)} mr={2} />
+        <IconButton flex="0" aria-label="Remove header" icon={<DeleteIcon />} onClick={() => onDelete(index)} mr={2} />
       </Flex>
     </Collapse>
   );

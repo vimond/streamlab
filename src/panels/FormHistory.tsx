@@ -205,7 +205,7 @@ const FormHistory: React.FC = () => {
         )}
       </Box>
       {selectedEntry && (
-        <Box mt={4} p={2} backgroundColor="gray.200" rounded="md">
+        <Box mt={4} p={2} backgroundColor="gray.200" rounded="md" aria-label="Form history entry">
           <Grid
             templateColumns={selectedEntry.error ? 'auto auto 1fr' : 'auto 1fr'}
             gap={4}
@@ -258,7 +258,10 @@ const FormHistory: React.FC = () => {
               isResourcePopulated(selectedEntry.formData.streamDetails.drmCertificateResource) && (
                 <StreamResourceFields
                   label="DRM certificate"
-                  resource={selectedEntry.formData.streamDetails.drmCertificateResource}
+                  resource={{
+                    ...selectedEntry.formData.streamDetails.drmCertificateResource,
+                    technology: BaseTech.AUTO,
+                  }}
                   techLabels={drmTechLabels}
                 />
               )}
