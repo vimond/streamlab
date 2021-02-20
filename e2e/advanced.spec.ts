@@ -145,7 +145,7 @@ test('Setting player options', async (t) => {
     .click(advanced.playerOptions.shakaPlayerButton)
     .click(advanced.playerOptions.warningLevelButton)
     .click(advanced.playerOptions.debugLevelButton) // TODO: Verify by deep inspection of player.
-    .click(advanced.playerOptions.playbackMonitorToggle)
+    .click(advanced.playerOptions.playbackMonitorSwitch, { offsetX: 20, offsetY: 20 })
     // TODO: Add custom configuration
     .click(advanced.playButton)
     .expect(player.videoElement.getAttribute('src'))
