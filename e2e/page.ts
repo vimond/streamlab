@@ -77,7 +77,7 @@ export const page = {
       shakaPlayerButton: playerOptionsForm.find('button').withText('Shaka Player'),
       warningLevelButton: playerOptionsForm.find('button').withText('WARNING'),
       debugLevelButton: playerOptionsForm.find('button').withText('DEBUG'),
-      playbackMonitorSwitch: playerOptionsForm.find('label').withText('Display playback monitor overlay at startup'),
+      playbackMonitorSwitch: Selector('#playback-monitor-switch'),
     },
     playButton: advancedForms.find('button').withExactText('Play'),
     stopButton: advancedForms.find('button').withText('Stop'),
