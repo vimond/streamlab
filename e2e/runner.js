@@ -1,6 +1,8 @@
 import * as child_process from 'child_process';
 import crossSpawn from 'cross-spawn';
 
+// https://medium.com/better-programming/cross-browser-testing-with-testcafe-on-github-actions-49ec58ac855cs
+
 const spawn = (command) => {
   const [c, ...args] = command.split(' ');
   const ps = crossSpawn(c, args);
@@ -10,7 +12,7 @@ const spawn = (command) => {
 };
 
 const build = () => {
-  const result = child_process.execSync(`yarn build:e2e`, { env: { ...process.env, PUBLIC_URL: '/' } });
+  const result = child_process.execSync(`yarn build`, { env: { ...process.env, PUBLIC_URL: '/' } });
   console.info('' + result);
 };
 

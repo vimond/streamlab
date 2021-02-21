@@ -58,7 +58,16 @@ const Sharing: React.FC = () => {
           {'playerOptions' in shareState ? 'stream details and player options' : 'stream specified'} to the left
           pre-filled and ready to be played, can be shared through the following link:
         </Text>
-        <Text backgroundColor="white" borderRadius="md" cursor="text" p={2} wordBreak="break-all">
+        <Text
+          backgroundColor="white"
+          borderRadius="md"
+          cursor="text"
+          p={2}
+          wordBreak="break-all"
+          aria-label="Copyable share URL"
+          aria-readonly
+          role="textbox"
+        >
           {link}
         </Text>
         <Button
@@ -71,6 +80,10 @@ const Sharing: React.FC = () => {
         >
           Copy to clipboard
         </Button>
+        <Text userSelect="none" mt={2}>
+          NOTE: URLs are often tracked/collected by sharing tools and search bots. Be cautious of using this share URL
+          if it contains form details (keys, resource URLs) not meant to be disclosed to other parties.
+        </Text>
       </Box>
     );
   } else {

@@ -39,9 +39,9 @@ const PlayerOptions: React.FC = () => {
   };
 
   return (
-    <form>
+    <form aria-label="Player options form">
       <Grid templateColumns="auto 1fr" gap={4} my={2} alignItems="center">
-        <Menu>
+        <Menu aria-label="Player library menu">
           <MenuButton as={Button} rightIcon={<ChevronDownIcon />} style={{ justifySelf: 'end' }}>
             {playerLibraries[playerLibrary]}
           </MenuButton>
@@ -62,11 +62,9 @@ const PlayerOptions: React.FC = () => {
           style={{ justifySelf: 'end' }}
           isChecked={showPlaybackMonitor}
           onChange={handlePlaybackMonitorToggle}
-        >
-          &nbsp;
-        </Switch>
+        />
         <FormLabel htmlFor="playback-monitor-switch">Display playback monitor overlay at startup</FormLabel>
-        <Menu>
+        <Menu aria-label="Log level menu">
           <MenuButton as={Button} rightIcon={<ChevronDownIcon />} style={{ justifySelf: 'end' }}>
             {getLogLevelLabel(logLevel)}
           </MenuButton>

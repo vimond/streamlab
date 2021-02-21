@@ -41,13 +41,13 @@ const Sidebar: React.FC = () => {
         <Tab>Sharing</Tab>
       </TabList>
       <TabPanels flex="1 1 auto" overflowY="auto" outline="none">
-        <TabPanel p={0}>
+        <TabPanel p={0} aria-label="Information panel">
           <Information />
         </TabPanel>
-        <TabPanel p={0}>
+        <TabPanel p={0} aria-label="Form history panel">
           <FormHistory />
         </TabPanel>
-        <TabPanel p={0}>
+        <TabPanel p={0} aria-label="Sharing panel">
           <Sharing />
         </TabPanel>
       </TabPanels>

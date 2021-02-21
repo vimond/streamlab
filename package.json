@@ -36,7 +36,7 @@
     "redux-thunk": "^2.3.0",
     "rx-player": "^3.9.2",
     "serve": "^11.3.2",
-    "testcafe": "^1.10.1",
+    "testcafe": "^1.11.0",
     "typescript": "3.9.6",
     "vimond-replay": "^2.0.1"
   },
@@ -46,8 +46,7 @@
     "prettier": "prettier --write \"./**/*.ts*\"",
     "test": "react-scripts test",
     "lint": "eslint . --ext ts --ext tsx --ext js --ext jsx",
-    "test:e2e:live": "TEST_PAGE=0.0.0.0:3030/streamlab/ testcafe chrome e2e/basic.spec.ts -L",
-    "build:e2e": "react-scripts build",
+    "test:e2e:live": "TEST_PAGE=0.0.0.0:3030/streamlab/ testcafe chrome e2e/*.spec.ts -L --hostname=localhost",
     "serve": "serve -s build",
     "test:e2e": "node e2e/runner.js",
     "eject": "react-scripts eject"
