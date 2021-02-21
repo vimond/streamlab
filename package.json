@@ -36,7 +36,7 @@
     "redux-thunk": "^2.3.0",
     "rx-player": "^3.9.2",
     "serve": "^11.3.2",
-    "testcafe": "^1.10.1",
+    "testcafe": "^1.11.0",
     "typescript": "3.9.6",
     "vimond-replay": "^2.0.1"
   },

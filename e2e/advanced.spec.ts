@@ -11,6 +11,8 @@ const encryptedStreamUrl = 'https://storage.googleapis.com/shaka-demo-assets/ang
 const widevineLicenseUrl = 'https://cwip-shaka-proxy.appspot.com/no_auth';
 const firstHeaderName = 'X-My-First-Header';
 const secondHeaderName = 'X-My-Second-Header';
+const firstHeaderValue = 'Number 1';
+const secondHeaderValue = 'Number 2';
 
 // TODO: Consider moving this to fixture with sidebar collapse/expand.
 test('Expanding/collapsing.', async (t) => {
@@ -74,8 +76,6 @@ test('Inputting advanced stream details.', async (t) => {
     .contains(reproduceShareUrlField('startOffset', 16));
 });
 
-const firstHeaderValue = 'Number 1';
-const secondHeaderValue = 'Number 2';
 test('DRM playback that fails.', async (t) => {
   await t
     .click(top.header.advancedSwitch, { offsetX: 20, offsetY: 20 })
@@ -106,8 +106,10 @@ test('DRM playback that fails.', async (t) => {
     .expect(info.hasMessageContaining('Auto detected stream type is MPEG DASH.'))
     .ok()
     // TODO: Deep inspection of Replay verifying the DRM details being passed on.
-    .expect(player.videoElement.duration)
-    .gt(10)
+    .expect(info.hasMessageContaining('Player error: Shaka Error DRM.LICENSE_REQUEST_FAILED'))
+    .ok()
+    // .expect(player.videoElement.duration)
+    // .gt(10)
     .click(advanced.stopButton)
     .click(top.tabs.history)
     .click(history.latestEntry)

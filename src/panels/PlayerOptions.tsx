@@ -62,9 +62,7 @@ const PlayerOptions: React.FC = () => {
           style={{ justifySelf: 'end' }}
           isChecked={showPlaybackMonitor}
           onChange={handlePlaybackMonitorToggle}
-        >
-          &nbsp;
-        </Switch>
+        />
         <FormLabel htmlFor="playback-monitor-switch">Display playback monitor overlay at startup</FormLabel>
         <Menu aria-label="Log level menu">
           <MenuButton as={Button} rightIcon={<ChevronDownIcon />} style={{ justifySelf: 'end' }}>
