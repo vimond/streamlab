@@ -36,7 +36,7 @@ export const page = {
   top: {
     header: {
       // Accessibility selector would have been based on going via <label for="...">
-      advancedSwitch: Selector('#advanced-switch'),
+      advancedSwitch: Selector('#advanced-switch').nextSibling(),
     },
     tabs: {
       info: tabs.withText('Info'),
@@ -77,7 +77,7 @@ export const page = {
       shakaPlayerButton: playerOptionsForm.find('button').withText('Shaka Player'),
       warningLevelButton: playerOptionsForm.find('button').withText('WARNING'),
       debugLevelButton: playerOptionsForm.find('button').withText('DEBUG'),
-      playbackMonitorSwitch: Selector('#playback-monitor-switch'),
+      playbackMonitorSwitch: Selector('#playback-monitor-switch').nextSibling(),
     },
     playButton: advancedForms.find('button').withExactText('Play'),
     stopButton: advancedForms.find('button').withText('Stop'),

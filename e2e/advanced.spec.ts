@@ -17,7 +17,7 @@ const secondHeaderValue = 'Number 2';
 // TODO: Consider moving this to fixture with sidebar collapse/expand.
 test('Expanding/collapsing.', async (t) => {
   await t
-    .click(top.header.advancedSwitch, { offsetX: 20, offsetY: 20 })
+    .click(top.header.advancedSwitch)
     .expect(advanced.streamDetails.streamUrlField.visible)
     .ok()
     .click(advanced.accordionButtons.streamDetails)
@@ -35,7 +35,7 @@ test('Expanding/collapsing.', async (t) => {
 
 test('Inputting advanced stream details.', async (t) => {
   await t
-    .click(top.header.advancedSwitch, { offsetX: 20, offsetY: 20 })
+    .click(top.header.advancedSwitch)
     .click(advanced.clearButton)
     .click(alert.clearFormsButton)
     .expect(advanced.playButton.hasAttribute('disabled'))
@@ -78,7 +78,7 @@ test('Inputting advanced stream details.', async (t) => {
 
 test('DRM playback that fails.', async (t) => {
   await t
-    .click(top.header.advancedSwitch, { offsetX: 20, offsetY: 20 })
+    .click(top.header.advancedSwitch)
     .click(advanced.clearButton)
     .click(alert.clearFormsButton)
     .expect(info.hasMessageContaining('Widevine'))
@@ -138,17 +138,23 @@ test('DRM playback that fails.', async (t) => {
 
 test('Setting player options', async (t) => {
   await t
-    .click(top.header.advancedSwitch, { offsetX: 20, offsetY: 20 })
+    .click(top.header.advancedSwitch)
     .click(advanced.accordionButtons.playerOptions)
     .click(advanced.clearButton)
     .click(alert.clearFormsButton)
     .typeText(advanced.streamDetails.streamUrlField, streamUrl, { paste: true })
+    .expect(advanced.accordionButtons.playerOptions.textContent)
+    .notContains('*')
     .click(advanced.playerOptions.playerLibraryButton)
     .click(advanced.playerOptions.shakaPlayerButton)
+    .expect(advanced.accordionButtons.playerOptions.textContent)
+    .contains('*')
     .click(advanced.playerOptions.warningLevelButton)
     .click(advanced.playerOptions.debugLevelButton) // TODO: Verify by deep inspection of player.
-    .click(advanced.playerOptions.playbackMonitorSwitch, { offsetX: 20, offsetY: 20 })
+    .click(advanced.playerOptions.playbackMonitorSwitch)
     // TODO: Add custom configuration
+    .expect(advanced.accordionButtons.playerOptions.textContent)
+    .contains('*')
     .click(advanced.playButton)
     .expect(player.videoElement.getAttribute('src'))
     .ok()
