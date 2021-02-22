@@ -7,7 +7,7 @@ fixture('Basic playback');
 const streamUrl = 'https://vimond.github.io/replay/public/example-media/adaptive.m3u8';
 
 test('Inputting stream URL.', async (t) => {
-  const firstMessage = 'Auto detected stream type is Apple HLS. Press Play to load it into the player.';
+  const firstMessage = 'Auto detected stream type is HLS. Press Play to load it into the player.';
   const secondMessage = /The player will use the HLS.js v(.*?) library for playing this stream./;
   const shareUrl =
     '?s={%22streamDetails%22:{%22streamResource%22:{%22url%22:%22https:%2F%2Fvimond.github.io%2Freplay%2Fpublic%2Fexample-media%2Fadaptive.m3u8%22,%22technology%22:0}}}';

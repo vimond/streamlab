@@ -12161,10 +12161,10 @@ sha.js@^2.4.0, sha.js@^2.4.8:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-shaka-player@^3.0.6:
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/shaka-player/-/shaka-player-3.0.6.tgz#38bc62d61eb73241ab517253912c9284d9955490"
-  integrity sha512-feW/4kTMEiFq2GdMXS1UcOIsNMSvGG/0+GZHcLcJ2+LQ8dFy4SiY4VmaaR/I1fLmHtvd8URvcWNUqWGLAAoH8g==
+shaka-player@^3.0.8:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/shaka-player/-/shaka-player-3.0.8.tgz#32e4c321b80012bca9db9a20b7ec63eefd7df512"
+  integrity sha512-4nROuGUhmtOTERWVO31pp/hvtdCy/kW/Ys6KQwqRhFeCsZsU1/8768dJUyXKqNnbYybKIvuv6LqO8egkXy6TjA==
   dependencies:
     eme-encryption-scheme-polyfill "^2.0.1"
 
@@ -13616,16 +13616,16 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-vimond-replay@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/vimond-replay/-/vimond-replay-2.0.1.tgz#8b9fdf5107a17b984614950f9b61104dfba8b9e3"
-  integrity sha512-Y5ESAcTyJ9AF16dTeYh4EC7QNAkoaQmDNgixOyfrRASpCqpi9Nfi65OFfXI0gxSLTALmreIlqI613sBelwezWg==
+vimond-replay@^2.0.2:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/vimond-replay/-/vimond-replay-2.0.3.tgz#bf5c3760d20791f17d08a34bc95929c7488136f6"
+  integrity sha512-595VUVmjnuHP7oNToy8M/zixpLvb7+0UFS/sxgiuIwTZw5daum5cXa/Tn9QDCAnuWbc9LB7pDciD9go3MbSWrQ==
   dependencies:
     hls.js "^0.14.17"
     memoize-one "^5.1.1"
     react-feather "^2.0.8"
     resize-observer-polyfill "^1.5.1"
-    shaka-player "^3.0.6"
+    shaka-player "^3.0.8"
 
 vm-browserify@^1.0.1:
   version "1.1.2"

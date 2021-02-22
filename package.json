@@ -38,7 +38,7 @@
     "serve": "^11.3.2",
     "testcafe": "^1.11.0",
     "typescript": "3.9.6",
-    "vimond-replay": "^2.0.1"
+    "vimond-replay": "^2.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
