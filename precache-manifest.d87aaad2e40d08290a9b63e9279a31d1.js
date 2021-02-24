@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "edc5e9f64652af425032c1e20cc457a6",
+    "revision": "721aeab4aba1fb5e463d7da7b239c65b",
     "url": "/streamlab/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/streamlab/static/css/2.a7d8ad9d.chunk.css"
   },
   {
-    "revision": "34403169024772f0bf9b",
+    "revision": "b0f285b35c80db3ddbc1",
     "url": "/streamlab/static/css/main.4969c61f.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/streamlab/static/js/2.1a7b27a6.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "34403169024772f0bf9b",
-    "url": "/streamlab/static/js/main.3280f30d.chunk.js"
+    "revision": "b0f285b35c80db3ddbc1",
+    "url": "/streamlab/static/js/main.73878e1e.chunk.js"
   },
   {
     "revision": "d87612ee514bc3545145",
