@@ -28,7 +28,7 @@ const renderMessage = ({ text, level, link }: Message, i: number) => (
 const Information: React.FC = () => {
   const messages = useSelector((state: AppState) => state.information.messages);
   return (
-    <Box height="100%" position="relative">
+    <Box display="flex" flex="1" position="relative">
       <List styleType="none">{messages.map(renderMessage)}</List>
       <Text position="absolute" bottom={3} left={1} right={1} align="center">
         An{' '}
