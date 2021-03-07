@@ -22,6 +22,7 @@ import { HistoryEntry, SimpleStreamResource } from '../store/model/history';
 import {
   deleteHistory,
   deleteHistoryEntry,
+  deleteUnnamedHistoryEntries,
   restoreHistoryEntry,
   selectHistoryEntry,
   updateSelectedHistoryEntryName,
@@ -149,17 +150,29 @@ const StreamResourceFields: React.FC<{
 );
 
 const FormHistory: React.FC = () => {
+  const dispatch = useDispatch();
   const history = useSelector((state: AppState) => state.history.history);
   const selectedEntry = useSelector((state: AppState) => state.history.selectedEntry);
 
-  const [isOpen, setIsOpen] = React.useState<boolean>(false);
-  const handleCloseClick = () => setIsOpen(false);
+  const [isFullClearOpen, setIsFullClearOpen] = React.useState<boolean>(false);
+  const [isClearUnnamedOpen, setIsClearUnnamedOpen] = React.useState<boolean>(false);
+
+  const handleCloseClick = () => {
+    setIsFullClearOpen(false);
+    setIsClearUnnamedOpen(false);
+  };
   const handleDeleteHistoryClick = () => {
     handleDeleteHistory();
     handleCloseClick();
   };
+  const handleDeleteUnnamedClick = () => {
+    handleDeleteUnnamed();
+    handleCloseClick();
+  };
+  const handleDeleteEntryClick = (entry: HistoryEntry) => dispatch(deleteHistoryEntry(entry));
+  const handleDeleteHistory = () => dispatch(deleteHistory());
+  const handleDeleteUnnamed = () => dispatch(deleteUnnamedHistoryEntries());
 
-  const dispatch = useDispatch();
   const handleEntryClick = (entry: HistoryEntry) => dispatch(selectHistoryEntry(entry));
   const handleEntryLabelChange = (evt: React.ChangeEvent<HTMLInputElement>) =>
     dispatch(updateSelectedHistoryEntryName(evt.target.value));
@@ -167,10 +180,9 @@ const FormHistory: React.FC = () => {
     updateAddressBar();
     return dispatch(restoreHistoryEntry(entry));
   };
-  const handleDeleteEntryClick = (entry: HistoryEntry) => dispatch(deleteHistoryEntry(entry));
-  const handleDeleteHistory = () => dispatch(deleteHistory());
 
-  const cancelRef = React.useRef<HTMLButtonElement>(null);
+  const cancelFullDeleteRef = React.useRef<HTMLButtonElement>(null);
+  const cancelUnnamedDeleteRef = React.useRef<HTMLButtonElement>(null);
   return (
     <Box mx={4}>
       <Box>
@@ -334,10 +346,42 @@ const FormHistory: React.FC = () => {
       )}
       {!!history.length && (
         <Flex justify="center" py={1}>
-          <Button m={2} colorScheme="red" variant="outline" onClick={() => setIsOpen(true)}>
+          <Button m={2} colorScheme="red" variant="outline" onClick={() => setIsClearUnnamedOpen(true)}>
+            Clear unnamed entries
+          </Button>
+          <Button m={2} colorScheme="red" variant="outline" onClick={() => setIsFullClearOpen(true)}>
             Clear history
           </Button>
-          <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={handleCloseClick}>
+          <AlertDialog
+            isOpen={isClearUnnamedOpen}
+            leastDestructiveRef={cancelUnnamedDeleteRef}
+            onClose={handleCloseClick}
+          >
+            <AlertDialogOverlay />
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                Clear unnamed entries
+              </AlertDialogHeader>
+              <AlertDialogBody>
+                <Text>
+                  Are you sure you want to clear all history entries you haven't given a name? You cannot undo this
+                  action afterwards.{' '}
+                </Text>
+                <Text mt={2}>
+                  If you want to keep some entries, give them a name before proceeding with this operation.
+                </Text>
+              </AlertDialogBody>
+              <AlertDialogFooter>
+                <Button ref={cancelUnnamedDeleteRef} onClick={handleCloseClick}>
+                  Cancel
+                </Button>
+                <Button colorScheme="red" onClick={handleDeleteUnnamedClick} ml={3}>
+                  Clear history entries with no name
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+          <AlertDialog isOpen={isFullClearOpen} leastDestructiveRef={cancelFullDeleteRef} onClose={handleCloseClick}>
             <AlertDialogOverlay />
             <AlertDialogContent>
               <AlertDialogHeader fontSize="lg" fontWeight="bold">
@@ -347,11 +391,11 @@ const FormHistory: React.FC = () => {
                 Are you sure you want to clear all history entries? You cannot undo this action afterwards.
               </AlertDialogBody>
               <AlertDialogFooter>
-                <Button ref={cancelRef} onClick={handleCloseClick}>
+                <Button ref={cancelFullDeleteRef} onClick={handleCloseClick}>
                   Cancel
                 </Button>
                 <Button colorScheme="red" onClick={handleDeleteHistoryClick} ml={3}>
-                  Clear history
+                  Clear history completely
                 </Button>
               </AlertDialogFooter>
             </AlertDialogContent>

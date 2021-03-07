@@ -5,6 +5,7 @@ export const RESTORE_HISTORY_ENTRY = 'RESTORE_HISTORY_ENTRY';
 export const UPDATE_HISTORY_ENTRY_NAME = 'UPDATE_HISTORY_ENTRY_NAME';
 export const DELETE_HISTORY_ENTRY = 'DELETE_HISTORY_ENTRY';
 export const DELETE_HISTORY = 'DELETE_HISTORY';
+export const DELETE_UNNAMED_HISTORY_ENTRIES = 'DELETE_UNNAMED_HISTORY_ENTRIES';
 export const SET_HISTORY_LIST_FILTER = 'SET_HISTORY_LIST_FILTER';
 
 export enum HistoryEntryFilter {
@@ -25,6 +26,10 @@ export interface UpdateSelectedHistoryEntryNameAction {
 
 export interface DeleteHistoryAction {
   type: typeof DELETE_HISTORY;
+}
+
+export interface DeleteUnnamedHistoryEntriesAction {
+  type: typeof DELETE_UNNAMED_HISTORY_ENTRIES;
 }
 
 export interface SetHistoryFilterAction {
@@ -59,4 +64,8 @@ export const deleteHistory = (): DeleteHistoryAction => ({
 export const setHistoryFilter = (value: HistoryEntryFilter): SetHistoryFilterAction => ({
   type: SET_HISTORY_LIST_FILTER,
   value,
+});
+
+export const deleteUnnamedHistoryEntries = (): DeleteUnnamedHistoryEntriesAction => ({
+  type: DELETE_UNNAMED_HISTORY_ENTRIES,
 });

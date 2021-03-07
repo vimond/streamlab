@@ -1,16 +1,18 @@
 import {
   DELETE_HISTORY,
   DELETE_HISTORY_ENTRY,
+  DELETE_UNNAMED_HISTORY_ENTRIES,
+  RESTORE_HISTORY_ENTRY,
+  SELECT_HISTORY_ENTRY,
+  SET_HISTORY_LIST_FILTER,
+  UPDATE_HISTORY_ENTRY_NAME,
   deleteHistory,
   deleteHistoryEntry,
+  deleteUnnamedHistoryEntries,
   HistoryEntryFilter,
-  RESTORE_HISTORY_ENTRY,
   restoreHistoryEntry,
-  SELECT_HISTORY_ENTRY,
   selectHistoryEntry,
-  SET_HISTORY_LIST_FILTER,
   setHistoryFilter,
-  UPDATE_HISTORY_ENTRY_NAME,
   updateSelectedHistoryEntryName,
 } from '../../../store/actions/history';
 import { HistoryEntry } from '../../../store/model/history';
@@ -64,6 +66,11 @@ describe('History actions', () => {
   test('Delete history', () => {
     expect(deleteHistory()).toEqual({
       type: DELETE_HISTORY,
+    });
+  });
+  test('Delete unnamed history entries', () => {
+    expect(deleteUnnamedHistoryEntries()).toEqual({
+      type: DELETE_UNNAMED_HISTORY_ENTRIES,
     });
   });
   test('Set history filter', () => {

@@ -1,9 +1,10 @@
 import historyReducer from '../../../store/reducers/history';
 import { HistoryEntry } from '../../../store/model/history';
 import {
+  HistoryEntryFilter,
   DELETE_HISTORY,
   DELETE_HISTORY_ENTRY,
-  HistoryEntryFilter,
+  DELETE_UNNAMED_HISTORY_ENTRIES,
   SELECT_HISTORY_ENTRY,
   SET_HISTORY_LIST_FILTER,
   UPDATE_HISTORY_ENTRY_NAME,
@@ -164,6 +165,22 @@ describe('Form history reducer', () => {
       history: [],
       historyListFilter: HistoryEntryFilter.UNNAMED,
       selectedEntry: undefined,
+    });
+  });
+  test('The DELETE_UNNAMED_HISTORY_ENTRIES action removes all entries from the history list having no names.', () => {
+    const unnamedHistoryEntry = { ...historyEntry2, name: '' };
+    const newState = historyReducer(
+      {
+        history: [historyEntry1, unnamedHistoryEntry, historyEntry3],
+        selectedEntry: unnamedHistoryEntry,
+        historyListFilter: HistoryEntryFilter.BOTH,
+      },
+      { type: DELETE_UNNAMED_HISTORY_ENTRIES }
+    );
+    expect(newState).toEqual({
+      history: [historyEntry1, historyEntry3],
+      selectedEntry: undefined,
+      historyListFilter: HistoryEntryFilter.BOTH,
     });
   });
   test('The SET_HISTORY_LIST_FILTER changes the current filter for the history list.', () => {

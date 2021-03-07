@@ -2,7 +2,9 @@ import { addOrUpdateEntry, HistoryEntry, isDeepEqual } from '../model/history';
 import {
   DELETE_HISTORY,
   DELETE_HISTORY_ENTRY,
+  DELETE_UNNAMED_HISTORY_ENTRIES,
   DeleteHistoryAction,
+  DeleteUnnamedHistoryEntriesAction,
   HistoryEntryAction,
   HistoryEntryFilter,
   SELECT_HISTORY_ENTRY,
@@ -28,6 +30,7 @@ const history = (
     | HistoryEntryAction
     | UpdateSelectedHistoryEntryNameAction
     | DeleteHistoryAction
+    | DeleteUnnamedHistoryEntriesAction
     | SetHistoryFilterAction
     | PlayerAction
     | PlayerErrorAction
@@ -82,6 +85,12 @@ const history = (
       return {
         history: [],
         historyListFilter: state.historyListFilter,
+      };
+    case DELETE_UNNAMED_HISTORY_ENTRIES:
+      return {
+        ...state,
+        selectedEntry: state.selectedEntry && state.selectedEntry.name ? state.selectedEntry : undefined,
+        history: state.history.filter((entry) => entry.name),
       };
     case SET_HISTORY_LIST_FILTER:
       return {

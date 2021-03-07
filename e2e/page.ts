@@ -107,6 +107,7 @@ export const page = {
     entries: historyList,
     latestEntry: historyList.nth(0),
     selectedEntry: {
+      nameField: selectedHistoryEntry.find('input[placeholder="Enter a name for this entry"]'),
       streamUrl: selectedHistoryEntry.find('label').withText('Stream URL').nextSibling('input'),
       drmLicenseUrl: selectedHistoryEntry.find('label').withText('DRM license URL').nextSibling('input'),
       subtitlesUrl: selectedHistoryEntry.find('label').withText('Subtitles URL').nextSibling('input'),
@@ -128,6 +129,22 @@ export const page = {
         .nextSibling('label')
         .find('input'),
       playerLogLevel: selectedHistoryEntry.find('label').withText('Player log level').nextSibling('input'),
+      restoreButton: selectedHistoryEntry.find('button').withText('Restore into forms'),
+      deleteButton: selectedHistoryEntry.find('button').withText('Delete from history'),
+    },
+    clearUnnamedButton: Selector('button').withText('Clear unnamed entries'),
+    clearHistoryButton: Selector('button').withText('Clear history'),
+    deleteUnnamedAlert: {
+      clearUnnamedButton: Selector('section')
+        .withAttribute('role', 'alertdialog')
+        .find('button')
+        .withText('Clear history entries with no name'),
+    },
+    deleteHistoryAlert: {
+      clearHistoryButton: Selector('section')
+        .withAttribute('role', 'alertdialog')
+        .find('button')
+        .withText('Clear history completely'),
     },
   },
   sharing: {

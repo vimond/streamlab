@@ -44,7 +44,7 @@ const Sidebar: React.FC = () => {
         <TabPanel p={0} aria-label="Information panel" display="flex" flex="1">
           <Information />
         </TabPanel>
-        <TabPanel p={0} aria-label="Form history panel">
+        <TabPanel p={0} aria-label="Form history panel" width="100%">
           <FormHistory />
         </TabPanel>
         <TabPanel p={0} aria-label="Sharing panel">
