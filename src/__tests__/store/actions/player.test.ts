@@ -52,7 +52,10 @@ const advancedFormState = {
     streamResource: {
       url: 'https://example.com/stream.m3u8',
       technology: BaseTech.AUTO,
-      headers: [{ name: 'X-Header', value: '123' }],
+      headers: [
+        { name: 'X-Header', value: '123' },
+        { name: 'Authorization', value: 'Bearer token' },
+      ],
       useProxy: true,
     },
     drmLicenseResource: {
@@ -195,6 +198,10 @@ describe('Player Redux actions', () => {
             },
           },
           playerLibraryOverride: 'HLS_JS',
+          additionalRequestData: {
+            headers: advancedFormState.streamDetails.streamResource.headers,
+            withCredentials: true,
+          },
           historyEntry: {
             timestamp: isoTimestamp,
             name: '',

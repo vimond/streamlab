@@ -60,7 +60,7 @@ export const page = {
       streamTechnologyButton: streamDetailsForm.find('button').withText('Auto').nth(0), // TODO: Menu label
       hlsButton: streamDetailsForm.find('button').withText('HLS'),
       drmLicenseUrlField: streamDetailsForm.find('input[placeholder="DRM license URL"]'),
-      addLicenseHeader: streamDetailsForm.find('button').withText('Add header'),
+      addLicenseHeader: streamDetailsForm.find('button').withText('Add header').nth(1),
       drmLicenseTechnologyButton: streamDetailsForm.find('button').withText('Widevine').nth(0), // TODO: Menu label
       headerName: streamDetailsForm.find('input[placeholder="Header name"]'),
       headerValue: streamDetailsForm.find('input[placeholder="Header value"]'),

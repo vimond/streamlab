@@ -131,6 +131,8 @@ const isIncompatibleStream = (state: BaseAppState) => {
   return false;
 };
 
+const hasHeaders = ({ headers }: Resource<unknown>) => Array.isArray(headers) && headers.some((h) => h.name);
+
 export const messages: MessageRule[] = [
   {
     id: 'welcome-1',
@@ -251,6 +253,19 @@ export const messages: MessageRule[] = [
       level: MessageLevel.WARNING,
       text:
         'Note that the integration with the RxPlayer library is not complete, and lacks support for subtitles and controls for bitrate + multiple audio tracks.',
+    },
+  },
+  {
+    id: 'limited-header-support',
+    displayCondition: ({ nextState }) =>
+      (!('error' in nextState.player) || !nextState.player.error) &&
+      hasHeaders(nextState.streamDetails.streamResource) &&
+      getLibrary(nextState) !== 'SHAKA_PLAYER' &&
+      getLibrary(nextState) !== 'HLS_JS',
+    message: {
+      level: MessageLevel.WARNING,
+      text:
+        'Including custom headers in stream requests (manifests, segments) is not supported for this player technology.',
     },
   },
   {

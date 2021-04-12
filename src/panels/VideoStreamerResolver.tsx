@@ -12,6 +12,18 @@ import muxjs from 'mux.js';
 export const isSafari = (userAgent: string) =>
   userAgent.indexOf('Safari') > 0 && userAgent.indexOf('Chrome') < 0 && userAgent.indexOf('Firefox') < 0;
 
+export const extractShakaRequestFilter = (props: any) => {
+  const shakaRequestFilter =
+    props.configuration && props.configuration.shakaPlayer && props.configuration.shakaPlayer.shakaRequestFilter;
+  if (shakaRequestFilter) {
+    return {
+      ...props,
+      shakaRequestFilter,
+    };
+  }
+  return props;
+};
+
 const getMatchingVideoStreamer = (
   source: PlaybackSource | undefined,
   userAgent: string,
@@ -24,7 +36,7 @@ const getMatchingVideoStreamer = (
     case 'SHAKA_PLAYER':
       // @ts-ignore
       window.muxjs = muxjs;
-      return <ShakaDebugVideoStreamer {...props} />;
+      return <ShakaDebugVideoStreamer {...extractShakaRequestFilter(props)} />;
     case 'HLS_JS':
       return <HlsjsVideoStreamer {...props} />;
     case 'RX_PLAYER':
@@ -33,7 +45,7 @@ const getMatchingVideoStreamer = (
       const contentType = source && typeof source !== 'string' && 'contentType' in source ? source.contentType : '';
       switch (contentType) {
         case contentTypes[StreamTechnology.DASH]:
-          return <ShakaDebugVideoStreamer {...props} />;
+          return <ShakaDebugVideoStreamer {...props} {...extractShakaRequestFilter(props)} />;
         case contentTypes[StreamTechnology.MSS]:
           return <RxVideoStreamer {...props} />;
         case contentTypes[StreamTechnology.HLS]:

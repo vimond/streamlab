@@ -36,9 +36,11 @@ export enum SubtitlesFormat {
 
 export type AutoTechnology<T> = BaseTech | T;
 
+export type Header = { id: number; name: string; value: string };
+
 export interface Resource<T> {
   url: string;
-  headers: { id: number; name: string; value: string }[];
+  headers: Header[];
   useProxy: boolean;
   technology: AutoTechnology<T>;
 }
@@ -49,6 +51,11 @@ type StreamDetails = {
   drmCertificateResource?: Resource<DrmTechnology>;
   subtitlesResource?: Resource<SubtitlesFormat>;
   startOffset?: number | '';
+};
+
+export type AdditionalRequestData = {
+  withCredentials?: boolean;
+  headers: Header[];
 };
 
 export type LabeledTechOption = {
@@ -291,6 +298,19 @@ export const createPlayerSource = ({
 export const getLogLevelLabel = (logLevel: PlayerLogLevel) => {
   const found = Object.entries(PlayerLogLevel).find(([key, value]) => logLevel === value);
   return found && found[0];
+};
+
+export const extractAdditionalRequestData = ({ streamResource }: StreamDetails): AdditionalRequestData | undefined => {
+  if (streamResource.headers && streamResource.headers.length) {
+    const additionalRequestData: AdditionalRequestData = {
+      headers: streamResource.headers,
+    };
+
+    if (streamResource.headers.some((h) => h.name && h.name.toLowerCase() === 'authorization')) {
+      additionalRequestData.withCredentials = true;
+    }
+    return additionalRequestData;
+  }
 };
 
 export const createPlayerOptions = ({ logLevel, showPlaybackMonitor, customConfiguration }: PlayerOptions) => {

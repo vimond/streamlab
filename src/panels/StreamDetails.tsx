@@ -52,7 +52,7 @@ const filterDrmTechLabels = (drmTechnologies: AutoTechnology<DrmTechnology>[]) =
 const StreamDetailRow: React.FC<RowProps> = ({
   id,
   url,
-  label, // TODO: Need
+  label,
   useProxy,
   headers,
   technology,
@@ -70,7 +70,10 @@ const StreamDetailRow: React.FC<RowProps> = ({
       />
     </FormControl>
     {isHeadersEnabled && (
-      <Button onClick={() => onChange({ headers: headers.concat({ name: '', value: '', id: Date.now() }) })}>
+      <Button
+        title={`Add headers to be included in ${label.toLowerCase()} requests`}
+        onClick={() => onChange({ headers: headers.concat({ name: '', value: '', id: Date.now() }) })}
+      >
         Add header
       </Button>
     )}
@@ -145,7 +148,7 @@ const StreamDetails: React.FC = () => {
           id="stream"
           label="Stream"
           techOptions={streamTechLabels}
-          isHeadersEnabled={false}
+          isHeadersEnabled={true}
           onChange={(streamResource: Partial<Resource<StreamTechnology>>) =>
             handleResourceFieldChange({ streamResource })
           }

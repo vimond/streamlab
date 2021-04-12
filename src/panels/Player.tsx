@@ -8,6 +8,7 @@ import { AppState } from '../store/reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import { handlePlayerError, stop } from '../store/actions/player';
 import VideoStreamerResolver from './VideoStreamerResolver';
+import { applyRequestInterceptors } from '../store/model/request-interceptors';
 
 const stickyPlayerControls = {
   interactionDetector: {
@@ -58,16 +59,20 @@ const onPlaybackActionsReady = (actions: PlaybackActions) => {
 };
 
 const Player: React.FC = () => {
-  const { source, options, playerLibraryOverride } = useSelector((state: AppState) => ({ ...state.player }));
+  const { source, options, playerLibraryOverride, additionalRequestData } = useSelector((state: AppState) => ({
+    ...state.player,
+  }));
   const dispatch = useDispatch();
   const onExit = () => dispatch(stop);
   const onError = (err: any) => dispatch(handlePlayerError(err));
+
+  const mergedOptions = applyRequestInterceptors(options, additionalRequestData);
 
   return (
     <Box my={1} p={4} position="relative">
       <Replay
         source={source}
-        options={source ? options : { ...options, ...stickyPlayerControls }}
+        options={source ? mergedOptions : { ...mergedOptions, ...stickyPlayerControls }}
         onError={onError}
         onExit={source ? onExit : undefined}
         onStreamStateChange={onStreamStateChange}

@@ -14,15 +14,20 @@ const options = {
   },
 };
 
+const additionalRequestData = {
+  headers: [{ id: 33, name: 'X-My-Header', value: 'My value' }],
+};
+
 describe('Player reducer', () => {
   test('The PLAY action applies the source and any player options to the state.', () => {
     const newState = playerReducer(
-      { source: { streamUrl: 'something' } },
+      { source: { streamUrl: 'something' }, additionalRequestData: { headers: [], withCredentials: true } },
       {
         type: PLAY,
         value: {
           source,
           options,
+          additionalRequestData,
           playerLibraryOverride: 'RX_PLAYER',
           historyEntry: {
             timestamp: '2020-01-12T19:11:02.837Z',
@@ -49,6 +54,7 @@ describe('Player reducer', () => {
           playsInline: true,
         },
       },
+      additionalRequestData,
       playerLibraryOverride: 'RX_PLAYER',
     });
   });
@@ -64,6 +70,7 @@ describe('Player reducer', () => {
             inactivityDelay: -1,
           },
         },
+        additionalRequestData: undefined,
       });
       const veryVeryBadError = new Error('Playback very very bad.');
       const newState2 = playerReducer({ source, options }, { type: PLAYER_ERROR, error: veryVeryBadError });
@@ -75,6 +82,7 @@ describe('Player reducer', () => {
           },
         },
         error: veryVeryBadError,
+        additionalRequestData: undefined,
       });
     }
   );
