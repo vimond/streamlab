@@ -5828,9 +5828,9 @@ elliptic@^6.0.0, elliptic@^6.5.2:
     minimalistic-crypto-utils "^1.0.0"
 
 eme-encryption-scheme-polyfill@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/eme-encryption-scheme-polyfill/-/eme-encryption-scheme-polyfill-2.0.1.tgz#b080b01bffd74c75c9cf8044c1cabedf3b83954f"
-  integrity sha512-Wz+Ro1c0/2Wsx2RLFvTOO0m4LvYn+7cSnq3XOvRvLLBq8jbvUACH/zpU9s0/5+mQa5oaelkU69x+q0z/iWYrFA==
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/eme-encryption-scheme-polyfill/-/eme-encryption-scheme-polyfill-2.0.2.tgz#6d3edb6d95951883a499f2d6dafbd84a5574f8c3"
+  integrity sha512-tZXuxVUCV1GmlQBGGVVNAt6lXBUxjDFqIAPAhz4F5Z/TvCi/coojxcZGEO5k+KMt/dWRFmXaK5pxKCMehue/oA==
 
 emittery@^0.4.1:
   version "0.4.1"
@@ -6241,7 +6241,7 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
-eventemitter3@^4.0.0, eventemitter3@^4.0.3:
+eventemitter3@^4.0.0:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.4.tgz#b5463ace635a083d018bdc7c917b4c5f10a85384"
   integrity sha512-rlaVLnVxtxvoyLsQQFBx53YmXHDxRIzzTLbdfxqi4yocpSjAxXwkU0cScM5JgSKMqEhrZpnvQ2D9gjylR0AimQ==
@@ -7214,13 +7214,10 @@ highlight-es@^1.0.0:
     is-es2016-keyword "^1.0.0"
     js-tokens "^3.0.0"
 
-hls.js@^0.14.17:
-  version "0.14.17"
-  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-0.14.17.tgz#0127cff2ec2f994a54eb955fe669ef6153a8e317"
-  integrity sha512-25A7+m6qqp6UVkuzUQ//VVh2EEOPYlOBg32ypr34bcPO7liBMOkKFvbjbCBfiPAOTA/7BSx1Dujft3Th57WyFg==
-  dependencies:
-    eventemitter3 "^4.0.3"
-    url-toolkit "^2.1.6"
+hls.js@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.0.1.tgz#d92bd0a9c78760f0f0e90d53c60192800ebc629f"
+  integrity sha512-ElPUW9VMY2uXdX07N872BSrVUcVd4jZGav4nqlY3vinpdMpW8esmdpUaeVA5vv3oIRSmiC/XtL9K+mSt6rlBpA==
 
 hmac-drbg@^1.0.0:
   version "1.0.1"
@@ -11235,9 +11232,9 @@ react-fast-compare@3.2.0:
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
 
 react-feather@^2.0.8:
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/react-feather/-/react-feather-2.0.8.tgz#455baf1470f756a57e2ad6c72545444ce5925781"
-  integrity sha512-J0dCEOvOxpovHeOVj3+8mAhN3/UERTfX6rSxnV6x4E+0s+STY536jhSjRfpSvTQA0SSFjYr4KrpPfdsLmK+zZg==
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/react-feather/-/react-feather-2.0.9.tgz#6e42072130d2fa9a09d4476b0e61b0ed17814480"
+  integrity sha512-yMfCGRkZdXwIs23Zw/zIWCJO3m3tlaUvtHiXlW+3FH7cIT6fiK1iJ7RJWugXq7Fso8ZaQyUm92/GOOHXvkiVUw==
   dependencies:
     prop-types "^15.7.2"
 
@@ -11882,19 +11879,19 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rx-player@^3.23.1:
-  version "3.23.1"
-  resolved "https://registry.yarnpkg.com/rx-player/-/rx-player-3.23.1.tgz#3c948d0dabd8f87385d4c1bbcad724baa0099fb9"
-  integrity sha512-t860jfgmWHB9pt3EYXyoqZw4Fupext802bBDCXd+vVRen0P5L70cruhpp23Fm25Z+Jka/bLmcoVoHwVePg4Xww==
+rx-player@^3.24.0:
+  version "3.24.0"
+  resolved "https://registry.yarnpkg.com/rx-player/-/rx-player-3.24.0.tgz#371e998838ea2c7c9a314965499df5309215d7b7"
+  integrity sha512-SqUY7LYeymLY0GdlYZpB+xdspSvwUJKFPUmxWqjSQchJMYW4VMXaLYkwWPhR7t4ot741bpxJB+olU7Tz+OBRoA==
   dependencies:
     next-tick "1.1.0"
     pinkie "2.0.4"
-    rxjs "6.6.3"
+    rxjs "6.6.7"
 
-rxjs@6.6.3:
-  version "6.6.3"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.3.tgz#8ca84635c4daa900c0d3967a6ee7ac60271ee552"
-  integrity sha512-trsQc+xYYXZ3urjOiJOuCOa5N3jAZ3eiSpQB5hIT8zGlL2QfnHLJ2r7GMkBGuIausdJN1OneaI6gQlsqNHHmZQ==
+rxjs@6.6.7:
+  version "6.6.7"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.7.tgz#90ac018acabf491bf65044235d5863c4dab804c9"
+  integrity sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==
   dependencies:
     tslib "^1.9.0"
 
@@ -12161,10 +12158,10 @@ sha.js@^2.4.0, sha.js@^2.4.8:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-shaka-player@^3.0.8:
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/shaka-player/-/shaka-player-3.0.8.tgz#32e4c321b80012bca9db9a20b7ec63eefd7df512"
-  integrity sha512-4nROuGUhmtOTERWVO31pp/hvtdCy/kW/Ys6KQwqRhFeCsZsU1/8768dJUyXKqNnbYybKIvuv6LqO8egkXy6TjA==
+shaka-player@^3.0.10:
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/shaka-player/-/shaka-player-3.0.10.tgz#f5cca848df54694f1aa77097f990881da11dbf68"
+  integrity sha512-kr1OFbihAmsmtsb/QhyDfxkt05wPAdreiW8vF86RN95zxpp+J/thEcTjRrH0E9dkBwPwS4HVv+mm096uqtEMvA==
   dependencies:
     eme-encryption-scheme-polyfill "^2.0.1"
 
@@ -13496,11 +13493,6 @@ url-parse@^1.4.3:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-url-toolkit@^2.1.6:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/url-toolkit/-/url-toolkit-2.2.0.tgz#9a57b89f315d4b7dc340e150bcfa548ddf5f5ce9"
-  integrity sha512-Rde0c9S4fJK3FaHim3DSgdQ8IFrSXcZCpAJo9T7/FA+BoQGhK0ow3mpwGQLJCPYsNn6TstpW7/7DzMpSpz9F9w==
-
 url@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/url/-/url-0.11.0.tgz#3838e97cfc60521eb73c525a8e55bfdd9e2e28f1"
@@ -13616,16 +13608,16 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-vimond-replay@^2.0.2:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/vimond-replay/-/vimond-replay-2.0.3.tgz#bf5c3760d20791f17d08a34bc95929c7488136f6"
-  integrity sha512-595VUVmjnuHP7oNToy8M/zixpLvb7+0UFS/sxgiuIwTZw5daum5cXa/Tn9QDCAnuWbc9LB7pDciD9go3MbSWrQ==
+vimond-replay@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/vimond-replay/-/vimond-replay-3.0.0.tgz#72a37a676ad0f0401ebf4e02e212a7d0b3821e51"
+  integrity sha512-PIkJEqnm4ngHh+8Xfe/3FsDiwGB77rmTwoxdr2kPMMis9qljTMfEFlexlazGErTPYF/vwV5AInOOxbEP5cUwIw==
   dependencies:
-    hls.js "^0.14.17"
+    hls.js "^1.0.1"
     memoize-one "^5.1.1"
     react-feather "^2.0.8"
     resize-observer-polyfill "^1.5.1"
-    shaka-player "^3.0.8"
+    shaka-player "^3.0.10"
 
 vm-browserify@^1.0.1:
   version "1.1.2"
