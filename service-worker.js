@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/streamlab/precache-manifest.ecc9ee620973da16f457ec8efd1c6b14.js"
+  "/streamlab/precache-manifest.db33aafce5a132d309f311aae5347872.js"
 );
 
 self.addEventListener('message', (event) => {
