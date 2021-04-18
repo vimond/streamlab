@@ -57,6 +57,7 @@ export const page = {
     },
     streamDetails: {
       streamUrlField: streamDetailsForm.find('input[placeholder="Stream URL"]'),
+      addStreamHeader: streamDetailsForm.find('button').withText('Add header').nth(0),
       streamTechnologyButton: streamDetailsForm.find('button').withText('Auto').nth(0), // TODO: Menu label
       hlsButton: streamDetailsForm.find('button').withText('HLS'),
       drmLicenseUrlField: streamDetailsForm.find('input[placeholder="DRM license URL"]'),
@@ -109,6 +110,7 @@ export const page = {
     selectedEntry: {
       nameField: selectedHistoryEntry.find('input[placeholder="Enter a name for this entry"]'),
       streamUrl: selectedHistoryEntry.find('label').withText('Stream URL').nextSibling('input'),
+      streamHeaders: selectedHistoryEntry.find('label').withText('Stream headers').nextSibling('div').find('input'),
       drmLicenseUrl: selectedHistoryEntry.find('label').withText('DRM license URL').nextSibling('input'),
       subtitlesUrl: selectedHistoryEntry.find('label').withText('Subtitles URL').nextSibling('input'),
       drmLicenseHeaders: selectedHistoryEntry

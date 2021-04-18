@@ -5,10 +5,7 @@ export const getShakaRequestInterceptorConfig = (
   additionalRequestData?: AdditionalRequestData
 ): any => {
   const shakaRequestFilter = (type: shaka.net.NetworkingEngine.RequestType, request: shaka.extern.Request) => {
-    if (
-      type === shaka.net.NetworkingEngine.RequestType.MANIFEST ||
-      type === shaka.net.NetworkingEngine.RequestType.SEGMENT
-    ) {
+    if (type === 1 || type === 0) { // shaka.net.NetworkingEngine.RequestType.MANIFEST || .SEGMENT
       if (withCredentials || (additionalRequestData && additionalRequestData.withCredentials)) {
         request.allowCrossSiteCredentials = true;
       }

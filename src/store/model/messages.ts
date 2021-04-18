@@ -256,6 +256,17 @@ export const messages: MessageRule[] = [
     },
   },
   {
+    id: 'stream-headers',
+    displayCondition: ({ nextState }) =>
+      (!('error' in nextState.player) || !nextState.player.error) &&
+      hasHeaders(nextState.streamDetails.streamResource) &&
+      (getLibrary(nextState) === 'SHAKA_PLAYER' || getLibrary(nextState) === 'HLS_JS'),
+    message: {
+      level: MessageLevel.INFO,
+      text: 'The specified headers will be included in manifest/playlist and segment requests.',
+    },
+  },
+  {
     id: 'limited-header-support',
     displayCondition: ({ nextState }) =>
       (!('error' in nextState.player) || !nextState.player.error) &&
@@ -360,20 +371,6 @@ export const messages: MessageRule[] = [
       level: MessageLevel.WARNING,
       text:
         'When playing a stream with FairPlay DRM encryption, a certificate URL for the content provider needs to be specified.',
-    },
-  },
-  {
-    id: 'drm-widevine-certificate',
-    displayCondition: ({ nextState }) =>
-      nextState.ui.advancedMode &&
-      !!nextState.streamDetails.drmLicenseResource.url &&
-      !nextState.streamDetails.drmCertificateResource.url &&
-      nextState.streamDetails.drmLicenseResource.technology === DrmTechnology.WIDEVINE,
-    message: {
-      level: MessageLevel.INFO,
-      text:
-        "When no DRM certificate URL is specified, the Widevine service's certificate will be fetched from the same URL as the DRM license. This will appear " +
-        'in DevTools as two similar requests to the license URL, however the payloads are different.',
     },
   },
   {

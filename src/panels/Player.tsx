@@ -66,7 +66,7 @@ const Player: React.FC = () => {
   const onExit = () => dispatch(stop);
   const onError = (err: any) => dispatch(handlePlayerError(err));
 
-  const mergedOptions = applyRequestInterceptors(options, additionalRequestData);
+  const mergedOptions = applyRequestInterceptors(source, options, additionalRequestData);
 
   return (
     <Box my={1} p={4} position="relative">
