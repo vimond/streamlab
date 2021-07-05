@@ -21,7 +21,11 @@ const additionalRequestData = {
 describe('Player reducer', () => {
   test('The PLAY action applies the source and any player options to the state.', () => {
     const newState = playerReducer(
-      { source: { streamUrl: 'something' }, additionalRequestData: { headers: [], withCredentials: true } },
+      {
+        source: { streamUrl: 'something' },
+        visibleLogo: false,
+        additionalRequestData: { headers: [], withCredentials: true },
+      },
       {
         type: PLAY,
         value: {
@@ -54,6 +58,7 @@ describe('Player reducer', () => {
           playsInline: true,
         },
       },
+      visibleLogo: false,
       additionalRequestData,
       playerLibraryOverride: 'RX_PLAYER',
     });
@@ -62,7 +67,7 @@ describe('Player reducer', () => {
     'The STOP or PLAYER_ERROR action types removes any current player source, and also makes the player ' +
       'controls constantly visible.',
     () => {
-      const newState1 = playerReducer({ source, options }, { type: STOP });
+      const newState1 = playerReducer({ source, options, visibleLogo: false }, { type: STOP });
       expect(newState1).toEqual({
         source: undefined,
         options: {
@@ -70,10 +75,14 @@ describe('Player reducer', () => {
             inactivityDelay: -1,
           },
         },
+        visibleLogo: true,
         additionalRequestData: undefined,
       });
       const veryVeryBadError = new Error('Playback very very bad.');
-      const newState2 = playerReducer({ source, options }, { type: PLAYER_ERROR, error: veryVeryBadError });
+      const newState2 = playerReducer(
+        { source, options, visibleLogo: false },
+        { type: PLAYER_ERROR, error: veryVeryBadError }
+      );
       expect(newState2).toEqual({
         source: undefined,
         options: {
@@ -82,6 +91,7 @@ describe('Player reducer', () => {
           },
         },
         error: veryVeryBadError,
+        visibleLogo: false,
         additionalRequestData: undefined,
       });
     }

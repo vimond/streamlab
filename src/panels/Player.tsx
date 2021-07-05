@@ -59,9 +59,11 @@ const onPlaybackActionsReady = (actions: PlaybackActions) => {
 };
 
 const Player: React.FC = () => {
-  const { source, options, playerLibraryOverride, additionalRequestData } = useSelector((state: AppState) => ({
-    ...state.player,
-  }));
+  const { source, options, playerLibraryOverride, additionalRequestData, visibleLogo } = useSelector(
+    (state: AppState) => ({
+      ...state.player,
+    })
+  );
   const dispatch = useDispatch();
   const onExit = () => dispatch(stop);
   const onError = (err: any) => dispatch(handlePlayerError(err));
@@ -80,32 +82,34 @@ const Player: React.FC = () => {
       >
         <VideoStreamerResolver playerLibraryOverride={playerLibraryOverride} />
       </Replay>
-      {!source && (
+      {visibleLogo && (
         <Flex
           position="absolute"
           left={0}
           right={0}
           top={0}
+          bottom={16}
           direction="column"
-          pt={12}
           alignItems="center"
+          justifyContent="center"
           opacity={0.7}
         >
-          <Text width="20%" mt={6}>
+          <Text width="20%">
             <Link href="https://vimond.github.io/replay/" isExternal>
               <Image src={ReplayLogo} alt="Replay" width="8rem" margin="0 auto" />
             </Link>
           </Text>
-          <Text color="white" mt={6}>
+          <Text color="white" mt={2} size="sm" width="12rem" align="center" lineHeight={1.3}>
             The{' '}
             <Link href="https://vimond.github.io/replay/" isExternal style={{ textDecoration: 'underline' }}>
               open source
-            </Link>{' '}
-            React video player from{' '}
+            </Link>
+            <br />
+            React video player <br />
+            from{' '}
             <Link href="https://vimond.com" isExternal style={{ textDecoration: 'underline' }}>
               Vimond
             </Link>
-            .
           </Text>
         </Flex>
       )}

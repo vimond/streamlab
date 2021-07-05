@@ -13,6 +13,7 @@ export interface PlayerState {
   playerLibraryOverride?: PlayerLibrary;
   additionalRequestData?: AdditionalRequestData;
   error?: Error;
+  visibleLogo: boolean;
 }
 
 const initialState = {
@@ -24,6 +25,7 @@ const initialState = {
   },
   additionalRequestData: undefined,
   playerLibraryOverride: undefined,
+  visibleLogo: true,
 };
 
 const player = (state: PlayerState = initialState, action: PlayerAction | PlayerErrorAction | ClearFormsAction) => {
@@ -35,13 +37,21 @@ const player = (state: PlayerState = initialState, action: PlayerAction | Player
         options,
         playerLibraryOverride,
         additionalRequestData,
+        visibleLogo: false,
       };
     case STOP:
     case CLEAR_FORMS:
+      if (state.options && state.options.playbackMonitor && state.options.playbackMonitor.visibleAtStart) {
+        return {
+          ...initialState,
+          visibleLogo: false,
+        };
+      }
       return initialState;
     case PLAYER_ERROR:
       return {
         ...initialState,
+        visibleLogo: false,
         error: action.error,
       };
   }
